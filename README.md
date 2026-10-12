@@ -8,9 +8,9 @@
 
 **Vibecoding** asks a model for code and hopes the tests catch the bugs. Sometimes it works, sometimes it doesn't.
 
-**Vericoding** asks for code and a *proof*, then lets a verifier decide. If the proof checks, the code meets its specification, and the only things left to trust are the specification and the verifier.
+**Vericoding** asks for code and a *proof* that it meets a specification, then hands both to a verifier that doesn't care who wrote them or how confident they sound. If the proof checks, the code does what the specification says, which leaves you two things to worry about: whether the specification says what you meant and whether the verifier can be trusted.
 
-Bursuc *et al.* (2025) coined the term vericoding in 2025 for LLM-generated, formally verified code. This awesome repo covers both classic (i.e. mostly human-driven) and AI vericoding.
+Bursuc *et al.* (2025) coined the term for LLM-generated, formally verified code, but people were doing the same thing by hand long before the models showed up. This awesome repo covers both: AI vericoding, and its artisanal ancestor, classic vericoding, where people still write the proofs themselves.
 
 |                                | Classic vericoding                        | AI vericoding                                  |
 | ------------------------------ | ----------------------------------------- | ---------------------------------------------- |
