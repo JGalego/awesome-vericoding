@@ -1,0 +1,31 @@
+name: Report a problem
+description: A broken link, an outdated entry, or an incorrect claim.
+title: "Fix "
+labels: ["fix"]
+body:
+  - type: input
+    id: entry
+    attributes:
+      label: Entry
+      description: Name of the entry as it appears in the list.
+    validations:
+      required: true
+  - type: dropdown
+    id: problem
+    attributes:
+      label: Problem
+      options:
+        - Broken link
+        - Moved or renamed
+        - Archived or unmaintained
+        - Incorrect description, number, or venue
+        - Something else
+    validations:
+      required: true
+  - type: textarea
+    id: details
+    attributes:
+      label: Details
+      description: What is wrong, and what should it say instead? Link a source if you can.
+    validations:
+      required: true

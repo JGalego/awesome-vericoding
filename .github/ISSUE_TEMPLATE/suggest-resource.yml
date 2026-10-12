@@ -1,0 +1,83 @@
+name: Suggest a resource
+description: Recommend a tool, paper, benchmark, or learning resource for the list.
+title: "Add "
+labels: ["suggestion"]
+body:
+  - type: markdown
+    attributes:
+      value: |
+        Thanks for the suggestion. Please read the [contribution guidelines](../blob/main/contributing.md) first, and suggest one resource per issue.
+  - type: input
+    id: name
+    attributes:
+      label: Name
+      description: Exact project name or paper title.
+    validations:
+      required: true
+  - type: input
+    id: url
+    attributes:
+      label: Link
+      description: Canonical URL, such as the project site, repository, arXiv abstract page, or DOI.
+      placeholder: https://
+    validations:
+      required: true
+  - type: dropdown
+    id: section
+    attributes:
+      label: Section
+      options:
+        - "Start Here"
+        - "Classic: Foundations"
+        - "Classic: Essays"
+        - "Classic: Verification-Aware Languages"
+        - "Classic: Verifiers for Mainstream Languages"
+        - "Classic: Proof Assistants"
+        - "Classic: Verification Infrastructure"
+        - "Classic: Verified Systems"
+        - "Classic: Industry Reports"
+        - "Classic: Books"
+        - "Classic: Courses and Tutorials"
+        - "AI: Position Papers and Essays"
+        - "AI: Surveys"
+        - "AI: Benchmarks"
+        - "AI: Verified Code Generation"
+        - "AI: Proof and Annotation Synthesis"
+        - "AI: Specification Generation"
+        - "AI: Verified Translation"
+        - "AI: Field Reports"
+        - "AI: Theorem-Proving Models"
+        - "AI: Agent Tooling"
+        - "AI: Organizations"
+        - "Community"
+        - "Meta"
+        - "Not sure"
+    validations:
+      required: true
+  - type: textarea
+    id: entry
+    attributes:
+      label: Proposed entry
+      description: One line in the list's format. See the contribution guidelines for paper and benchmark formats.
+      render: markdown
+      placeholder: "- [Name](https://example.com) - What it does and why it matters. *Venue Year*"
+    validations:
+      required: true
+  - type: textarea
+    id: why
+    attributes:
+      label: Why it belongs
+      description: What does it add that the list lacks? Include evidence for the quality bar, such as venue, citations, adoption, or recent activity.
+    validations:
+      required: true
+  - type: checkboxes
+    id: checks
+    attributes:
+      label: Checks
+      options:
+        - label: I have used or read this resource myself.
+          required: true
+        - label: It is not already listed, and I searched open and closed issues.
+          required: true
+        - label: I checked the link and every claim in the entry myself.
+          required: true

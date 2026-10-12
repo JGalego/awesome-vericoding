@@ -1,0 +1,8 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 120 120" width="240" height="240" role="img" aria-labelledby="title">
+  <title id="title">Awesome Vericoding logo: code braces around a check mark</title>
+  <g fill="none" stroke-linecap="round" stroke-linejoin="round">
+    <path stroke="#2f80ed" stroke-width="8" d="M42 18 C30 18 30 28 30 38 L30 50 C30 56 26 60 18 60 C26 60 30 64 30 70 L30 82 C30 92 30 102 42 102"/>
+    <path stroke="#2f80ed" stroke-width="8" d="M78 18 C90 18 90 28 90 38 L90 50 C90 56 94 60 102 60 C94 60 90 64 90 70 L90 82 C90 92 90 102 78 102"/>
+    <path stroke="#22a35a" stroke-width="10" d="M44 61 L56 73 L77 47"/>
+  </g>
+</svg>

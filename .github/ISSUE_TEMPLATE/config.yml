@@ -1,0 +1,5 @@
+blank_issues_enabled: true
+contact_links:
+  - name: Contribution guidelines
+    url: https://github.com/JGalego/awesome-vericoding/blob/main/contributing.md
+    about: Read these before suggesting or changing an entry.

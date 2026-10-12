@@ -1,0 +1,24 @@
+cff-version: 1.2.0
+title: Awesome Vericoding
+message: If you use this list in your work, please cite it as below.
+type: dataset
+authors:
+  - given-names: João
+    family-names: Galego
+repository-code: https://github.com/JGalego/awesome-vericoding
+abstract: >-
+  A curated list of resources for vericoding: writing programs together with
+  machine-checked proofs that they meet a formal specification, either by hand
+  (classic vericoding) or with AI models and agents (AI vericoding).
+keywords:
+  - vericoding
+  - formal verification
+  - program verification
+  - verified code generation
+  - theorem proving
+  - large language models
+  - Dafny
+  - Verus
+  - Lean
+  - Rocq
+license: CC0-1.0

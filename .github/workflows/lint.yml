@@ -1,0 +1,41 @@
+name: Lint
+
+on:
+  pull_request:
+  push:
+    branches: [main]
+  workflow_dispatch:
+    inputs:
+      strict:
+        description: Also enforce repository age and GitHub metadata (run before submitting to sindresorhus/awesome)
+        type: boolean
+        default: false
+
+permissions:
+  contents: read
+
+jobs:
+  awesome-lint:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v7
+        with:
+          fetch-depth: 0 # awesome-lint reads the first commit date
+      - uses: actions/setup-node@v7
+        with:
+          node-version: 22
+      - name: awesome-lint
+        run: python3 scripts/lint.py ${{ inputs.strict && '--strict' || '' }}
+
+  scripts:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v7
+      - name: Test the maintenance scripts
+        run: python3 -m unittest discover -s scripts -v
+      - name: Check that tables are aligned
+        run: |
+          python3 scripts/align_tables.py README.md contributing.md || {
+            echo "::error::Tables are not aligned. Run: python3 scripts/align_tables.py README.md contributing.md"
+            exit 1
+          }

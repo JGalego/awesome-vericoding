@@ -1,0 +1,42 @@
+# Git hooks for this list. Set up once with:
+#   pip install pre-commit && pre-commit install
+# Run everything on demand with:
+#   pre-commit run --all-files
+repos:
+  - repo: https://github.com/pre-commit/pre-commit-hooks
+    rev: v6.0.0
+    hooks:
+      - id: trailing-whitespace
+        exclude: ^LICENSE$
+      - id: end-of-file-fixer
+        exclude: ^LICENSE$
+      - id: mixed-line-ending
+        args: [--fix=lf]
+      - id: check-yaml
+      - id: check-merge-conflict
+      - id: check-added-large-files
+
+  - repo: local
+    hooks:
+      - id: align-tables
+        name: Align Markdown tables
+        entry: python3 scripts/align_tables.py
+        language: system
+        files: ^(README|contributing)\.md$
+
+      - id: test-scripts
+        name: Test maintenance scripts
+        entry: python3 -m unittest discover -s scripts
+        language: system
+        pass_filenames: false
+        files: ^scripts/.*\.py$
+
+      # Wraps awesome-lint so that repository age and GitHub metadata are
+      # warnings rather than errors; see scripts/lint.py.
+      - id: awesome-lint
+        name: awesome-lint
+        entry: python3 scripts/lint.py
+        language: node
+        additional_dependencies: [awesome-lint@2.3.0]
+        pass_filenames: false
+        files: ^(README|contributing|code-of-conduct)\.md$

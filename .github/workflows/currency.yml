@@ -1,0 +1,48 @@
+name: Currency
+
+# Monthly check that every listed GitHub repository still exists, has not
+# moved or been archived, and (for tools) is still active. Findings open an
+# issue rather than failing a build: an upstream archive is news to act on,
+# not a broken repository.
+
+on:
+  schedule:
+    - cron: "0 6 2 * *" # monthly, on the 2nd
+  workflow_dispatch:
+
+permissions:
+  contents: read
+  issues: write
+
+jobs:
+  check:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v7
+
+      - name: Self-test the checker
+        run: python3 -m unittest discover -s scripts
+
+      - name: Check every GitHub repository in the list
+        id: check
+        env:
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+        run: python3 scripts/check_currency.py --readme README.md --out currency-report.md
+
+      - name: Open an issue if anything needs attention
+        if: steps.check.outputs.findings != '0'
+        env:
+          GH_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+        run: |
+          gh issue create \
+            --title "Currency check: ${{ steps.check.outputs.findings }} entries need attention ($(date +%Y-%m))" \
+            --body-file currency-report.md
+
+      # A run where the API went quiet must not read as a clean run.
+      - name: Summarize the run
+        if: always()
+        run: |
+          cat currency-report.md >> "$GITHUB_STEP_SUMMARY"
+          if [ "${{ steps.check.outputs.unchecked }}" != "0" ]; then
+            echo "::warning::${{ steps.check.outputs.unchecked }} repositories could not be checked"
+          fi
