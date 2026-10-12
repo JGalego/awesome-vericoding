@@ -91,11 +91,12 @@ Markers:
 
 ## Maintenance
 
-Three automated checks keep the list healthy:
+Three automated checks keep the list healthy, and a fourth publishes it:
 
 - **Lint** runs awesome-lint on every pull request.
 - **Links** runs lychee on every pull request and once a month, and opens an issue when links break.
 - **Currency** checks every GitHub repository in the list once a month and opens an issue for any that are archived, missing, or inactive for over a year.
+- **Pages** publishes the list as a website on every push to `main`. To preview it locally, run `bundle install && bundle exec jekyll serve --baseurl ""` and open <http://localhost:4000/>.
 
 Tools that are archived or inactive for more than a year are removed. Papers stay unless they are retracted or clearly superseded.
 

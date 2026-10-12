@@ -1,0 +1,30 @@
+title: Awesome Vericoding
+description: Curated resources on vericoding, i.e. code generated together with a proof.
+markdown: kramdown
+kramdown:
+  input: GFM
+  syntax_highlighter_opts:
+    disable: true
+plugins:
+  - jekyll-readme-index
+  - jekyll-optional-front-matter
+  - jekyll-relative-links
+  - jekyll-titles-from-headings
+relative_links:
+  enabled: true
+  collection: false
+defaults:
+  - scope:
+      path: ""
+    values:
+      layout: default
+include:
+  - contributing.md
+  - code-of-conduct.md
+exclude:
+  - scripts
+  - lychee.toml
+  - CITATION.cff
+  - .pre-commit-config.yaml
+  - currency-report.md
+  - lychee
