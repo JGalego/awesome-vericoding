@@ -1,0 +1,63 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="1200" height="600" viewBox="0 0 1200 600" role="img" aria-labelledby="t d">
+<title id="t">Classic vericoding versus AI vericoding</title>
+<desc id="d">On the left, a tired person sweats over a half-built bridge between a spec card and a code box, with a heap of crumpled drafts at their feet. On the right, a four-armed robot places planks quickly so the bridge is finished and every plank is ticked, while a person relaxes on the spec card with a mug.</desc>
+<style>
+svg{--bg:#fcfcfb;--ink:#1d1d1b;--mut:#8a8780;--wave:#cfe2fa;--wave-s:#2a78d6;--blk:#fbe7a6;--blk-s:#c48a00;--ok:#0ca30c;--okf:#d9f2d9;--pink:#f8cfe0;--pink-s:#d6457f;--paper:#fff}
+@media (prefers-color-scheme:dark){svg{--bg:#1a1a19;--ink:#f3f2ed;--mut:#93908a;--wave:#1f3d63;--wave-s:#5b9cf0;--blk:#5a4714;--blk-s:#e0aa22;--ok:#2fbf4a;--okf:#1d4423;--pink:#5c2440;--pink-s:#e8649b;--paper:#252522}}
+.s{fill:none;stroke:var(--ink);stroke-width:4;stroke-linecap:round;stroke-linejoin:round}
+.t{font-family:"Comic Sans MS","Chalkboard SE",system-ui,sans-serif;font-size:44px;font-weight:700;fill:var(--ink);text-anchor:middle}
+</style>
+<rect width="1200" height="600" fill="var(--bg)"/>
+<path d="M600 60 V560" stroke="var(--mut)" stroke-width="3" stroke-dasharray="3 14" stroke-linecap="round"/>
+<path d="M20 540 H580 M620 540 H1180" class="s"/>
+<text class="t" x="300" y="70" transform="rotate(-3 300 70)">classic vericoding</text>
+<text class="t" x="900" y="70" transform="rotate(2 900 70)">AI vericoding</text>
+
+<g transform="translate(0 0)"><g transform="rotate(-3 95 450)"><rect x="40" y="360" width="110" height="180" rx="10" fill="var(--wave)" stroke="var(--wave-s)" stroke-width="4"/><path d="M60 395 h70 M60 425 h56 M60 455 h70 M60 485 h44" stroke="var(--wave-s)" stroke-width="4" stroke-linecap="round"/></g>
+<g transform="rotate(3 520 450)"><rect x="470" y="380" width="100" height="160" rx="10" fill="var(--blk)" stroke="var(--blk-s)" stroke-width="4"/><path d="M500 440 l-16 20 l16 20 M540 440 l16 20 l-16 20 M526 432 l-12 56" stroke="var(--blk-s)" stroke-width="4" stroke-linecap="round" stroke-linejoin="round" fill="none"/></g>
+<path d="M150 440 C230 320 390 320 470 440" class="s" stroke-width="5"/><rect x="156" y="386" width="40" height="20" rx="4" fill="var(--okf)" stroke="var(--ok)" stroke-width="4" transform="rotate(-35 176 396)"/><path d="M168 370 l7 8 l13 -16" class="s" stroke="var(--ok)" stroke-width="5"/><rect x="202" y="350" width="40" height="20" rx="4" fill="var(--okf)" stroke="var(--ok)" stroke-width="4" transform="rotate(-20 222 360)"/><path d="M214 334 l7 8 l13 -16" class="s" stroke="var(--ok)" stroke-width="5"/><rect x="290" y="328" width="40" height="20" rx="4" fill="none" stroke="var(--mut)" stroke-width="3" stroke-dasharray="5 6" transform="rotate(0 310 338)"/><rect x="378" y="350" width="40" height="20" rx="4" fill="none" stroke="var(--mut)" stroke-width="3" stroke-dasharray="5 6" transform="rotate(20 398 360)"/><rect x="424" y="386" width="40" height="20" rx="4" fill="none" stroke="var(--mut)" stroke-width="3" stroke-dasharray="5 6" transform="rotate(35 444 396)"/></g>
+<!-- tired human -->
+<g>
+ <circle cx="310" cy="388" r="28" fill="var(--paper)" class="s"/>
+ <path d="M296 386 h10 M316 386 h10 M298 404 q12 -8 24 0" class="s"/>
+ <path d="M296 366 q14 -14 28 0" class="s" stroke-width="3"/>
+ <rect x="282" y="418" width="56" height="70" rx="14" fill="var(--pink)" stroke="var(--pink-s)" stroke-width="4"/>
+ <path d="M296 488 v52 M324 488 v52" class="s"/>
+ <path d="M284 430 l-26 -50 l14 -26 M336 430 l30 -36 l16 -50" class="s"/>
+ <path d="M372 336 l30 -12" class="s" stroke="var(--blk-s)" stroke-width="6"/>
+ <path d="M350 372 q-6 12 0 18 q6 -6 0 -18 Z M280 352 q-6 12 0 18 q6 -6 0 -18 Z" fill="var(--wave)" stroke="var(--wave-s)" stroke-width="3"/>
+</g>
+<!-- crumpled drafts -->
+<g fill="var(--paper)" class="s" stroke-width="3">
+ <path d="M170 540 q-12 -6 -6 -20 q10 -10 22 -4 q12 6 8 20 q-8 8 -24 4 Z"/>
+ <path d="M205 540 q-10 -4 -8 -16 q8 -10 20 -4 q10 8 4 20 Z"/>
+ <path d="M440 540 q-12 -6 -6 -20 q10 -10 22 -4 q12 6 8 20 Z"/>
+ <path d="M150 510 q-10 -8 -2 -20 q12 -6 20 4 q4 12 -4 18 Z"/>
+</g>
+
+<g transform="translate(600 0)"><g transform="rotate(-3 95 450)"><rect x="40" y="360" width="110" height="180" rx="10" fill="var(--wave)" stroke="var(--wave-s)" stroke-width="4"/><path d="M60 395 h70 M60 425 h56 M60 455 h70 M60 485 h44" stroke="var(--wave-s)" stroke-width="4" stroke-linecap="round"/></g>
+<g transform="rotate(3 520 450)"><rect x="470" y="380" width="100" height="160" rx="10" fill="var(--blk)" stroke="var(--blk-s)" stroke-width="4"/><path d="M500 440 l-16 20 l16 20 M540 440 l16 20 l-16 20 M526 432 l-12 56" stroke="var(--blk-s)" stroke-width="4" stroke-linecap="round" stroke-linejoin="round" fill="none"/></g>
+<path d="M150 440 C230 320 390 320 470 440" class="s" stroke-width="5"/><rect x="156" y="386" width="40" height="20" rx="4" fill="var(--okf)" stroke="var(--ok)" stroke-width="4" transform="rotate(-35 176 396)"/><path d="M168 370 l7 8 l13 -16" class="s" stroke="var(--ok)" stroke-width="5"/><rect x="202" y="350" width="40" height="20" rx="4" fill="var(--okf)" stroke="var(--ok)" stroke-width="4" transform="rotate(-20 222 360)"/><path d="M214 334 l7 8 l13 -16" class="s" stroke="var(--ok)" stroke-width="5"/><rect x="290" y="328" width="40" height="20" rx="4" fill="var(--okf)" stroke="var(--ok)" stroke-width="4" transform="rotate(0 310 338)"/><path d="M302 312 l7 8 l13 -16" class="s" stroke="var(--ok)" stroke-width="5"/><rect x="378" y="350" width="40" height="20" rx="4" fill="var(--okf)" stroke="var(--ok)" stroke-width="4" transform="rotate(20 398 360)"/><path d="M390 334 l7 8 l13 -16" class="s" stroke="var(--ok)" stroke-width="5"/><rect x="424" y="386" width="40" height="20" rx="4" fill="var(--okf)" stroke="var(--ok)" stroke-width="4" transform="rotate(35 444 396)"/><path d="M436 370 l7 8 l13 -16" class="s" stroke="var(--ok)" stroke-width="5"/></g>
+<!-- robot -->
+<g transform="translate(600 0)">
+ <rect x="282" y="370" width="56" height="42" rx="14" fill="var(--paper)" class="s"/>
+ <path d="M310 370 v-18" class="s"/><circle cx="310" cy="346" r="8" fill="var(--okf)" stroke="var(--ok)" stroke-width="4"/>
+ <path d="M294 386 q6 8 12 0 M314 386 q6 8 12 0 M302 398 q8 6 16 0" class="s" stroke-width="3"/>
+ <rect x="286" y="412" width="48" height="76" rx="12" fill="var(--paper)" class="s"/>
+ <path d="M298 488 v52 M322 488 v52" class="s"/>
+ <path d="M286 424 l-34 -30 M286 446 l-40 14 M334 424 l34 -30 M334 446 l40 14" class="s"/>
+ <rect x="226" y="372" width="44" height="18" rx="4" fill="var(--okf)" stroke="var(--ok)" stroke-width="4" transform="rotate(-20 248 381)"/>
+ <path d="M250 466 h14 M250 476 h20" class="s" stroke="var(--mut)" stroke-width="3"/>
+ <path d="M190 390 h20 M186 404 h28 M196 418 h20" class="s" stroke="var(--mut)" stroke-width="3"/>
+ <path d="M410 390 h-20 M414 404 h-28 M404 418 h-20" class="s" stroke="var(--mut)" stroke-width="3"/>
+</g>
+<!-- relaxed human on spec card -->
+<g transform="translate(0 0)">
+ <circle cx="695" cy="318" r="24" fill="var(--paper)" class="s"/>
+ <path d="M684 316 q5 -5 10 0 M700 316 q5 -5 10 0 M686 328 q9 8 18 0" class="s" stroke-width="3"/>
+ <rect x="672" y="342" width="46" height="22" rx="10" fill="var(--pink)" stroke="var(--pink-s)" stroke-width="4"/>
+ <path d="M718 352 q22 6 30 -8" class="s"/>
+ <rect x="740" y="316" width="22" height="26" rx="4" fill="var(--paper)" class="s" stroke-width="3"/>
+ <path d="M762 322 q10 4 0 14 M745 300 q-6 -10 2 -16 M755 300 q-6 -10 2 -16" class="s" stroke-width="3"/>
+</g>
+</svg>

@@ -10,6 +10,8 @@
 
 **Vericoding** asks for code and a *proof* that it meets a specification, then hands both to a verifier that doesn't care who wrote them or how confident they sound. If the proof checks, the code does what the specification says, which leaves you two things to worry about: whether the specification says what you meant and whether the verifier can be trusted.
 
+<img src="media/vibe_vs_veri.svg" width="50%"/>
+
 Bursuc *et al.* (2025) coined the term for LLM-generated, formally verified code, but people were doing the same thing by hand long before the models showed up. This awesome repo covers both: AI vericoding, and its artisanal ancestor, classic vericoding, where people still write the proofs themselves.
 
 |                                | Classic vericoding                        | AI vericoding                                  |
@@ -88,6 +90,8 @@ To try AI vericoding:
 
 1. [Prediction: AI Will Make Formal Verification Go Mainstream](https://martin.kleppmann.com/2025/12/08/ai-formal-verification.html) - A short, accessible case for why AI makes formal verification practical.
 2. Ask your coding assistant for a small Dafny method with its preconditions and postconditions, run `dafny verify`, and check the result against the Trust Checklist before believing it.
+
+<img src="media/classic_vs_ai.svg" width="50%"/>
 
 ## 📐 Classic Vericoding
 
@@ -280,6 +284,7 @@ To try AI vericoding:
 - [On the Success of 'Natural Language Programming'](https://brooker.co.za/blog/2025/12/16/natural-language.html) - Marc Brooker argues that specification is becoming the core of programming, with formal tools taking over where precision matters. *Blog 2025*
 - [Who Watches the Provers?](https://leodemoura.github.io/blog/2026-3-16-who-watches-the-provers/) - Leonardo de Moura on why small, independently implemented proof kernels make AI-generated proofs trustworthy. *Blog 2026*
 - [When the Hard Part Stops Being Hard](https://proofsandintuitions.net/2026/08/14/when-the-hard-part-stops-being-hard/) - Ilya Sergey on mechanizing a production type system's metatheory with AI in about four weeks, and what that means for research. *Blog 2026*
+- [Skills for the future software profession: beyond agentic AI!](https://www.youtube.com/watch?v=UMTHkr9cnig) - Argues that verification and validation is increasing in importance as agents handle implementation, and that future software professionals will need to be proficient in these areas. *arXiv 2026*
 
 ### 📖 Surveys
 

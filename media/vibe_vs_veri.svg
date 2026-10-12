@@ -1,0 +1,84 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="1200" height="600" viewBox="0 0 1200 600" role="img" aria-labelledby="t d">
+<title id="t">Vibecoding versus vericoding</title>
+<desc id="d">On the left, a robot surfs a wave of code while a tall tower of blocks wobbles, with a question mark overhead. On the right, the same robot calmly stands beside a sturdy bridge between a spec card and a code box, every plank ticked.</desc>
+<style>
+svg{--bg:#fcfcfb;--ink:#1d1d1b;--mut:#8a8780;--wave:#cfe2fa;--wave-s:#2a78d6;--blk:#fbe7a6;--blk-s:#c48a00;--ok:#0ca30c;--okf:#d9f2d9;--pink:#f8cfe0;--pink-s:#d6457f;--paper:#fff}
+@media (prefers-color-scheme:dark){svg{--bg:#1a1a19;--ink:#f3f2ed;--mut:#93908a;--wave:#1f3d63;--wave-s:#5b9cf0;--blk:#5a4714;--blk-s:#e0aa22;--ok:#2fbf4a;--okf:#1d4423;--pink:#5c2440;--pink-s:#e8649b;--paper:#252522}}
+.s{fill:none;stroke:var(--ink);stroke-width:4;stroke-linecap:round;stroke-linejoin:round}
+.t{font-family:"Comic Sans MS","Chalkboard SE",system-ui,sans-serif;font-size:44px;font-weight:700;fill:var(--ink);text-anchor:middle}
+.q{font-family:system-ui,sans-serif;font-size:64px;font-weight:700;fill:var(--pink-s);text-anchor:middle}
+</style>
+<rect width="1200" height="600" fill="var(--bg)"/>
+<path d="M600 60 V560" stroke="var(--mut)" stroke-width="3" stroke-dasharray="3 14" stroke-linecap="round"/>
+
+<!-- ===== LEFT: vibes ===== -->
+<text class="t" x="300" y="70" transform="rotate(-3 300 70)">vibecoding</text>
+<!-- wave -->
+<path d="M30 470 C90 380 170 380 230 440 C290 500 380 500 440 420 C490 350 540 370 570 430 V560 H30 Z" fill="var(--wave)" stroke="var(--wave-s)" stroke-width="4" stroke-linejoin="round"/>
+<path d="M60 520 q20 -18 40 0 t40 0 t40 0 M300 535 q20 -18 40 0 t40 0 t40 0" class="s" stroke="var(--wave-s)" stroke-width="3"/>
+<!-- wobbly tower -->
+<g class="s" stroke="var(--blk-s)" fill="var(--blk)" transform="translate(50 -10)">
+ <rect x="322" y="408" width="110" height="46" rx="6" transform="rotate(3 377 431)"/>
+ <rect x="332" y="362" width="96" height="46" rx="6" transform="rotate(-6 380 385)"/>
+ <rect x="330" y="316" width="104" height="46" rx="6" transform="rotate(9 382 339)"/>
+ <rect x="344" y="270" width="90" height="46" rx="6" transform="rotate(-12 389 293)"/>
+</g>
+<g stroke="var(--blk-s)" stroke-width="3" stroke-linecap="round" fill="none" transform="translate(50 -10)">
+ <path d="M340 428 h40 M345 382 h30 M345 336 h50 M356 290 h34" />
+</g>
+<text class="q" x="520" y="210" transform="rotate(12 520 210)">?</text>
+<text class="q" x="270" y="170" font-size="40" transform="rotate(-15 270 170)">?</text>
+<!-- surf robot -->
+<g transform="translate(140 0) rotate(-8 150 380)">
+ <path d="M30 440 q90 28 180 0 q-20 -22 -90 -22 q-70 0 -90 22 Z" fill="var(--pink)" stroke="var(--pink-s)" stroke-width="4" stroke-linejoin="round"/>
+ <rect x="80" y="330" width="80" height="70" rx="14" fill="var(--paper)" class="s"/>
+ <rect x="68" y="262" width="104" height="68" rx="18" fill="var(--paper)" class="s"/>
+ <path d="M120 262 v-26" class="s"/><circle cx="120" cy="230" r="8" fill="var(--pink)" class="s"/>
+ <path d="M96 292 q10 -12 20 0 M128 292 q10 -12 20 0" class="s"/>
+ <path d="M100 312 q20 18 40 0" class="s"/>
+ <path d="M80 345 l-50 -42 M160 345 l50 -42" class="s"/>
+ <path d="M104 400 l-12 28 M136 400 l12 28" class="s"/>
+</g>
+<!-- sparkles -->
+<g class="s" stroke="var(--blk-s)" stroke-width="3">
+ <path d="M70 160 v28 M56 174 h28"/><path d="M520 120 v22 M509 131 h22"/><path d="M110 250 v18 M101 259 h18"/>
+</g>
+
+<!-- ===== RIGHT: proofs ===== -->
+<text class="t" x="900" y="70" transform="rotate(2 900 70)">vericoding</text>
+<!-- ground -->
+<path d="M630 500 H1170" class="s"/>
+<!-- spec card -->
+<g transform="rotate(-3 700 400)">
+ <rect x="640" y="330" width="130" height="170" rx="10" fill="var(--wave)" stroke="var(--wave-s)" stroke-width="4"/>
+ <path d="M662 365 h86 M662 395 h70 M662 425 h86 M662 455 h54" stroke="var(--wave-s)" stroke-width="4" stroke-linecap="round"/>
+</g>
+<!-- code box -->
+<g transform="rotate(3 1100 420)">
+ <rect x="1030" y="350" width="130" height="150" rx="10" fill="var(--blk)" stroke="var(--blk-s)" stroke-width="4"/>
+ <path d="M1062 400 l-20 24 l20 24 M1128 400 l20 24 l-20 24 M1106 392 l-20 64" stroke="var(--blk-s)" stroke-width="4" stroke-linecap="round" stroke-linejoin="round" fill="none"/>
+</g>
+<!-- bridge -->
+<path d="M770 440 C850 360 950 360 1030 440" class="s" stroke-width="5"/>
+<g>
+ <rect x="790" y="420" width="46" height="22" rx="4" fill="var(--okf)" stroke="var(--ok)" stroke-width="4" transform="rotate(-28 813 431)"/>
+ <rect x="842" y="395" width="46" height="22" rx="4" fill="var(--okf)" stroke="var(--ok)" stroke-width="4" transform="rotate(-10 865 406)"/>
+ <rect x="912" y="395" width="46" height="22" rx="4" fill="var(--okf)" stroke="var(--ok)" stroke-width="4" transform="rotate(10 935 406)"/>
+ <rect x="964" y="420" width="46" height="22" rx="4" fill="var(--okf)" stroke="var(--ok)" stroke-width="4" transform="rotate(28 987 431)"/>
+</g>
+<g class="s" stroke="var(--ok)" stroke-width="5">
+ <path d="M802 386 l8 9 l16 -18"/><path d="M857 362 l8 9 l16 -18"/><path d="M927 362 l8 9 l16 -18"/><path d="M982 386 l8 9 l16 -18"/>
+</g>
+<!-- calm robot with magnifier -->
+<g transform="translate(790 150)">
+ <rect x="76" y="40" width="88" height="56" rx="16" fill="var(--paper)" class="s"/>
+ <path d="M120 40 v-22" class="s"/><circle cx="120" cy="12" r="8" fill="var(--okf)" stroke="var(--ok)" stroke-width="4"/>
+ <path d="M96 66 q8 8 16 0 M128 66 q8 8 16 0" class="s"/>
+ <path d="M108 80 q12 8 24 0" class="s"/>
+ <rect x="84" y="96" width="72" height="62" rx="12" fill="var(--paper)" class="s"/>
+ <path d="M110 158 l-6 62 M130 158 l6 62" class="s"/>
+ <path d="M84 112 l-30 24 M156 112 l36 14" class="s"/>
+ <circle cx="214" cy="130" r="22" fill="var(--paper)" class="s"/><path d="M230 146 l22 22" class="s" stroke-width="6"/>
+ <path d="M204 130 l7 8 l12 -14" class="s" stroke="var(--ok)" stroke-width="4"/>
+</g>
+</svg>
