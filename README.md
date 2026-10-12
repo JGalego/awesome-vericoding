@@ -51,7 +51,8 @@ flowchart LR
   - [📰 Industry Reports](#-industry-reports)
   - [📚 Books](#-books)
   - [🎓 Courses and Tutorials](#-courses-and-tutorials)
-  - [⚡ Cheat Sheets](#-cheat-sheets)
+  - [📘 Official Cheat Sheets](#-official-cheat-sheets)
+  - [✏️ Unofficial Cheat Sheets](#-unofficial-cheat-sheets)
 - [🤖 AI Vericoding](#-ai-vericoding)
   - [💬 Position Papers and Essays](#-position-papers-and-essays)
   - [📖 Surveys](#-surveys)
@@ -259,13 +260,46 @@ To try AI vericoding:
 - [Verification Corner](https://www.youtube.com/channel/UCP2eLEql4tROYmIYm5mA27A) - Rustan Leino's video series on specifications, invariants, and Dafny.
 - [Verus Guide](https://verus-lang.github.io/verus/guide/) ⭐ - Official tutorial and reference for verifying Rust with Verus.
 
-### ⚡ Cheat Sheets
+### 📘 Official Cheat Sheets
+
+> *Language tours already published on Learn X in Y Minutes*
+
+- [Learn Agda in Y Minutes](https://learnxinyminutes.com/agda/) - Dependent types and proofs written as total programs.
+- [Learn Coq in Y Minutes](https://learnxinyminutes.com/coq/) - A programming introduction to Gallina for the prover now called Rocq.
+- [Learn Lean 4 in Y Minutes](https://learnxinyminutes.com/lean4/) - Dependent types, propositions, and tactic proofs.
+
+### ✏️ Unofficial Cheat Sheets
 
 > *One page of syntax before your first proof obligation*
 
-- [Learn Agda in Y Minutes](https://learnxinyminutes.com/agda/) - Annotated tour of Agda syntax, from data types and pattern matching to dependent types and simple proofs.
-- [Learn Coq in Y Minutes](https://learnxinyminutes.com/coq/) - Annotated tour of Coq (now Rocq) focused on functional programming, with a short introduction to tactic proofs.
-- [Learn Lean 4 in Y Minutes](https://learnxinyminutes.com/lean4/) - Annotated tour of Lean 4 as both a programming language and a proof assistant.
+- [Learn ACL2 in Y Minutes](primers/acl2.md) - A terminating definition and the theorems the waterfall is expected to prove alone.
+- [Learn ACSL in Y Minutes](primers/acsl.md) - Function contracts, frames, and a loop variant for Frama-C's WP plugin.
+- [Learn Agda in Y Minutes](primers/agda.md) - A proof of associativity and a lookup whose index is a type.
+- [Learn Boogie in Y Minutes](primers/boogie.md) - Uninterpreted functions, axioms, and a loop whose frame is an invariant.
+- [Learn CN in Y Minutes](primers/cn.md) - Ownership, returned on exit, for a pointer and for every cell of an array.
+- [Learn Creusot in Y Minutes](primers/creusot.md) - Pearlite logic functions and the view of a Rust value in that logic.
+- [Learn Dafny in Y Minutes](primers/dafny.md) - Ghost lemmas, a frame, and a binary search whose invariant is the postcondition.
+- [Learn F* in Y Minutes](primers/fstar.md) - Refinements as preconditions and an SMT lemma whose body is the induction.
+- [Learn Flux in Y Minutes](primers/flux.md) - Predicates attached to Rust types, including the overflow check beside them.
+- [Learn Gobra in Y Minutes](primers/gobra.md) - Go comments for contracts, termination, and permission to each slice cell.
+- [Learn Gospel in Y Minutes](primers/gospel.md) - OCaml contracts in comments, including a checks clause a test can monitor.
+- [Learn HOL4 in Y Minutes](primers/hol4.md) - A Holmake script: a definition used by name, then an induction.
+- [Learn Idris 2 in Y Minutes](primers/idris.md) - Totality checking, and a vector whose length is part of its type.
+- [Learn Isabelle in Y Minutes](primers/isabelle.md) - Simplification when it is enough, and an induction when auto will not invent one.
+- [Learn JML in Y Minutes](primers/jml.md) - Java comments whose arithmetic is mathematical, with a bound so the code stays in range.
+- [Learn Kani in Y Minutes](primers/kani.md) - A bounded harness, and a contract the harness does not restate.
+- [Learn Lean 4 in Y Minutes](primers/lean.md) - Tactic proofs, a dependent index, and a loop whose conditions come from mvcgen.
+- [Learn Liquid Haskell in Y Minutes](primers/liquid-haskell.md) - Refinement types and a measure the solver uses without an induction.
+- [Learn Nagini in Y Minutes](primers/nagini.md) - Python calls that are contracts, including the variant of a loop.
+- [Learn Prusti in Y Minutes](primers/prusti.md) - Rust attributes for contracts, with ownership left to the borrow checker.
+- [Learn PVS in Y Minutes](primers/pvs.md) - A recursive definition whose typechecker emits the termination condition.
+- [Learn Rocq in Y Minutes](primers/rocq.md) - A Gallina program and the tactic proof that append distributes over sum.
+- [Learn SPARK in Y Minutes](primers/spark.md) - An expression function and a loop that must also be free of overflow.
+- [Learn Stainless in Y Minutes](primers/stainless.md) - Scala contracts on BigInt, so overflow is not the verification condition.
+- [Learn Velvet in Y Minutes](primers/velvet.md) - Dafny-style methods whose verification conditions are Lean goals.
+- [Learn Verus in Y Minutes](primers/verus.md) - The split between spec, proof, and exec, plus a loop variant.
+- [Learn Viper in Y Minutes](primers/viper.md) - Permissions that must be held, split, and given back.
+- [Learn WhyML in Y Minutes](primers/whyml.md) - A logical function, a variant, and the obligations Alt-Ergo receives.
 
 ## 🤖 AI Vericoding
 

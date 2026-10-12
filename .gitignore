@@ -6,3 +6,10 @@ lychee/
 _site/
 .jekyll-cache/
 Gemfile.lock
+# Local extracts and output from checking the primers
+primers/_scratch/
+*.vo
+*.vos
+*.vok
+*.glob
+.*.aux
