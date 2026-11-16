@@ -365,6 +365,7 @@ To try AI vericoding:
 - [VeCoGen: Automating Generation of Formally Verified C Code with Large Language Models](https://arxiv.org/abs/2411.19275) - Iterates on C code against ACSL specifications until Frama-C proves it correct. *FormaliSE 2025* · [Code](https://github.com/ASSERT-KTH/Vecogen)
 - [AlphaVerus: Bootstrapping Formally Verified Code Generation through Self-Improving Translation and Treefinement](https://arxiv.org/abs/2412.06176) - Bootstraps verified Rust by translating Dafny programs into Verus and refining failures with tree search. *ICML 2025* · [Code](https://github.com/cmu-l3/alphaverus)
 - [Re:Form: Reducing Human Annotations in Scalable Formal Software Verification with RL in LLMs](https://arxiv.org/abs/2507.16331) - Reinforcement learning with the Dafny verifier as reward teaches small models to write verifiable code. *TMLR 2026*
+- [Automating Formal Verification with Reinforcement Learning and Recursive Inference](https://arxiv.org/abs/2605.30914) - Thesis on training Dafny models with verifier rewards, where models exploited weak specifications, and on Lean proof search; adds the Dalek-Bench repository benchmark. *arXiv 2026*
 - [ATLAS: Automated Toolkit for Large-Scale Verified Code Synthesis](https://arxiv.org/abs/2512.10173) - Turns Python solutions into 2.7K verified Dafny programs for fine-tuning, lifting a 7B model on DafnyBench from 32% to 57%. *arXiv 2025*
 - [Propose, Solve, Verify: Self-Play Through Formal Verification](https://arxiv.org/abs/2512.18160) - Self-play in which a model proposes Verus problems and trains on verifier-checked solutions. *arXiv 2025*
 - [WybeCoder: Verified Imperative Code Generation](https://arxiv.org/abs/2603.29088) - Prove-as-you-generate agent for imperative code in Lean that solves 74% of VERINA and 62% of CLEVER. *arXiv 2026* · [Code](https://github.com/facebookresearch/wybecoder)
@@ -396,6 +397,8 @@ To try AI vericoding:
   - [Rango: Adaptive Retrieval-Augmented Proving for Automated Software Verification](https://arxiv.org/abs/2412.14063) - Retrieves relevant proofs and lemmas at every step and introduces the CoqStoq dataset of 197K theorems. *ICSE 2025*
   - [QEDCartographer: Automating Formal Verification Using Reward-Free Reinforcement Learning](https://arxiv.org/abs/2408.09237) - Learns a proof-search value function without hand-designed rewards. *ICSE 2025*
   - [Cobblestone: A Divide-and-Conquer Approach for Automating Formal Verification](https://arxiv.org/abs/2410.19940) - Splits Rocq goals and reuses partial LLM progress to prove more theorems cheaply. *ICSE 2026*
+  - [Agentic Verification of Software Systems](https://arxiv.org/abs/2511.17330) - AutoRocq agent refines Rocq proofs through prover feedback, evaluated on SV-COMP tasks and Linux kernel modules. *arXiv 2025*
+  - [Harnessing Code Agents for Automatic Software Verification](https://arxiv.org/abs/2607.06341) - Lets a code agent choose its own proof strategy for Rocq instead of following a fixed retrieve-and-predict pipeline. *arXiv 2026*
 - Rust and Verus
   - [Leveraging Large Language Models for Automated Proof Synthesis in Rust](https://arxiv.org/abs/2311.03739) - First study of GPT-4 writing Verus proofs, combined with static analysis and a developer in the loop. *arXiv 2023*
   - [AutoVerus: Automated Proof Generation for Rust Code](https://arxiv.org/abs/2409.13082) - Multi-agent pipeline that generates, refines, and repairs Verus proofs, verifying over 90% of Verus-Bench. *OOPSLA 2025*
@@ -440,10 +443,12 @@ To try AI vericoding:
 
 - [lean-zip](https://github.com/kim-em/lean-zip) - DEFLATE and zlib in Lean 4, implemented and proved by loosely supervised AI agents, including a proof that decompression inverts compression for every input.
 - [Verifying Move Borrow Checker in Lean: An Experiment in AI-Assisted PL Metatheory](https://proofsandintuitions.net/2026/03/18/move-borrow-checker-lean/) - Ilya Sergey and an AI coding assistant produce 39,000 lines of mechanized metatheory for Move's borrow checker in under a month. *Blog 2026*
+- [Testing, Credible Compilation, and Verification in the Axon Verified Compiler in Lean and Claude Code](https://arxiv.org/abs/2605.01660) - A compiler whose code and proofs were all written in Lean by Claude Code, with a process that combines testing, translation validation, and proof. *PAgE 2026*
 - [A Rust-to-Lean Verification Pipeline with AI Provers: An Experience Report](https://arxiv.org/abs/2605.30106) - Lifts production Rust cryptography to Lean with Aeneas or hax and closes proof obligations with Aristotle and Aleph. *arXiv 2026*
 - [Postmortem for Kernel Soundness Bug #14576](https://leodemoura.github.io/blog/2026-8-1-postmortem-for-kernel-soundness-bug-14576/) - An AI-assisted "disproof" of the Collatz conjecture exploited a soundness bug in Lean's kernel, a reminder that the checker is part of what you trust. *Blog 2026*
 - [An AI Approach to Verified Production Cryptographic Libraries](https://arxiv.org/abs/2608.00965) - CryptoProver re-verifies curve25519-dalek and verifies RustCrypto's chacha20 against RFC 8439 in about 11 hours of agent time. *arXiv 2026*
 - [Fewer Assumptions by Design: A Reusable Skill for LLM-Assisted Verus Verification](https://arxiv.org/abs/2609.34886) - An agent skill that encodes domain knowledge lets LLMs verify doubly linked lists in Verus with fewer trusted assumptions. *FROM 2026*
+- [Introducing AlphaProof Code](https://deepmind.google/blog/introducing-alphaproof-code/) - DeepMind reports agents writing over three million lines of Lean proof for Signal's core cryptography, verified down to machine instructions. *Blog 2026*
 
 ### 🏆 Theorem-Proving Models
 

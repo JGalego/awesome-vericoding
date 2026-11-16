@@ -1,0 +1,49 @@
+name: Scout
+
+# Weekly search for new references. An agent drafts at most three pull
+# requests, one resource each, and a maintainer reviews them. Its rules live in
+# .github/agents/weekly-scout.md.
+#
+# One-time setup:
+#   - add the ANTHROPIC_API_KEY repository secret
+#   - Settings > Actions > General > Workflow permissions: read and write, and
+#     allow GitHub Actions to create pull requests
+#   - create a `scout` label
+# Pull requests opened with GITHUB_TOKEN do not trigger other workflows, so
+# lint and links will not run on them until a maintainer pushes a commit or
+# closes and reopens the pull request.
+
+on:
+  schedule:
+    - cron: "0 7 * * 1" # weekly, on Monday
+  workflow_dispatch:
+
+permissions:
+  contents: write
+  pull-requests: write
+  issues: read
+  id-token: write
+
+concurrency:
+  group: scout
+  cancel-in-progress: false
+
+jobs:
+  scout:
+    runs-on: ubuntu-latest
+    timeout-minutes: 30
+    steps:
+      - uses: actions/checkout@v7
+        with:
+          fetch-depth: 0
+
+      - uses: anthropics/claude-code-action@v1
+        with:
+          anthropic_api_key: ${{ secrets.ANTHROPIC_API_KEY }}
+          github_token: ${{ secrets.GITHUB_TOKEN }}
+          prompt: |
+            Follow the instructions in .github/agents/weekly-scout.md.
+            Today's date is available from `date -u +%F`.
+          claude_args: |
+            --max-turns 60
+            --allowedTools "WebSearch,WebFetch,Read,Edit,Glob,Grep,Bash(git:*),Bash(gh pr:*),Bash(gh issue list:*),Bash(gh label:*),Bash(python3 scripts/*),Bash(python3 -m unittest:*),Bash(date:*),Bash(curl:*)"
