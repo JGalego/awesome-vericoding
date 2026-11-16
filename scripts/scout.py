@@ -166,7 +166,7 @@ def fetch(url: str, headers: Optional[dict] = None, data: Optional[bytes] = None
             print(f"warning: {url}: HTTP {error.code}: {detail}", file=sys.stderr)
             return None
         except (urllib.error.URLError, TimeoutError, OSError) as error:
-            if attempt >= 2:
+            if attempt >= 3:
                 print(f"warning: {url}: {error}", file=sys.stderr)
                 return None
 

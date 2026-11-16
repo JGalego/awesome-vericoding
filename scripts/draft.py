@@ -203,7 +203,7 @@ def clean_url(url: str) -> str:
 def load_page(url: str, token: str) -> Page:
     match = ARXIV_ID.search(url)
     if match:
-        body = fetch(f"https://export.arxiv.org/api/query?id_list={match.group(1)}", retry_on=(429, 503), pauses=(10, 30, 60))
+        body = fetch(f"https://export.arxiv.org/api/query?id_list={match.group(1)}", timeout=60, retry_on=(429, 503), pauses=(10, 30, 60))
         cands = parse_arxiv(body.decode("utf-8", "replace")) if body else []
         if not cands:
             return Page(url, "", "", "", problems=["Could not read the paper from the arXiv API."])
