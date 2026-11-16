@@ -2,14 +2,16 @@ name: Scout
 
 # Weekly search for new references. scripts/scout.py gathers candidates from
 # arXiv, GitHub, and the blogs in the list, drops anything already listed or
-# reported, and has a model on GitHub Models screen out filler, marketing, and
+# reported, and has a Gemini model screen out filler, marketing, and
 # out-of-scope items. The result opens one issue for a maintainer to triage.
 # Nothing is added to the list automatically.
 #
-# One-time setup: create a `scout` label. GitHub Models must be available to
-# the repository, and the free tier is rate limited, so the script sends
-# candidates in small batches and falls back to an unfiltered report if the
-# model is unreachable.
+# One-time setup: create a `scout` label and add a SCOUT_API_KEY secret (a
+# Gemini API key from Google AI Studio). Optionally set the SCOUT_MODEL and
+# SCOUT_API_URL repository variables to use another model or any other
+# OpenAI-compatible endpoint. The free tier is rate limited, so the script sends
+# candidates in small batches with pauses, and falls back to an unfiltered
+# report if the model is unreachable or the key is missing.
 
 on:
   schedule:
@@ -27,7 +29,6 @@ on:
 permissions:
   contents: read
   issues: write
-  models: read
 
 concurrency:
   group: scout
@@ -48,6 +49,9 @@ jobs:
         env:
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
           GITHUB_REPOSITORY: ${{ github.repository }}
+          SCOUT_API_KEY: ${{ secrets.SCOUT_API_KEY }}
+          SCOUT_API_URL: ${{ vars.SCOUT_API_URL }}
+          SCOUT_MODEL: ${{ vars.SCOUT_MODEL }}
         run: |
           python3 scripts/scout.py --out scout-report.md \
             --days "${{ inputs.days || '10' }}" ${{ inputs.no_model && '--no-model' || '' }}

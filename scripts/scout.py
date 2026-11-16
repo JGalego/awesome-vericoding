@@ -4,12 +4,12 @@
 Candidates come from free, keyless sources: the arXiv API, the GitHub search
 API, and the RSS or Atom feeds of the blogs already in the list. Anything that
 is already linked from the README, or that an earlier scout issue already
-reported, is dropped. A model on GitHub Models then reads each candidate's
+reported, is dropped. A model reached through an OpenAI-compatible API (Gemini by default) then reads each candidate's
 title and abstract and keeps only those that look substantive and in scope. The
 model never browses and never edits the list: it only answers keep or drop for
 text this script fetched, and a maintainer decides what to add.
 
-    GITHUB_TOKEN=... GITHUB_REPOSITORY=owner/repo python3 scripts/scout.py --out scout-report.md
+    GITHUB_TOKEN=... SCOUT_API_KEY=... GITHUB_REPOSITORY=owner/repo python3 scripts/scout.py --out scout-report.md
 
 The script always exits 0 when it could run. When $GITHUB_OUTPUT is set it
 writes `candidates` there so a workflow can decide whether to open an issue.
@@ -34,8 +34,12 @@ from datetime import datetime, timedelta, timezone
 from typing import Callable, Iterable, Optional
 
 USER_AGENT = "awesome-vericoding-scout"
-MODELS_URL = "https://models.github.ai/inference/chat/completions"
-DEFAULT_MODEL = "openai/gpt-4.1-mini"
+# Any OpenAI-compatible chat endpoint works. The defaults are Google's Gemini API,
+# which has a free tier; override them with SCOUT_API_URL and SCOUT_MODEL.
+API_URL = os.environ.get("SCOUT_API_URL") or "https://generativelanguage.googleapis.com/v1beta/openai/chat/completions"
+DEFAULT_MODEL = "gemini-flash-latest"
+# The free tier allows only a handful of requests a minute.
+MODEL_PAUSE = 7
 SCOUT_LABEL = "scout"
 
 LINK = re.compile(r"\]\((https?://[^)\s]+)\)")
@@ -356,13 +360,8 @@ def parse_verdicts(text: str) -> dict[str, tuple[bool, str]]:
 def ask_model(batch: list[Candidate], token: str, model: str) -> Optional[dict[str, tuple[bool, str]]]:
     payload = json.dumps({"model": model, "messages": build_messages(batch), "temperature": 0}).encode()
     body = fetch(
-        MODELS_URL,
-        headers={
-            "Accept": "application/vnd.github+json",
-            "Authorization": f"Bearer {token}",
-            "X-GitHub-Api-Version": "2022-11-28",
-            "Content-Type": "application/json",
-        },
+        API_URL,
+        headers={"Authorization": f"Bearer {token}", "Content-Type": "application/json"},
         data=payload,
         timeout=120,
     )
@@ -396,7 +395,7 @@ def filter_with_model(cands: list[Candidate], token: str, model: str, batch_size
             else:
                 print(f"warning: the model gave no verdict for {cand.id}", file=sys.stderr)
                 complete = False
-        time.sleep(2)
+        time.sleep(MODEL_PAUSE)
     return complete
 
 
@@ -418,7 +417,7 @@ def render(cands: list[Candidate], filtered: bool, dropped: int, days: int, mode
             "",
         ]
     else:
-        lines += [f"Screened by `{model}` on GitHub Models; {dropped} candidates were dropped.", ""]
+        lines += [f"Screened by `{model}`; {dropped} candidates were dropped.", ""]
     lines += [
         "Nothing here is verified. Open each link, check the claims against the source, and read "
         "`contributing.md` before proposing an entry. One resource per pull request.",
@@ -455,7 +454,7 @@ def main(argv: Optional[Iterable[str]] = None) -> int:
     parser.add_argument("--contributing", default="contributing.md")
     parser.add_argument("--out", default="scout-report.md")
     parser.add_argument("--days", type=int, default=10, help="how far back to look")
-    parser.add_argument("--model", default=os.environ.get("SCOUT_MODEL", DEFAULT_MODEL))
+    parser.add_argument("--model", default=os.environ.get("SCOUT_MODEL") or DEFAULT_MODEL)
     parser.add_argument("--max-candidates", type=int, default=60, help="cap on candidates sent to the model")
     parser.add_argument("--no-model", action="store_true", help="skip the model filter")
     args = parser.parse_args(argv)
@@ -479,8 +478,12 @@ def main(argv: Optional[Iterable[str]] = None) -> int:
     cands = cands[: args.max_candidates]
 
     filtered = False
+    api_key = os.environ.get("SCOUT_API_KEY", "")
     if cands and not args.no_model:
-        filtered = filter_with_model(cands, token, args.model)
+        if api_key:
+            filtered = filter_with_model(cands, api_key, args.model)
+        else:
+            print("warning: SCOUT_API_KEY is not set, so the model filter was skipped", file=sys.stderr)
     dropped = sum(1 for c in cands if c.verdict is False)
     kept = [c for c in cands if c.verdict is not False]
 

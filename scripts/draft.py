@@ -2,14 +2,14 @@
 """Draft one README entry for a candidate from a scout issue.
 
 A maintainer comments `/draft <url>` on a scout issue. This script fetches the
-page itself, asks a model on GitHub Models to pick a subsection and write a
+page itself, asks a model (Gemini by default) to pick a subsection and write a
 one-sentence description, then checks the result mechanically against the rules
 in contributing.md before touching the README. The model never chooses where
 the line goes, never writes the title of a paper, and never sees any file other
 than the page it was handed. If a check fails the README is left alone and the
 report says why.
 
-    GITHUB_TOKEN=... GITHUB_REPOSITORY=owner/repo COMMENT_BODY='/draft https://...' \\
+    GITHUB_TOKEN=... SCOUT_API_KEY=... GITHUB_REPOSITORY=owner/repo COMMENT_BODY='/draft https://...' \\
         ISSUE_BODY='...' python3 scripts/draft.py --report draft-report.md
 
 When $GITHUB_OUTPUT is set it writes `status` (ok or rejected), `branch`, and
@@ -31,7 +31,7 @@ from typing import Optional
 from scout import (
     ARXIV_ID,
     DEFAULT_MODEL,
-    MODELS_URL,
+    API_URL,
     fetch,
     github_get,
     known_keys,
@@ -277,7 +277,7 @@ def build_messages(page: Page, subsections: list[tuple[str, list[str]]]) -> list
 def ask_model(messages: list[dict], token: str, model: str) -> Optional[dict]:
     payload = json.dumps({"model": model, "messages": messages, "temperature": 0}).encode()
     body = fetch(
-        MODELS_URL,
+        API_URL,
         headers={
             "Accept": "application/vnd.github+json",
             "Authorization": f"Bearer {token}",
@@ -426,7 +426,7 @@ def main(argv: Optional[list[str]] = None) -> int:
     parser.add_argument("--readme", default="README.md")
     parser.add_argument("--report", default="draft-report.md")
     parser.add_argument("--issue", default="a scout issue", help="how to refer to the source issue")
-    parser.add_argument("--model", default=os.environ.get("SCOUT_MODEL", DEFAULT_MODEL))
+    parser.add_argument("--model", default=os.environ.get("SCOUT_MODEL") or DEFAULT_MODEL)
     args = parser.parse_args(argv)
 
     token = os.environ.get("GITHUB_TOKEN", "")
@@ -465,7 +465,10 @@ def main(argv: Optional[list[str]] = None) -> int:
     secs = sections(readme.split("\n"))
     lines = readme.split("\n")
     menu = [(s.heading, groups(lines, s)) for s in secs if s.supported]
-    answer = None if page.problems else ask_model(build_messages(page, menu), token, args.model)
+    api_key = os.environ.get("SCOUT_API_KEY", "")
+    if not api_key and not page.problems:
+        return finish("rejected", "The SCOUT_API_KEY secret is not set, so there is no model to draft with.\n")
+    answer = None if page.problems else ask_model(build_messages(page, menu), api_key, args.model)
     if answer is None and not page.problems:
         return finish("rejected", "The model did not give a usable answer, so nothing was drafted. Try again later.\n")
 

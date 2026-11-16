@@ -1,7 +1,7 @@
 name: Draft
 
 # A maintainer comments `/draft <url>` on a scout issue. scripts/draft.py
-# fetches that page, has a model on GitHub Models write one entry, checks the
+# fetches that page, has a Gemini model write one entry, checks the
 # entry mechanically against contributing.md, and opens a pull request with
 # only that line added. If a check fails, the issue gets a comment saying why
 # and nothing is opened. Every PR still needs a person to check it.
@@ -18,7 +18,6 @@ permissions:
   contents: write
   pull-requests: write
   issues: write
-  models: read
 
 concurrency:
   group: draft
@@ -51,6 +50,9 @@ jobs:
         env:
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
           GITHUB_REPOSITORY: ${{ github.repository }}
+          SCOUT_API_KEY: ${{ secrets.SCOUT_API_KEY }}
+          SCOUT_API_URL: ${{ vars.SCOUT_API_URL }}
+          SCOUT_MODEL: ${{ vars.SCOUT_MODEL }}
           COMMENT_BODY: ${{ github.event.comment.body }}
           ISSUE_BODY: ${{ github.event.issue.body }}
         run: python3 scripts/draft.py --report draft-report.md --issue "#${{ github.event.issue.number }}"
