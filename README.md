@@ -390,6 +390,7 @@ To try AI vericoding:
   - [Selene: Pioneering Automated Proof in Software Verification](https://arxiv.org/abs/2401.07663) - Project-level proof benchmark built from the seL4 verification. *ACL 2024*
   - [FVEL: Interactive Formal Verification Environment with Large Language Models via Theorem Proving](https://arxiv.org/abs/2406.14408) - Verifies code through Isabelle and releases FVELER, a dataset of 29K lemmas from seL4. *NeurIPS 2024* · [Project](https://fveler.github.io/)
   - [Neuro-Symbolic Proof Generation for Scaling Systems Software Verification](https://arxiv.org/abs/2603.19715) - Couples LLMs with Sledgehammer through a new Isabelle REPL and proves up to 77.6% of seL4 theorems. *OSDI 2026* · [Code](https://github.com/SoaringE/seL4-proof-search)
+  - [Statopia: A Prover--Library Ecosystem for Automated Formalization and Proof Discovery in Statistics](https://arxiv.org/abs/2611.11110) - An ecosystem featuring an automated prover and a Lean 4 library for formalizing and verifying statistical and machine learning proofs. *arXiv 2026*
 - Rocq
   - [Generating Correctness Proofs with Neural Networks](https://arxiv.org/abs/1907.07794) - Proverbot9001, an early neural tactic predictor evaluated on CompCert proofs. *MAPL 2020* · [Code](https://github.com/UCSD-PL/proverbot9001)
   - [Passport: Improving Automated Formal Verification Using Identifiers](https://arxiv.org/abs/2204.10370) - Shows that encoding identifier names boosts neural proof synthesis. *TOPLAS 2023*
