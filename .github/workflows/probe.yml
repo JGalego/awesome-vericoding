@@ -1,0 +1,22 @@
+name: Probe models
+
+# Manual check of which models the SCOUT_API_KEY secret can reach right now.
+# Run it before changing the SCOUT_MODEL variable.
+
+on:
+  workflow_dispatch:
+
+permissions:
+  contents: read
+
+jobs:
+  probe:
+    runs-on: ubuntu-latest
+    timeout-minutes: 15
+    steps:
+      - uses: actions/checkout@v7
+      - name: Probe
+        env:
+          SCOUT_API_KEY: ${{ secrets.SCOUT_API_KEY }}
+          SCOUT_API_URL: ${{ vars.SCOUT_API_URL }}
+        run: python3 scripts/probe_models.py | tee -a "$GITHUB_STEP_SUMMARY"

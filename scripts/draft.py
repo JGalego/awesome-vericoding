@@ -31,7 +31,7 @@ from typing import Optional
 from scout import (
     ARXIV_ID,
     DEFAULT_MODEL,
-    API_URL,
+    chat,
     fetch,
     github_get,
     known_keys,
@@ -275,27 +275,13 @@ def build_messages(page: Page, subsections: list[tuple[str, list[str]]]) -> list
 
 
 def ask_model(messages: list[dict], token: str, model: str) -> Optional[dict]:
-    payload = json.dumps({"model": model, "messages": messages, "temperature": 0}).encode()
-    body = fetch(
-        API_URL,
-        headers={
-            "Accept": "application/vnd.github+json",
-            "Authorization": f"Bearer {token}",
-            "X-GitHub-Api-Version": "2022-11-28",
-            "Content-Type": "application/json",
-        },
-        data=payload,
-        timeout=120,
-        retry_on=(429, 500, 502, 503, 504),
-    )
-    if not body:
+    content = chat(messages, token, model)
+    if content is None:
         return None
-    try:
-        content = json.loads(body)["choices"][0]["message"]["content"]
-    except (KeyError, IndexError, TypeError, json.JSONDecodeError):
-        print(f"warning: unexpected response from the model: {body[:300]!r}", file=sys.stderr)
-        return None
-    return parse_answer(content)
+    answer = parse_answer(content)
+    if answer is None:
+        print(f"warning: no usable JSON in the model's answer: {content[:300]!r}", file=sys.stderr)
+    return answer
 
 
 def parse_answer(text: str) -> Optional[dict]:

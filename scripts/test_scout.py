@@ -99,5 +99,46 @@ class RenderTests(unittest.TestCase):
         self.assertIn("unfiltered", render(cands, False, 0, 10, "m"))
 
 
+
+class ChatFallbackTests(unittest.TestCase):
+    def setUp(self):
+        import scout
+        self.scout = scout
+        self.calls = []
+
+    def _fake(self, answers):
+        def fake(url, headers=None, data=None, timeout=30, retry_on=(), pauses=()):
+            import json as _json
+            model = _json.loads(data)["model"]
+            self.calls.append((model, pauses))
+            answer = answers[model]
+            if answer is None:
+                return None
+            return _json.dumps({"choices": [{"message": {"content": answer}}]}).encode()
+        return fake
+
+    def test_falls_back_when_the_first_model_is_busy(self):
+        from unittest import mock
+        with mock.patch.object(self.scout, "fetch", self._fake({"a": None, "b": "hello"})):
+            self.assertEqual(self.scout.chat([], "k", "a, b"), "hello")
+        self.assertEqual([m for m, _ in self.calls], ["a", "b"])
+        # The first model gets a short wait because a fallback is available.
+        self.assertEqual(self.calls[0][1], (15,))
+        self.assertEqual(self.calls[1][1], (15, 45, 90))
+
+    def test_stops_at_the_first_answer(self):
+        from unittest import mock
+        with mock.patch.object(self.scout, "fetch", self._fake({"a": "hi", "b": "no"})):
+            self.assertEqual(self.scout.chat([], "k", "a,b"), "hi")
+        self.assertEqual([m for m, _ in self.calls], ["a"])
+
+    def test_none_when_every_model_fails(self):
+        from unittest import mock
+        with mock.patch.object(self.scout, "fetch", self._fake({"a": None, "b": None})):
+            self.assertIsNone(self.scout.chat([], "k", "a,b"))
+        with mock.patch.object(self.scout, "fetch", self._fake({"a": None})):
+            self.assertIsNone(self.scout.chat([], "k", "a"))
+        self.assertEqual(self.calls[-1][1], (15, 45, 90))
+
 if __name__ == "__main__":
     unittest.main()

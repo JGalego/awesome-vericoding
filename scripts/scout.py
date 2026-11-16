@@ -37,7 +37,8 @@ USER_AGENT = "awesome-vericoding-scout"
 # Any OpenAI-compatible chat endpoint works. The defaults are Google's Gemini API,
 # which has a free tier; override them with SCOUT_API_URL and SCOUT_MODEL.
 API_URL = os.environ.get("SCOUT_API_URL") or "https://generativelanguage.googleapis.com/v1beta/openai/chat/completions"
-DEFAULT_MODEL = "gemini-flash-latest"
+# A comma-separated list: each model is tried in turn until one answers.
+DEFAULT_MODEL = "gemini-flash-latest,gemini-flash-lite-latest"
 # The free tier allows only a handful of requests a minute.
 MODEL_PAUSE = 7
 SCOUT_LABEL = "scout"
@@ -365,21 +366,38 @@ def parse_verdicts(text: str) -> dict[str, tuple[bool, str]]:
     return out
 
 
+def chat(messages: list[dict], api_key: str, models: str) -> Optional[str]:
+    """Return the text of the first answer from the comma-separated models, trying each in order."""
+    names = [m.strip() for m in models.split(",") if m.strip()]
+    for position, model in enumerate(names):
+        payload = json.dumps({"model": model, "messages": messages, "temperature": 0}).encode()
+        # With a fallback waiting, give up on a busy model sooner.
+        pauses = (15, 45, 90) if len(names) == 1 or position == len(names) - 1 else (15,)
+        body = fetch(
+            API_URL,
+            headers={"Authorization": f"Bearer {api_key}", "Content-Type": "application/json"},
+            data=payload,
+            timeout=120,
+            retry_on=(429, 500, 502, 503, 504),
+            pauses=pauses,
+        )
+        if not body:
+            print(f"warning: {model} did not answer; {'trying the next model' if position < len(names) - 1 else 'no models left'}", file=sys.stderr)
+            continue
+        try:
+            content = json.loads(body)["choices"][0]["message"]["content"]
+        except (KeyError, IndexError, TypeError, json.JSONDecodeError):
+            print(f"warning: unexpected response from {model}: {body[:300]!r}", file=sys.stderr)
+            continue
+        if position:
+            print(f"note: answered by the fallback model {model}", file=sys.stderr)
+        return content
+    return None
+
+
 def ask_model(batch: list[Candidate], token: str, model: str) -> Optional[dict[str, tuple[bool, str]]]:
-    payload = json.dumps({"model": model, "messages": build_messages(batch), "temperature": 0}).encode()
-    body = fetch(
-        API_URL,
-        headers={"Authorization": f"Bearer {token}", "Content-Type": "application/json"},
-        data=payload,
-        timeout=120,
-        retry_on=(429, 500, 502, 503, 504),
-    )
-    if not body:
-        return None
-    try:
-        content = json.loads(body)["choices"][0]["message"]["content"]
-    except (KeyError, IndexError, TypeError, json.JSONDecodeError):
-        print(f"warning: unexpected response from the model: {body[:300]!r}", file=sys.stderr)
+    content = chat(build_messages(batch), token, model)
+    if content is None:
         return None
     verdicts = parse_verdicts(content)
     if not verdicts:

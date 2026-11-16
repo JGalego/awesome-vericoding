@@ -7,7 +7,9 @@ name: Scout
 # Nothing is added to the list automatically.
 #
 # One-time setup: create a `scout` label and add a SCOUT_API_KEY secret (a
-# Gemini API key from Google AI Studio). Optionally set the SCOUT_MODEL and
+# Gemini API key from Google AI Studio). Optionally set SCOUT_MODEL (one model,
+# or a comma-separated fallback list; run the Probe models workflow to see what
+# works) and
 # SCOUT_API_URL repository variables to use another model or any other
 # OpenAI-compatible endpoint. The free tier is rate limited, so the script sends
 # candidates in small batches with pauses, and falls back to an unfiltered
