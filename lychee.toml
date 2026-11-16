@@ -12,6 +12,7 @@ accept = ["200..=299", "429"]
 # identifiers, and these were verified against Crossref when added.
 exclude = [
   '^http://localhost', # the local Jekyll preview command in contributing.md
+  '^https://flint\.cs\.yale\.edu/certikos/', # serves a certificate that does not chain to a trusted root; the page itself loads
   '^https://doi\.org/10\.1145/', # ACM Digital Library
   '^https://doi\.org/10\.1561/', # Foundations and Trends
 ]
