@@ -428,6 +428,7 @@ To try AI vericoding:
 - [Evaluating LLM-driven User-Intent Formalization for Verification-Aware Languages](https://arxiv.org/abs/2406.09757) - Metrics for judging whether LLM-written Dafny specifications capture what the user meant. *FMCAD 2024*
 - [OSVBench: Benchmarking LLMs on Specification Generation Tasks for Operating System Verification](https://arxiv.org/abs/2504.20964) - Benchmark of 245 long-context specification tasks from the Hyperkernel verified operating system. *arXiv 2025* · [Code](https://github.com/lishangyu-hkust/OSVBench)
 - [On the Unreasonable Effectiveness of Property-Based Testing for Validating Formal Specifications](https://proofsandintuitions.net/2026/05/18/property-based-testing-specifications/) - Cheap property-based tests found underspecification in 10% of the specifications in verified code generation benchmarks. *Blog 2026*
+- [Pre-QED: Environment Specifications for Agentic Verification](https://arxiv.org/abs/2611.15207) - This paper introduces verification harnesses that model legal API usages via an agentic workflow using Linear-time Temporal Logic to generate environment specifications. *arXiv 2026*
 
 ### 🔄 Verified Translation
 
