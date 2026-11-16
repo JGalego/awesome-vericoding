@@ -1,0 +1,4 @@
+{
+  "//": "Lets Node import these browser modules as ES modules (scripts/hatches.mjs and its tests). Not published with the site.",
+  "type": "module"
+}

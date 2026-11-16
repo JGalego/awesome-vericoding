@@ -255,15 +255,22 @@ def build_messages(page: Page, subsections: list[tuple[str, list[str]]]) -> list
         "You help maintain an awesome list about vericoding: code that comes with a machine-checked proof "
         "against a formal specification, written by people or by AI. You will be given the text of one web page. "
         "Decide whether it belongs and, if so, write its list entry.\n\n"
-        "Set fits=false, with a one-sentence reason, if the page is marketing, a product announcement, filler, "
-        "padded writing, a passing mention of formal verification, or has no checkable artifact such as code, "
-        "proofs, data, or a method. When in doubt set fits=false.\n\n"
+        "The page must be about at least one of: verification-aware languages, verifiers or proof assistants applied "
+        "to programs; verified software systems; benchmarks or datasets of verified code, specifications, or proofs; "
+        "or AI that writes verified code, specifications, or proofs. Set fits=false, with a one-sentence reason, if "
+        "the page is marketing, a product announcement, filler, or padded writing; has no checkable artifact such as "
+        "code, proofs, data, or a method; only mentions formal verification in passing or uses it as a label; is "
+        "testing, fuzzing, or static analysis that produces no proofs; is design-level model checking with no link to "
+        "code; or is formalized mathematics, physics, statistics, security, or another domain that merely uses a "
+        "proof assistant or formal methods, with no carry-over to program proofs. When in doubt set fits=false.\n\n"
         "If it fits, pick exactly one subsection from this list, copied exactly, and a group if the subsection "
         "lists groups:\n" + "\n".join(menu) + "\n\n"
         "Write one factual sentence of at most 25 words. Start with a capital letter and end with a period. "
         "No marketing words. Do not repeat the name. Use only numbers that appear in the page text. "
         "For papers and posts also give venue_tag as 'arXiv YYYY' for preprints or 'Blog YYYY' for posts, "
-        "or the published venue and year. Use null for fields that do not apply.\n\n"
+        "or the published venue and year. Use null for fields that do not apply. When fits is true, evidence must be an "
+        "exact quote of 20 to 200 characters copied from the page text that shows it is about verified code, "
+        "specifications, or proofs; when fits is false, use null.\n\n"
         'Reply with JSON only: {"fits": bool, "reason": str, "subsection": str, "group": str|null, '
         '"name": str, "description": str, "venue_tag": str|null, "code_url": str|null}. '
         "code_url must be a URL that appears in the page text."
@@ -330,6 +337,14 @@ def draft(readme: str, page: Page, answer: dict, known: set[str]) -> Result:
         result.problems.append("This URL is already in the README, an open PR, or an earlier scout issue.")
         return result
 
+    evidence = " ".join(str(answer.get("evidence") or "").split())
+    if len(evidence) < 20 or " ".join(evidence.casefold().split()) not in " ".join(page.text.casefold().split()):
+        result.problems.append(
+            "The model gave no quote from the page showing it is about code with machine-checked proofs, "
+            "or the quote is not on the page."
+        )
+        return result
+
     sec = secs.get(str(answer.get("subsection")))
     if sec is None or not sec.supported:
         result.problems.append(f"'{answer.get('subsection')}' is not a subsection this script can add to. Add it by hand.")
@@ -361,6 +376,8 @@ def draft(readme: str, page: Page, answer: dict, known: set[str]) -> Result:
         tag = None
 
     code = answer.get("code_url") or None
+    if not page.is_paper:
+        code = None  # a repository or post is its own link
     if code and code not in page.text:
         result.problems.append("The code URL does not appear in the fetched page.")
         code = None
@@ -451,7 +468,7 @@ def main(argv: Optional[list[str]] = None) -> int:
     page = load_page(url, token)
     secs = sections(readme.split("\n"))
     lines = readme.split("\n")
-    menu = [(s.heading, groups(lines, s)) for s in secs if s.supported]
+    menu = [(s.heading, groups(lines, s)) for s in secs if s.supported and (page.is_paper or not s.chronological)]
     api_key = os.environ.get("SCOUT_API_KEY", "")
     if not api_key and not page.problems:
         return finish("rejected", "The SCOUT_API_KEY secret is not set, so there is no model to draft with.\n")

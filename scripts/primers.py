@@ -6,6 +6,7 @@ matter names the file that block should be saved as. A primer is checked by a
 script at scripts/primers/<name>.sh, which installs a pinned version of the
 tool when it is missing and exits non-zero when the code does not verify.
 
+    python3 scripts/primers.py names              # every primer, one per line
     python3 scripts/primers.py list               # primers with a check script, as JSON
     python3 scripts/primers.py extract dafny DIR  # write DIR/learndafny.dfy
     python3 scripts/primers.py check dafny lean   # extract and verify each one
@@ -98,6 +99,7 @@ def check(name: str, keep: bool = False) -> int:
 def main(argv: list[str] | None = None) -> int:
     parser = argparse.ArgumentParser(description=__doc__.split("\n\n")[0])
     commands = parser.add_subparsers(dest="command", required=True)
+    commands.add_parser("names", help="print every primer, one per line")
     commands.add_parser("list", help="print primers that have a check script, as JSON")
     one = commands.add_parser("extract", help="write a primer's code to a directory")
     one.add_argument("name")
@@ -108,6 +110,9 @@ def main(argv: list[str] | None = None) -> int:
     args = parser.parse_args(argv)
 
     try:
+        if args.command == "names":
+            print("\n".join(names()))
+            return 0
         if args.command == "list":
             print(json.dumps(checked()))
             return 0
