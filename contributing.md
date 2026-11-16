@@ -108,6 +108,7 @@ Three automated checks keep the list healthy, a scout looks for new entries, and
 - **Currency** checks every GitHub repository in the list once a month and opens an issue for any that are archived, missing, or inactive for over a year.
 - **Scout** runs weekly, collects recent papers, repositories, and blog posts, drops filler with a Gemini model, and opens an issue labeled `scout` for maintainers to triage. It never edits the list. Check every link, number, and claim before proposing an entry.
 - **Draft** runs when a maintainer comments `/draft <url>` on a scout issue. It drafts that one entry with a model, checks it against these rules, and opens a pull request with only that line added, or comments with the reason it declined. `/draft all` does the same for every candidate in the issue, up to 10, one pull request each. A person must still check each one before merging.
+- **Review commands** let a maintainer comment `/reject <reason>` on a pull request, where the reason is `out-of-scope`, `duplicate`, `low-quality`, or `not-yet`. It labels the pull request with the reason, closes it, and deletes its branch. Scout never reports a candidate again once its `scout` pull request is closed.
 - **Pages** publishes the list as a website on every push to `main`. To preview it locally, run `bundle install && bundle exec jekyll serve --baseurl ""` and open <http://localhost:4000/>.
 
 Tools that are archived or inactive for more than a year are removed. Papers stay unless they are retracted or clearly superseded.
