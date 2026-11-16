@@ -174,6 +174,7 @@ To try AI vericoding:
 
 - [ACL2](https://www.cs.utexas.edu/~moore/acl2/) 🏭 - Applicative Common Lisp with an automated theorem prover, long used to verify industrial hardware and software.
 - [Agda](https://github.com/agda/agda) - Dependently typed programming language and proof assistant.
+- [Bridging Gaps with Tensor Networks: From the Haldane Gap and Beyond](https://arxiv.org/abs/2611.11049) - This work formalizes a computer-assisted proof of a uniform gap in the periodic spin-1 Heisenberg chain using Lean 4.
 - [HOL4](https://hol-theorem-prover.org) - Higher-order logic theorem prover behind the CakeML verified compiler.
 - [Idris 2](https://www.idris-lang.org) - Purely functional language with first-class dependent types for type-driven development.
 - [Isabelle](https://isabelle.in.tum.de) ⭐ - Generic proof assistant, best known for Isabelle/HOL and its Sledgehammer automation, used to verify the seL4 kernel.
