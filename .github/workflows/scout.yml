@@ -1,28 +1,33 @@
 name: Scout
 
-# Weekly search for new references. An agent drafts at most three pull
-# requests, one resource each, and a maintainer reviews them. Its rules live in
-# .github/agents/weekly-scout.md.
+# Weekly search for new references. scripts/scout.py gathers candidates from
+# arXiv, GitHub, and the blogs in the list, drops anything already listed or
+# reported, and has a model on GitHub Models screen out filler, marketing, and
+# out-of-scope items. The result opens one issue for a maintainer to triage.
+# Nothing is added to the list automatically.
 #
-# One-time setup:
-#   - add the ANTHROPIC_API_KEY repository secret
-#   - Settings > Actions > General > Workflow permissions: read and write, and
-#     allow GitHub Actions to create pull requests
-#   - create a `scout` label
-# Pull requests opened with GITHUB_TOKEN do not trigger other workflows, so
-# lint and links will not run on them until a maintainer pushes a commit or
-# closes and reopens the pull request.
+# One-time setup: create a `scout` label. GitHub Models must be available to
+# the repository, and the free tier is rate limited, so the script sends
+# candidates in small batches and falls back to an unfiltered report if the
+# model is unreachable.
 
 on:
   schedule:
     - cron: "0 7 * * 1" # weekly, on Monday
   workflow_dispatch:
+    inputs:
+      days:
+        description: How many days back to look
+        default: "10"
+      no_model:
+        description: Skip the model filter
+        type: boolean
+        default: false
 
 permissions:
-  contents: write
-  pull-requests: write
-  issues: read
-  id-token: write
+  contents: read
+  issues: write
+  models: read
 
 concurrency:
   group: scout
@@ -31,19 +36,31 @@ concurrency:
 jobs:
   scout:
     runs-on: ubuntu-latest
-    timeout-minutes: 30
+    timeout-minutes: 20
     steps:
       - uses: actions/checkout@v7
-        with:
-          fetch-depth: 0
 
-      - uses: anthropics/claude-code-action@v1
-        with:
-          anthropic_api_key: ${{ secrets.ANTHROPIC_API_KEY }}
-          github_token: ${{ secrets.GITHUB_TOKEN }}
-          prompt: |
-            Follow the instructions in .github/agents/weekly-scout.md.
-            Today's date is available from `date -u +%F`.
-          claude_args: |
-            --max-turns 60
-            --allowedTools "WebSearch,WebFetch,Read,Edit,Glob,Grep,Bash(git:*),Bash(gh pr:*),Bash(gh issue list:*),Bash(gh label:*),Bash(python3 scripts/*),Bash(python3 -m unittest:*),Bash(date:*),Bash(curl:*)"
+      - name: Self-test the scout
+        run: python3 -m unittest discover -s scripts
+
+      - name: Find candidates
+        id: scout
+        env:
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+          GITHUB_REPOSITORY: ${{ github.repository }}
+        run: |
+          python3 scripts/scout.py --out scout-report.md \
+            --days "${{ inputs.days || '10' }}" ${{ inputs.no_model && '--no-model' || '' }}
+
+      - name: Open an issue if there is anything to review
+        if: steps.scout.outputs.candidates != '0'
+        env:
+          GH_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+        run: |
+          gh issue create --label scout \
+            --title "Scout: ${{ steps.scout.outputs.candidates }} candidates ($(date +%Y-%m-%d))" \
+            --body-file scout-report.md
+
+      - name: Summarize the run
+        if: always()
+        run: cat scout-report.md >> "$GITHUB_STEP_SUMMARY" || true

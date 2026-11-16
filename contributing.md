@@ -106,7 +106,7 @@ Three automated checks keep the list healthy, a scout looks for new entries, and
 - **Lint** runs awesome-lint on every pull request.
 - **Links** runs lychee on every pull request and once a month, and opens an issue when links break.
 - **Currency** checks every GitHub repository in the list once a month and opens an issue for any that are archived, missing, or inactive for over a year.
-- **Scout** runs weekly and an agent drafts up to three pull requests for new resources, labeled `scout`. It follows the rules on this page and rejects marketing, filler, and anything it cannot verify. A maintainer checks every link, number, and claim before merging.
+- **Scout** runs weekly, collects recent papers, repositories, and blog posts, drops filler with a model on GitHub Models, and opens an issue labeled `scout` for maintainers to triage. It never edits the list. Check every link, number, and claim before proposing an entry.
 - **Pages** publishes the list as a website on every push to `main`. To preview it locally, run `bundle install && bundle exec jekyll serve --baseurl ""` and open <http://localhost:4000/>.
 
 Tools that are archived or inactive for more than a year are removed. Papers stay unless they are retracted or clearly superseded.
