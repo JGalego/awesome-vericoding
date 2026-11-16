@@ -436,6 +436,7 @@ To try AI vericoding:
 - [VERT: Verified Equivalent Rust Transpilation with Large Language Models as Few-Shot Learners](https://arxiv.org/abs/2404.18852) - Checks LLM translations into Rust against an oracle with property-based testing and bounded model checking. *arXiv 2024*
 - [Verified Code Transpilation with LLMs](https://arxiv.org/abs/2406.03003) - Introduces LLMLift, which lifts code into a DSL and generates the invariants needed to prove the translation equivalent. *NeurIPS 2024*
 - [PyVeritas: On Verifying Python via LLM-Based Transpilation and Bounded Model Checking for C](https://arxiv.org/abs/2508.08171) - Transpiles Python to C with an LLM so CBMC can check it. *arXiv 2025*
+- [C-to-Rust Translation Validation at the LLVM IR Level via AI-Assisted Refinement Proof](https://arxiv.org/abs/2611.18036) - Validates C-to-Rust translation by proving in Rocq at the LLVM IR level that the Rust program refines the C program using AI-assisted refinement proofs. *arXiv 2026*
 
 ### 🧪 Field Reports
 
