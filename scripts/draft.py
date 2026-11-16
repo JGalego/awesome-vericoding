@@ -39,7 +39,8 @@ from scout import (
     parse_arxiv,
 )
 
-CAP = 15
+CAP = 15  # flat subsections
+GROUP_CAP = 10  # each language group in a nested subsection
 MAX_WORDS = 30
 BANNED = (
     "blazing", "best", "revolutionary", "game-changing", "groundbreaking", "cutting-edge",
@@ -394,11 +395,15 @@ def draft(readme: str, page: Page, answer: dict, known: set[str]) -> Result:
         result.problems.append("Could not find where to insert the entry.")
         return result
     entry = compose(name, page.url, description, tag, code, nested=bool(grp))
-    count = sum(1 for i in range(sec.start, sec.end) if re.match(r"\s*- \[", lines[i]))
-    if count >= CAP:
+    if grp:
+        count, cap, where = len(entry_lines(lines, sec, grp)), GROUP_CAP, f"The '{grp}' group in '{sec.heading}'"
+    else:
+        count = sum(1 for i in range(sec.start, sec.end) if re.match(r"\s*- \[", lines[i]))
+        cap, where = CAP, f"'{sec.heading}'"
+    if count >= cap:
         result.warnings.append(
-            f"'{sec.heading}' already has {count} entries (the target is at most {CAP}). "
-            "Say which entry this one should replace and why."
+            f"{where} already has {count} entries (the guideline is at most {cap}). "
+            "Say which entry this one should replace and why, or why it is worth the extra place."
         )
     new = lines[:pos] + [entry] + lines[pos:]
     return Result(True, [], result.warnings, new, entry, f"Add {name}", slugify(name), sec.heading)

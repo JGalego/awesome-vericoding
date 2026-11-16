@@ -185,6 +185,22 @@ class DraftTests(unittest.TestCase):
         self.assertTrue(r.warnings)
 
 
+    def test_groups_are_capped_separately_from_the_subsection(self):
+        # Many entries across other groups do not trigger the warning for a small group.
+        filler = "".join(f"  - [C{i:02d}](https://c{i}.example) - C.\n" for i in range(12))
+        lines = README.split("\n")
+        c_top = lines.index("- C")
+        lines[c_top + 1:c_top + 1] = filler.rstrip("\n").split("\n")
+        crowded = "\n".join(lines)
+        rust = draft(crowded, page(text="Beta verifies Rust programs."), answer(subsection="🔧 Verifiers", group="Rust", description="Verifies Rust.", evidence="Beta verifies Rust programs."), set())
+        self.assertTrue(rust.ok, rust.problems)
+        self.assertFalse(rust.warnings)
+        c = draft(crowded, page(text="Beta verifies C programs."), answer(subsection="🔧 Verifiers", group="C", description="Verifies C.", evidence="Beta verifies C programs."), set())
+        self.assertTrue(c.ok, c.problems)
+        self.assertIn("'C' group", c.warnings[0])
+        self.assertIn("at most 10", c.warnings[0])
+
+
 class HelperTests(unittest.TestCase):
     def test_parse_answer(self):
         self.assertEqual(parse_answer('```json\n{"fits": false, "reason": "x"}\n```'), {"fits": False, "reason": "x"})

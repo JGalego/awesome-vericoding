@@ -34,7 +34,7 @@ Out of scope:
 | Organization      | Verified software or AI vericoding is a primary focus, with a public description of the work.                                                                                 |
 | Company           | Verified software or AI vericoding is the main product or research focus, backed by a public tool, model, paper, or repository, not only a landing page.                      |
 
-Subsections are shortlists and aim for at most 15 entries. When a subsection is full, say which entry yours should replace and why. One in, one out.
+Subsections are shortlists. Aim for at most 15 entries in a flat subsection and at most 10 in each language group of a nested one, such as Proof and Annotation Synthesis. Cheat sheets are exempt because they cover every language. When your target is full, say which entry yours should replace and why, or why it is worth the extra place. Maintainers prune for quality, not to hit a number: archived, superseded, or never-published entries go first.
 
 ## Entry Format
 
@@ -101,15 +101,16 @@ Markers:
 
 ## Maintenance
 
-Three automated checks keep the list healthy, a scout looks for new entries, and a last job publishes the list:
+Four automated checks keep the list healthy, a scout looks for new entries, and a last job publishes the list:
 
-- **Lint** runs awesome-lint on every pull request.
+- **Lint** runs awesome-lint on every pull request, and fails if a primer uses an escape hatch from the Trust Checklist.
+- **Primers** runs each primer through its verifier, at the version pinned in `scripts/primers/<name>.sh`, on pull requests that touch it and once a month. Run one locally with `python3 scripts/primers.py check dafny`. A new primer needs a check script that fails when the proof does not go through.
 - **Links** runs lychee on every pull request and once a month, and opens an issue when links break.
 - **Currency** checks every GitHub repository in the list once a month and opens an issue for any that are archived, missing, or inactive for over a year.
 - **Scout** runs weekly, collects recent papers, repositories, and blog posts, drops filler with a Gemini model, and opens an issue labeled `scout` for maintainers to triage. It never edits the list. Check every link, number, and claim before proposing an entry.
 - **Draft** runs when a maintainer comments `/draft <url>` on a scout issue. It drafts that one entry with a model, checks it against these rules, and opens a pull request with only that line added, or comments with the reason it declined. `/draft all` does the same for every candidate in the issue, up to 10, one pull request each. A person must still check each one before merging.
 - **Review commands** let a maintainer comment `/reject <reason>` on a pull request, where the reason is `out-of-scope`, `duplicate`, `low-quality`, or `not-yet`. It labels the pull request with the reason, closes it, and deletes its branch. Scout never reports a candidate again once its `scout` pull request is closed.
-- **Pages** publishes the list as a website on every push to `main`. To preview it locally, run `bundle install && bundle exec jekyll serve --baseurl ""` and open <http://localhost:4000/>.
+- **Pages** publishes the list as a website on every push to `main`, with search, filters, and the [escape-hatch scanner](https://jgalego.github.io/awesome-vericoding/scanner.html). It first writes `data/list.json` from the README, which the filters and the scanner read and which anyone can fetch, and `badges/sorry.json` for the README badge. To preview it locally, run `python3 scripts/build_data.py --out data/list.json && bundle install && bundle exec jekyll serve --baseurl ""` and open <http://localhost:4000/>.
 
 Tools that are archived or inactive for more than a year are removed. Papers stay unless they are retracted or clearly superseded.
 
