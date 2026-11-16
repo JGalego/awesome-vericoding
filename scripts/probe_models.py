@@ -21,9 +21,11 @@ import urllib.request
 
 from scout import API_URL, USER_AGENT
 
-SKIP = ("embedding", "image", "tts", "audio", "veo", "imagen", "aqa", "live", "robotics", "vision", "gemma")
-LIMIT = 20
-PAUSE = 7
+SKIP = ("embedding", "image", "tts", "audio", "veo", "imagen", "aqa", "live", "robotics", "vision", "gemma",
+        "transcribe", "computer-use", "customtools", "-pro")  # pro models have no free tier
+LIMIT = 15
+PAUSE = 2
+TIMEOUT = 20
 
 
 def call(url: str, key: str, payload: dict | None = None) -> tuple[int, str]:
@@ -33,7 +35,7 @@ def call(url: str, key: str, payload: dict | None = None) -> tuple[int, str]:
         headers["Content-Type"] = "application/json"
     request = urllib.request.Request(url, data=data, headers=headers)
     try:
-        with urllib.request.urlopen(request, timeout=60) as response:
+        with urllib.request.urlopen(request, timeout=TIMEOUT) as response:
             return response.status, response.read().decode("utf-8", "replace")
     except urllib.error.HTTPError as error:
         return error.code, " ".join(error.read()[:200].decode("utf-8", "replace").split())

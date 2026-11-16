@@ -38,7 +38,8 @@ USER_AGENT = "awesome-vericoding-scout"
 # which has a free tier; override them with SCOUT_API_URL and SCOUT_MODEL.
 API_URL = os.environ.get("SCOUT_API_URL") or "https://generativelanguage.googleapis.com/v1beta/openai/chat/completions"
 # A comma-separated list: each model is tried in turn until one answers.
-DEFAULT_MODEL = "gemini-flash-latest,gemini-flash-lite-latest"
+# gemini-flash-latest timed out for this key; these pinned models passed the probe.
+DEFAULT_MODEL = "gemini-3.5-flash,gemini-3.1-flash-lite"
 # The free tier allows only a handful of requests a minute.
 MODEL_PAUSE = 7
 SCOUT_LABEL = "scout"
