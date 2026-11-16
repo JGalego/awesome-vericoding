@@ -1,8 +1,8 @@
 # Link checker settings, used by .github/workflows/links.yml (https://lychee.cli.rs).
 
-max_retries = 3
-retry_wait_time = 5
-timeout = 30
+max_retries = 5
+retry_wait_time = 10
+timeout = 60
 max_concurrency = 16
 
 # 429 means "slow down", not "gone".
