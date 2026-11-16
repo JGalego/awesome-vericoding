@@ -20,6 +20,7 @@ Out of scope:
 - Design-level model checking with no link to code, such as most TLA+ work. Awesome TLA+ covers it.
 - Formalized mathematics, unless the technique carries over to program proofs. The Theorem-Proving Models section has a high bar.
 - Services that sell audits without public tools or research.
+- Companies that only use "formal verification" as a label, with no public tool, model, paper, or repository.
 
 ## Quality Bar
 
@@ -31,6 +32,7 @@ Out of scope:
 | Learning resource | Current with the tool it teaches. Free, or marked 💰.                                                                                                                         |
 | Essay             | A widely read argument or story about verified software by a practitioner or researcher. Not a product announcement.                                                          |
 | Organization      | Verified software or AI vericoding is a primary focus, with a public description of the work.                                                                                 |
+| Company           | Verified software or AI vericoding is the main product or research focus, backed by a public tool, model, paper, or repository, not only a landing page.                      |
 
 Subsections are shortlists and aim for at most 15 entries. When a subsection is full, say which entry yours should replace and why. One in, one out.
 
@@ -54,6 +56,14 @@ Essays use the paper format with a short venue tag such as *Blog 2026*.
 
 Benchmarks go in the Benchmarks table. Keep it sorted by year, then by name, and realign the table with `python3 scripts/align_tables.py README.md`. The pre-commit hook does this for you.
 
+Companies:
+
+```md
+- [Name](https://company.example) - What they build, in one sentence.
+```
+
+Link the company's own site, not a press article. Leave out funding amounts, valuations, and customer claims. Say in your pull request how you checked the description, for example a public repo, paper, or documentation. Companies that are acquired, pivot away from verification, or go quiet for more than a year are removed.
+
 Description rules:
 
 - Start with a capital letter and end with a period. Keep it under 30 words, and do not repeat the entry's name.
@@ -71,7 +81,7 @@ Markers:
 
 ## Ordering
 
-- Tools, books, courses, venues, forums, and organizations are alphabetical.
+- Tools, books, courses, venues, forums, organizations, and companies are alphabetical.
 - Papers, essays, and verified systems are ordered by year of first public release, oldest first, so each subsection reads as a lineage.
 - Benchmarks are ordered by year, then by name.
 

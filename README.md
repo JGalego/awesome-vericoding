@@ -65,6 +65,7 @@ flowchart LR
   - [🏆 Theorem-Proving Models](#-theorem-proving-models)
   - [🔌 Agent Tooling](#-agent-tooling)
   - [🏢 Organizations](#-organizations)
+  - [💼 Companies](#-companies)
 - [🔍 Trust Checklist](#-trust-checklist)
 - [📅 Milestones](#-milestones)
 - [🌍 Community](#-community)
@@ -485,11 +486,20 @@ To try AI vericoding:
 
 - [ARIA Safeguarded AI](https://aria.org.uk/opportunity-spaces/trust-everything-everywhere/safeguarded-ai) - UK research programme funding AI systems whose behavior comes with formal, quantitative guarantees.
 - [Beneficial AI Foundation](https://www.beneficialaifoundation.org) - Nonprofit whose researchers released the vericoding benchmark and tools.
-- [Galois](https://www.galois.com) - Research company applying formal methods to high-assurance software for government and industry.
-- [Harmonic](https://www.harmonic.fun) - Company building Aristotle, a reasoning system whose outputs are verified in Lean.
 - [Lean FRO](https://lean-lang.org/fro/) - Focused research organization that develops Lean and its ecosystem.
-- [Logical Intelligence](https://logicalintelligence.com) - Company building Aleph, a Lean-based prover for automatic formal verification of generated code.
-- [Theorem](https://theorem.dev) - Startup building a verified software stack and cheaper proofs, starting with verified sandboxes for agents.
+
+### 💼 Companies
+
+> *Businesses that sell verification rather than hope*
+
+- [AdaCore](https://www.adacore.com) 🏭 - Maintains SPARK and GNATprove, with commercial support for high-integrity Ada code.
+- [Axiom](https://axiommath.ai) - Builds Lean-based tooling for machine-checked proofs, including the AXLE interactive proof environment.
+- [Certora](https://www.certora.com) - Develops the Certora Prover, which checks smart contracts against formal specifications.
+- [Galois](https://www.galois.com) - Research company applying formal methods to high-assurance software for government and industry.
+- [Harmonic](https://www.harmonic.fun) - Builds Aristotle, a reasoning system whose outputs are verified in Lean.
+- [Imandra](https://www.imandra.ai) - Sells automated reasoning and formal verification tools for industrial software, built around ImandraX.
+- [Logical Intelligence](https://logicalintelligence.com) - Builds Aleph, a Lean-based prover for automatic formal verification of generated code.
+- [Theorem](https://theorem.dev) - Builds a verified software stack and cheaper proofs, starting with verified sandboxes for agents.
 
 ## 🔍 Trust Checklist
 
