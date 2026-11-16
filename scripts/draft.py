@@ -286,6 +286,7 @@ def ask_model(messages: list[dict], token: str, model: str) -> Optional[dict]:
         },
         data=payload,
         timeout=120,
+        retry_on=(429, 500, 502, 503, 504),
     )
     if not body:
         return None

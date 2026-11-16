@@ -145,20 +145,28 @@ def known_keys(*texts: str) -> set[str]:
 
 
 def fetch(url: str, headers: Optional[dict] = None, data: Optional[bytes] = None,
-          timeout: int = 30) -> Optional[bytes]:
+          timeout: int = 30, retry_on: tuple = (), pauses: tuple = (15, 45, 90)) -> Optional[bytes]:
+    """GET or POST a URL. Statuses in retry_on (say 429 and 503) are retried after each pause."""
     request = urllib.request.Request(url, data=data, headers={"User-Agent": USER_AGENT, **(headers or {})})
-    for attempt in (1, 2):
+    waits = list(pauses)
+    attempt = 0
+    while True:
+        attempt += 1
         try:
             with urllib.request.urlopen(request, timeout=timeout) as response:
                 return response.read()
         except urllib.error.HTTPError as error:
-            detail = error.read()[:300].decode("utf-8", "replace")
+            detail = " ".join(error.read()[:300].decode("utf-8", "replace").split())
+            if error.code in retry_on and waits:
+                print(f"warning: {url}: HTTP {error.code}, retrying in {waits[0]}s", file=sys.stderr)
+                time.sleep(waits.pop(0))
+                continue
             print(f"warning: {url}: HTTP {error.code}: {detail}", file=sys.stderr)
-            return None  # a refusal will not change on retry
+            return None
         except (urllib.error.URLError, TimeoutError, OSError) as error:
-            if attempt == 2:
+            if attempt >= 2:
                 print(f"warning: {url}: {error}", file=sys.stderr)
-    return None
+                return None
 
 
 def github_get(path: str, token: str) -> Optional[object]:
@@ -364,6 +372,7 @@ def ask_model(batch: list[Candidate], token: str, model: str) -> Optional[dict[s
         headers={"Authorization": f"Bearer {token}", "Content-Type": "application/json"},
         data=payload,
         timeout=120,
+        retry_on=(429, 500, 502, 503, 504),
     )
     if not body:
         return None
