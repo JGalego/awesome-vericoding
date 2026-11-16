@@ -273,34 +273,34 @@ To try AI vericoding:
 
 > *One page of syntax before your first proof obligation*
 
-- [Learn ACL2 in Y Minutes](primers/acl2.md) - A terminating definition and the theorems the waterfall is expected to prove alone.
-- [Learn ACSL in Y Minutes](primers/acsl.md) - Function contracts, frames, and a loop variant for Frama-C's WP plugin.
-- [Learn Agda in Y Minutes](primers/agda.md) - A proof of associativity and a lookup whose index is a type.
-- [Learn Boogie in Y Minutes](primers/boogie.md) - Uninterpreted functions, axioms, and a loop whose frame is an invariant.
-- [Learn CN in Y Minutes](primers/cn.md) - Ownership, returned on exit, for a pointer and for every cell of an array.
-- [Learn Creusot in Y Minutes](primers/creusot.md) - Pearlite logic functions and the view of a Rust value in that logic.
-- [Learn Dafny in Y Minutes](primers/dafny.md) - Ghost lemmas, a frame, and a binary search whose invariant is the postcondition.
-- [Learn F* in Y Minutes](primers/fstar.md) - Refinements as preconditions and an SMT lemma whose body is the induction.
-- [Learn Flux in Y Minutes](primers/flux.md) - Predicates attached to Rust types, including the overflow check beside them.
-- [Learn Gobra in Y Minutes](primers/gobra.md) - Go comments for contracts, termination, and permission to each slice cell.
-- [Learn Gospel in Y Minutes](primers/gospel.md) - OCaml contracts in comments, including a checks clause a test can monitor.
-- [Learn HOL4 in Y Minutes](primers/hol4.md) - A Holmake script: a definition used by name, then an induction.
-- [Learn Idris 2 in Y Minutes](primers/idris.md) - Totality checking, and a vector whose length is part of its type.
-- [Learn Isabelle in Y Minutes](primers/isabelle.md) - Simplification when it is enough, and an induction when auto will not invent one.
-- [Learn JML in Y Minutes](primers/jml.md) - Java comments whose arithmetic is mathematical, with a bound so the code stays in range.
-- [Learn Kani in Y Minutes](primers/kani.md) - A bounded harness, and a contract the harness does not restate.
-- [Learn Lean 4 in Y Minutes](primers/lean.md) - Tactic proofs, a dependent index, and a loop whose conditions come from mvcgen.
-- [Learn Liquid Haskell in Y Minutes](primers/liquid-haskell.md) - Refinement types and a measure the solver uses without an induction.
-- [Learn Nagini in Y Minutes](primers/nagini.md) - Python calls that are contracts, including the variant of a loop.
-- [Learn Prusti in Y Minutes](primers/prusti.md) - Rust attributes for contracts, with ownership left to the borrow checker.
-- [Learn PVS in Y Minutes](primers/pvs.md) - A recursive definition whose typechecker emits the termination condition.
-- [Learn Rocq in Y Minutes](primers/rocq.md) - A Gallina program and the tactic proof that append distributes over sum.
-- [Learn SPARK in Y Minutes](primers/spark.md) - An expression function and a loop that must also be free of overflow.
-- [Learn Stainless in Y Minutes](primers/stainless.md) - Scala contracts on BigInt, so overflow is not the verification condition.
-- [Learn Velvet in Y Minutes](primers/velvet.md) - Dafny-style methods whose verification conditions are Lean goals.
-- [Learn Verus in Y Minutes](primers/verus.md) - The split between spec, proof, and exec, plus a loop variant.
-- [Learn Viper in Y Minutes](primers/viper.md) - Permissions that must be held, split, and given back.
-- [Learn WhyML in Y Minutes](primers/whyml.md) - A logical function, a variant, and the obligations Alt-Ergo receives.
+- [Learn ACL2 in Y Minutes](https://github.com/JGalego/awesome-vericoding/blob/main/primers/acl2.md) - A terminating definition and the theorems the waterfall is expected to prove alone.
+- [Learn ACSL in Y Minutes](https://github.com/JGalego/awesome-vericoding/blob/main/primers/acsl.md) - Function contracts, frames, and a loop variant for Frama-C's WP plugin.
+- [Learn Agda in Y Minutes](https://github.com/JGalego/awesome-vericoding/blob/main/primers/agda.md) - A proof of associativity and a lookup whose index is a type.
+- [Learn Boogie in Y Minutes](https://github.com/JGalego/awesome-vericoding/blob/main/primers/boogie.md) - Uninterpreted functions, axioms, and a loop whose frame is an invariant.
+- [Learn CN in Y Minutes](https://github.com/JGalego/awesome-vericoding/blob/main/primers/cn.md) - Ownership, returned on exit, for a pointer and for every cell of an array.
+- [Learn Creusot in Y Minutes](https://github.com/JGalego/awesome-vericoding/blob/main/primers/creusot.md) - Pearlite logic functions and the view of a Rust value in that logic.
+- [Learn Dafny in Y Minutes](https://github.com/JGalego/awesome-vericoding/blob/main/primers/dafny.md) - Ghost lemmas, a frame, and a binary search whose invariant is the postcondition.
+- [Learn F* in Y Minutes](https://github.com/JGalego/awesome-vericoding/blob/main/primers/fstar.md) - Refinements as preconditions and an SMT lemma whose body is the induction.
+- [Learn Flux in Y Minutes](https://github.com/JGalego/awesome-vericoding/blob/main/primers/flux.md) - Predicates attached to Rust types, including the overflow check beside them.
+- [Learn Gobra in Y Minutes](https://github.com/JGalego/awesome-vericoding/blob/main/primers/gobra.md) - Go comments for contracts, termination, and permission to each slice cell.
+- [Learn Gospel in Y Minutes](https://github.com/JGalego/awesome-vericoding/blob/main/primers/gospel.md) - OCaml contracts in comments, including a checks clause a test can monitor.
+- [Learn HOL4 in Y Minutes](https://github.com/JGalego/awesome-vericoding/blob/main/primers/hol4.md) - A Holmake script: a definition used by name, then an induction.
+- [Learn Idris 2 in Y Minutes](https://github.com/JGalego/awesome-vericoding/blob/main/primers/idris.md) - Totality checking, and a vector whose length is part of its type.
+- [Learn Isabelle in Y Minutes](https://github.com/JGalego/awesome-vericoding/blob/main/primers/isabelle.md) - Simplification when it is enough, and an induction when auto will not invent one.
+- [Learn JML in Y Minutes](https://github.com/JGalego/awesome-vericoding/blob/main/primers/jml.md) - Java comments whose arithmetic is mathematical, with a bound so the code stays in range.
+- [Learn Kani in Y Minutes](https://github.com/JGalego/awesome-vericoding/blob/main/primers/kani.md) - A bounded harness, and a contract the harness does not restate.
+- [Learn Lean 4 in Y Minutes](https://github.com/JGalego/awesome-vericoding/blob/main/primers/lean.md) - Tactic proofs, a dependent index, and a loop whose conditions come from mvcgen.
+- [Learn Liquid Haskell in Y Minutes](https://github.com/JGalego/awesome-vericoding/blob/main/primers/liquid-haskell.md) - Refinement types and a measure the solver uses without an induction.
+- [Learn Nagini in Y Minutes](https://github.com/JGalego/awesome-vericoding/blob/main/primers/nagini.md) - Python calls that are contracts, including the variant of a loop.
+- [Learn Prusti in Y Minutes](https://github.com/JGalego/awesome-vericoding/blob/main/primers/prusti.md) - Rust attributes for contracts, with ownership left to the borrow checker.
+- [Learn PVS in Y Minutes](https://github.com/JGalego/awesome-vericoding/blob/main/primers/pvs.md) - A recursive definition whose typechecker emits the termination condition.
+- [Learn Rocq in Y Minutes](https://github.com/JGalego/awesome-vericoding/blob/main/primers/rocq.md) - A Gallina program and the tactic proof that append distributes over sum.
+- [Learn SPARK in Y Minutes](https://github.com/JGalego/awesome-vericoding/blob/main/primers/spark.md) - An expression function and a loop that must also be free of overflow.
+- [Learn Stainless in Y Minutes](https://github.com/JGalego/awesome-vericoding/blob/main/primers/stainless.md) - Scala contracts on BigInt, so overflow is not the verification condition.
+- [Learn Velvet in Y Minutes](https://github.com/JGalego/awesome-vericoding/blob/main/primers/velvet.md) - Dafny-style methods whose verification conditions are Lean goals.
+- [Learn Verus in Y Minutes](https://github.com/JGalego/awesome-vericoding/blob/main/primers/verus.md) - The split between spec, proof, and exec, plus a loop variant.
+- [Learn Viper in Y Minutes](https://github.com/JGalego/awesome-vericoding/blob/main/primers/viper.md) - Permissions that must be held, split, and given back.
+- [Learn WhyML in Y Minutes](https://github.com/JGalego/awesome-vericoding/blob/main/primers/whyml.md) - A logical function, a variant, and the obligations Alt-Ergo receives.
 
 ## 🤖 AI Vericoding
 
