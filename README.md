@@ -399,6 +399,7 @@ To try AI vericoding:
   - [Cobblestone: A Divide-and-Conquer Approach for Automating Formal Verification](https://arxiv.org/abs/2410.19940) - Splits Rocq goals and reuses partial LLM progress to prove more theorems cheaply. *ICSE 2026*
   - [Agentic Verification of Software Systems](https://arxiv.org/abs/2511.17330) - AutoRocq agent refines Rocq proofs through prover feedback, evaluated on SV-COMP tasks and Linux kernel modules. *arXiv 2025*
   - [Harnessing Code Agents for Automatic Software Verification](https://arxiv.org/abs/2607.06341) - Lets a code agent choose its own proof strategy for Rocq instead of following a fixed retrieve-and-predict pipeline. *arXiv 2026*
+  - [ProofCoder: Continuous Reasoning for Automated Software Verification](https://arxiv.org/abs/2611.14106) - This agentic proof-synthesis system for Rocq uses continuous reasoning and proof-assistant feedback to construct, repair, and refine proofs across 280 benchmark tasks. *arXiv 2026*
 - Rust and Verus
   - [Leveraging Large Language Models for Automated Proof Synthesis in Rust](https://arxiv.org/abs/2311.03739) - First study of GPT-4 writing Verus proofs, combined with static analysis and a developer in the loop. *arXiv 2023*
   - [AutoVerus: Automated Proof Generation for Rust Code](https://arxiv.org/abs/2409.13082) - Multi-agent pipeline that generates, refines, and repairs Verus proofs, verifying over 90% of Verus-Bench. *OOPSLA 2025*
