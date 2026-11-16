@@ -110,6 +110,7 @@ To try AI vericoding:
 - [Separation Logic: A Logic for Shared Mutable Data Structures](https://doi.org/10.1109/LICS.2002.1029817) - Reynolds's logic for local reasoning about heaps and pointers, the basis of VeriFast, Viper, and Iris. *LICS 2002*
 - [The Verifying Compiler: A Grand Challenge for Computing Research](https://doi.org/10.1145/602382.602403) - Hoare's call for tools that check every program against its specification, an early statement of the vericoding goal. *JACM 2003*
 - [QED at Large: A Survey of Engineering of Formally Verified Software](https://doi.org/10.1561/2500000045) - How large verified systems are designed, maintained, and repaired in practice. *Foundations and Trends in PL 2019*
+- [On the Relative Security of Prompt Injection: Mechanised Definitions, Defences and Verdicts for LLM Agents](https://arxiv.org/abs/2611.11506) - Presents a mechanised framework in Isabelle/HOL to formalize and prove relative security definitions and defences for LLM agents against prompt injection. *arXiv 2026*
 
 ### 📝 Essays
 
