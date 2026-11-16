@@ -408,6 +408,7 @@ To try AI vericoding:
   - [VeruSAGE: A Study of Agent-Based Verification for Rust Systems](https://arxiv.org/abs/2512.18436) - Agents complete over 80% of 849 proof tasks drawn from eight Verus-verified systems. *arXiv 2025*
   - [ExVerus: Verus Proof Repair via Counterexample Reasoning](https://arxiv.org/abs/2603.25810) - Repairs failing Verus proofs by generalizing concrete counterexamples into invariants. *arXiv 2026*
   - [KVerus: Scalable and Resilient Formal Verification Proof Generation for Rust Code](https://arxiv.org/abs/2605.03822) - Proof generation that survives Verus updates and produced upstream-accepted proofs for the Asterinas kernel. *ASE 2026* · [Code](https://github.com/asterinas/KVerus)
+  - [Curriculum proof repair with learned counterexamples](https://arxiv.org/abs/2611.13627) - This framework repairs Verus proofs using learned counterexamples and reinforcement learning across seven benchmarks with 471 problems. *NeurIPS 2026*
 - C and loop invariants
   - [Learning Loop Invariants for Program Verification](https://papers.nips.cc/paper_files/paper/2018/hash/65b1e92c585fd4c2159d5f33b5030ff2-Abstract.html) - Code2Inv learns to propose loop invariants with reinforcement learning and graph neural networks. *NeurIPS 2018* · [Code](https://github.com/PL-ML/code2inv)
   - [CLN2INV: Learning Loop Invariants with Continuous Logic Networks](https://arxiv.org/abs/1909.11542) - Learns invariants by relaxing logical formulas into trainable continuous networks. *ICLR 2020*
