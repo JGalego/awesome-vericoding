@@ -11,6 +11,7 @@ accept = ["200..=299", "429"]
 # Publishers whose sites reject automated requests. DOIs are persistent
 # identifiers, and these were verified against Crossref when added.
 exclude = [
+  '^http://localhost', # the local Jekyll preview command in contributing.md
   '^https://doi\.org/10\.1145/', # ACM Digital Library
   '^https://doi\.org/10\.1561/', # Foundations and Trends
 ]
