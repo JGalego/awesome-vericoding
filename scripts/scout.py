@@ -143,12 +143,18 @@ def known_keys(*texts: str) -> set[str]:
 def fetch(url: str, headers: Optional[dict] = None, data: Optional[bytes] = None,
           timeout: int = 30) -> Optional[bytes]:
     request = urllib.request.Request(url, data=data, headers={"User-Agent": USER_AGENT, **(headers or {})})
-    try:
-        with urllib.request.urlopen(request, timeout=timeout) as response:
-            return response.read()
-    except (urllib.error.URLError, TimeoutError, OSError) as error:
-        print(f"warning: {url}: {error}", file=sys.stderr)
-        return None
+    for attempt in (1, 2):
+        try:
+            with urllib.request.urlopen(request, timeout=timeout) as response:
+                return response.read()
+        except urllib.error.HTTPError as error:
+            detail = error.read()[:300].decode("utf-8", "replace")
+            print(f"warning: {url}: HTTP {error.code}: {detail}", file=sys.stderr)
+            return None  # a refusal will not change on retry
+        except (urllib.error.URLError, TimeoutError, OSError) as error:
+            if attempt == 2:
+                print(f"warning: {url}: {error}", file=sys.stderr)
+    return None
 
 
 def github_get(path: str, token: str) -> Optional[object]:
@@ -364,9 +370,13 @@ def ask_model(batch: list[Candidate], token: str, model: str) -> Optional[dict[s
         return None
     try:
         content = json.loads(body)["choices"][0]["message"]["content"]
-    except (KeyError, IndexError, json.JSONDecodeError):
+    except (KeyError, IndexError, TypeError, json.JSONDecodeError):
+        print(f"warning: unexpected response from the model: {body[:300]!r}", file=sys.stderr)
         return None
-    return parse_verdicts(content)
+    verdicts = parse_verdicts(content)
+    if not verdicts:
+        print(f"warning: no verdicts in the model's answer: {content[:300]!r}", file=sys.stderr)
+    return verdicts
 
 
 def filter_with_model(cands: list[Candidate], token: str, model: str, batch_size: int = 8) -> bool:
@@ -378,10 +388,13 @@ def filter_with_model(cands: list[Candidate], token: str, model: str, batch_size
         if verdicts is None:
             complete = False
             continue
+        by_key = {k.strip().lower(): v for k, v in verdicts.items()}
         for cand in batch:
-            if cand.id in verdicts:
-                cand.verdict, cand.reason = verdicts[cand.id]
+            found = by_key.get(cand.id.strip().lower())
+            if found is not None:
+                cand.verdict, cand.reason = found
             else:
+                print(f"warning: the model gave no verdict for {cand.id}", file=sys.stderr)
                 complete = False
         time.sleep(2)
     return complete
