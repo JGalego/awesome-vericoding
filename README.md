@@ -383,6 +383,7 @@ To try AI vericoding:
   - [dafny-annotator: AI-Assisted Verification of Dafny Programs](https://arxiv.org/abs/2411.15143) - Fine-tuned open models plus search add the annotations a Dafny method needs to verify. *arXiv 2024* · [Code](https://github.com/metareflection/dafny-annotator)
   - [Can LLMs Enable Verification in Mainstream Programming?](https://arxiv.org/abs/2503.14183) - Compares LLM-written verified code across Dafny, Nagini, and Verus on HumanEval-derived tasks. *arXiv 2025*
   - [DafnyPro: LLM-Assisted Automated Verification for Dafny Programs](https://arxiv.org/abs/2601.05385) - Inference-time framework that raises Claude Sonnet 3.5 to 86% correct proofs on DafnyBench. *arXiv 2026*
+  - [LLM-Assisted Verification in Dafny](https://arxiv.org/abs/2611.16886) - Presents a ten-step workflow for language-model-assisted algorithm verification using Dafny, evaluated on 37 complex algorithms from graph theory and transition systems. *arXiv 2026*
 - F*
   - [Towards Neural Synthesis for SMT-Assisted Proof-Oriented Programming](https://arxiv.org/abs/2405.01787) - Curates 600K lines of F* and shows fine-tuned small models rival GPT-4 at synthesizing definitions and proofs. *ICSE 2025*
 - Isabelle
