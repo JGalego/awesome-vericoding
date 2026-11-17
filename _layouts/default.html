@@ -55,23 +55,39 @@
         {%- endif -%}
       {%- endfor -%}
     {%- endif %}
-    {%- comment -%} The BibTeX mirrors CITATION.cff. The button needs JavaScript, so it starts hidden. {%- endcomment -%}
+    {%- comment -%} The BibTeX mirrors CITATION.cff. The copy button needs JavaScript, so it starts hidden. {%- endcomment -%}
     {%- capture bibtex -%}
 @misc<galego_awesome_vericoding,
   author = <Galego, João>,
   title = <Awesome Vericoding>,
   year = <{{ site.time | date: "%Y" }}>,
   url = <https://github.com/{{ site.repository }}>,
-  note = <Curated list>
+  license = <CC0-1.0>
 >
     {%- endcapture -%}
     {%- assign bibtex = bibtex | replace: "<", "{" | replace: ">", "}" %}
+    {%- capture bar -%}
+    <div class="bibtex"><button type="button" hidden>Copy</button><pre>{{ bibtex | strip | escape }}</pre></div>
+    {%- endcapture -%}
+    {%- comment -%}
+      The citation box goes on the home page only, after the diagram and its
+      legend (the paragraph that starts "Legend:").
+    {%- endcomment -%}
+    {%- assign marker = "<strong>Legend:</strong>" -%}
+    {%- assign before = "" -%}
+    {%- assign tail = body -%}
+    {%- if page.url == "/" and body contains marker -%}
+      {%- assign halves = body | split: marker -%}
+      {%- assign legend = halves[1] | split: "</p>" | first -%}
+      {%- assign before = halves[0] | append: marker | append: legend | append: "</p>" -%}
+      {%- assign tail = halves[1] | remove_first: legend | remove_first: "</p>" -%}
+    {%- else -%}
+      {%- assign bar = "" -%}
+    {%- endif %}
     <main class="markdown-body" data-list="{{ '/data/list.json' | relative_url }}">
-      <div class="site-bar">
-        <a href="https://github.com/{{ site.repository }}">GitHub</a>
-        <button type="button" hidden data-bibtex="{{ bibtex | strip | escape }}">Cite</button>
-      </div>
-      {{ body }}
+      {{ before }}
+      {{ bar }}
+      {{ tail }}
     </main>
   </div>
   <script type="module" src="{{ '/assets/js/site.js' | relative_url }}"></script>

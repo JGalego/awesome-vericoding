@@ -1,6 +1,6 @@
 # Awesome Vericoding [![Awesome](https://awesome.re/badge.svg)](https://awesome.re)
 
-[![License: CC0-1.0](https://img.shields.io/badge/license-CC0--1.0-lightgrey)](LICENSE) [![PRs welcome](https://img.shields.io/badge/PRs-welcome-brightgreen)](#contributing) ![Last commit](https://img.shields.io/github/last-commit/JGalego/awesome-vericoding) ![sorry count](https://img.shields.io/endpoint?url=https%3A%2F%2Fjgalego.github.io%2Fawesome-vericoding%2Fbadges%2Fsorry.json) ![vibes: informally verified](https://img.shields.io/badge/vibes-informally%20verified-blueviolet) ![Q.E.D.](https://img.shields.io/badge/Q.E.D.-%E2%88%8E-black)
+[![GitHub](https://img.shields.io/badge/GitHub-JGalego%2Fawesome--vericoding-181717?logo=github)](https://github.com/JGalego/awesome-vericoding) [![License: CC0-1.0](https://img.shields.io/badge/license-CC0--1.0-lightgrey)](LICENSE) [![PRs welcome](https://img.shields.io/badge/PRs-welcome-brightgreen)](#contributing) ![Last commit](https://img.shields.io/github/last-commit/JGalego/awesome-vericoding) ![sorry count](https://img.shields.io/endpoint?url=https%3A%2F%2Fjgalego.github.io%2Fawesome-vericoding%2Fbadges%2Fsorry.json) ![vibes: informally verified](https://img.shields.io/badge/vibes-informally%20verified-blueviolet) ![Q.E.D.](https://img.shields.io/badge/Q.E.D.-%E2%88%8E-black)
 
 <a href="https://arxiv.org/abs/2509.22908"><img src="media/logo.svg" align="right" width="130" alt="Vericoding logo: code braces around a check mark"></a>
 
