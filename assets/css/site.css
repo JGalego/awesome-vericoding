@@ -1,0 +1,212 @@
+/* Styles for the search, sidebar, and sortable tables. The page
+   itself is styled by github-markdown-css; these tokens copy its light and
+   dark palettes so that elements outside .markdown-body match. */
+
+:root {
+  --vc-fg: #1f2328;
+  --vc-muted: #636c76;
+  --vc-accent: #0969da;
+  --vc-accent-bg: #ddf4ff;
+  --vc-bg: #ffffff;
+  --vc-bg-muted: #f6f8fa;
+  --vc-border: #d0d7de;
+  --vc-mark: #fff8c5;
+  --vc-radius: 6px;
+  --vc-mono: ui-monospace, SFMono-Regular, "SF Mono", Menlo, Consolas, "Liberation Mono", monospace;
+}
+
+@media (prefers-color-scheme: dark) {
+  :root {
+    --vc-fg: #e6edf3;
+    --vc-muted: #8d96a0;
+    --vc-accent: #4493f8;
+    --vc-accent-bg: #388bfd26;
+    --vc-bg: #0d1117;
+    --vc-bg-muted: #161b22;
+    --vc-border: #30363d;
+    --vc-mark: #bb800966;
+  }
+}
+
+.is-filtered-out { display: none !important; }
+
+
+.link-button {
+  border: 0;
+  padding: 0;
+  background: none;
+  color: var(--vc-accent);
+  font: inherit;
+  cursor: pointer;
+}
+.link-button:hover { text-decoration: underline; }
+
+/* ------------------------------------------------------------ page layout */
+
+.sidebar { display: none; }
+
+/* Wide enough for a 260px sidebar beside about 800px of list. */
+@media (min-width: 1100px) {
+  .page.has-sidebar {
+    display: grid;
+    grid-template-columns: 260px minmax(0, 980px);
+    justify-content: center;
+    column-gap: 8px;
+  }
+  .page.has-sidebar .markdown-body { margin: 0; }
+  .page.has-sidebar .sidebar {
+    display: flex;
+    flex-direction: column;
+    gap: 16px;
+    position: sticky;
+    top: 0;
+    align-self: start;
+    max-height: 100vh;
+    overflow-y: auto;
+    box-sizing: border-box;
+    padding: 45px 8px 24px 16px;
+    color: var(--vc-fg);
+    font: 14px/1.5 -apple-system, BlinkMacSystemFont, "Segoe UI", "Noto Sans", Helvetica, Arial, sans-serif;
+  }
+}
+
+.sidebar-title {
+  font-size: 16px;
+  font-weight: 600;
+  color: var(--vc-fg);
+  text-decoration: none;
+}
+
+.toc ul { list-style: none; margin: 0; padding: 0; }
+.toc ul ul { padding-left: 12px; }
+.toc a {
+  display: flex;
+  justify-content: space-between;
+  gap: 8px;
+  padding: 2px 8px;
+  border-radius: var(--vc-radius);
+  color: var(--vc-fg);
+  text-decoration: none;
+}
+.toc a:hover { background: var(--vc-bg-muted); }
+.toc a[aria-current="true"] { background: var(--vc-accent-bg); color: var(--vc-accent); font-weight: 600; }
+.toc a.empty { opacity: 0.4; }
+.toc .n { color: var(--vc-muted); font-variant-numeric: tabular-nums; }
+
+/* ----------------------------------------------------------------- finder */
+
+.finder { font-size: 14px; }
+.finder-row { display: flex; gap: 8px; align-items: center; }
+.finder-search {
+  flex: 1;
+  display: flex;
+  align-items: center;
+  gap: 6px;
+  min-width: 0;
+  padding: 0 8px;
+  border: 1px solid var(--vc-border);
+  border-radius: var(--vc-radius);
+  background: var(--vc-bg);
+  color: var(--vc-muted);
+}
+.finder-search:focus-within { border-color: var(--vc-accent); box-shadow: 0 0 0 3px var(--vc-accent-bg); }
+.finder-search input {
+  flex: 1;
+  min-width: 0;
+  padding: 6px 0;
+  border: 0;
+  outline: none;
+  background: transparent;
+  color: var(--vc-fg);
+  font: inherit;
+}
+.finder-icon { display: flex; }
+.finder-search kbd {
+  padding: 0 5px;
+  border: 1px solid var(--vc-border);
+  border-radius: 4px;
+  font: 11px/16px var(--vc-mono);
+  color: var(--vc-muted);
+}
+.finder-count {
+  display: block;
+  margin-top: 6px;
+  color: var(--vc-muted);
+  font-size: 12px;
+  font-variant-numeric: tabular-nums;
+}
+.finder-count:empty { display: none; }
+.finder-panel { display: flex; flex-direction: column; gap: 10px; margin-top: 10px; }
+.finder-label { margin-bottom: 4px; color: var(--vc-muted); font-size: 12px; font-weight: 600; }
+.finder-clear { align-self: flex-start; font-size: 13px; }
+.finder-toggle {
+  padding: 5px 10px;
+  border: 1px solid var(--vc-border);
+  border-radius: var(--vc-radius);
+  background: var(--vc-bg-muted);
+  color: var(--vc-fg);
+  font: inherit;
+  white-space: nowrap;
+  cursor: pointer;
+}
+
+.chips { display: flex; flex-wrap: wrap; gap: 6px; }
+.chip,
+.chips select {
+  padding: 2px 10px;
+  border: 1px solid var(--vc-border);
+  border-radius: 999px;
+  background: var(--vc-bg);
+  color: var(--vc-fg);
+  font: inherit;
+  font-size: 12px;
+  line-height: 20px;
+  cursor: pointer;
+}
+.chip:hover { border-color: var(--vc-muted); }
+.chip[aria-pressed="true"] { border-color: var(--vc-accent); background: var(--vc-accent); color: #fff; }
+.chip:focus-visible,
+.chips select:focus-visible,
+.finder-toggle:focus-visible,
+.link-button:focus-visible { outline: 2px solid var(--vc-accent); outline-offset: 2px; }
+
+/* In the page (narrow screens) the finder sticks to the top, and the filters
+   fold away behind a button. In the sidebar they are always open. */
+.markdown-body .finder {
+  position: sticky;
+  top: 0;
+  z-index: 10;
+  margin: 0 -16px 16px;
+  padding: 10px 16px;
+  border-bottom: 1px solid var(--vc-border);
+  background: var(--vc-bg);
+}
+.markdown-body .finder .finder-panel { display: none; }
+.markdown-body .finder.open .finder-panel { display: flex; max-height: 45vh; overflow-y: auto; }
+.finder.in-sidebar .finder-toggle { display: none; }
+
+.finder-empty {
+  padding: 24px;
+  border: 1px dashed var(--vc-border);
+  border-radius: var(--vc-radius);
+  color: var(--vc-muted);
+  text-align: center;
+}
+
+.markdown-body mark.hit { padding: 0 1px; border-radius: 2px; background: var(--vc-mark); color: inherit; }
+
+/* --------------------------------------------------------- sortable tables */
+
+.markdown-body th .sort {
+  all: unset;
+  display: inline-flex;
+  align-items: center;
+  gap: 4px;
+  cursor: pointer;
+}
+.markdown-body th .sort::after { content: "↕"; font-size: 11px; color: var(--vc-muted); opacity: 0; }
+.markdown-body th:hover .sort::after,
+.markdown-body th .sort:focus-visible::after { opacity: 1; }
+.markdown-body th[aria-sort="ascending"] .sort::after { content: "▲"; color: var(--vc-accent); opacity: 1; }
+.markdown-body th[aria-sort="descending"] .sort::after { content: "▼"; color: var(--vc-accent); opacity: 1; }
+.markdown-body th .sort:focus-visible { outline: 2px solid var(--vc-accent); outline-offset: 2px; border-radius: 3px; }

@@ -4,9 +4,10 @@
   <meta charset="utf-8">
   <meta name="viewport" content="width=device-width, initial-scale=1">
   <title>{{ page.title | default: site.title }}</title>
-  <meta name="description" content="{{ site.description }}">
+  <meta name="description" content="{{ page.description | default: site.description }}">
   <link rel="icon" href="{{ '/media/logo.svg' | relative_url }}">
   <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/github-markdown-css@5.6.1/github-markdown.css">
+  <link rel="stylesheet" href="{{ '/assets/css/site.css' | relative_url }}">
   <style>
     body { margin: 0; background: #fff; }
     .markdown-body { box-sizing: border-box; max-width: 980px; margin: 0 auto; padding: 45px 16px; }
@@ -14,9 +15,12 @@
   </style>
 </head>
 <body>
-  <main class="markdown-body">
-    {{ content }}
-  </main>
+  <div class="page">
+    <main class="markdown-body" data-list="{{ '/data/list.json' | relative_url }}">
+      {{ content }}
+    </main>
+  </div>
+  <script type="module" src="{{ '/assets/js/site.js' | relative_url }}"></script>
   <script type="module">
     import mermaid from "https://cdn.jsdelivr.net/npm/mermaid@11.4.1/dist/mermaid.esm.min.mjs";
     const dark = matchMedia("(prefers-color-scheme: dark)").matches;
