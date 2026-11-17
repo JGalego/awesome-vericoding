@@ -55,7 +55,22 @@
         {%- endif -%}
       {%- endfor -%}
     {%- endif %}
+    {%- comment -%} The BibTeX mirrors CITATION.cff. The button needs JavaScript, so it starts hidden. {%- endcomment -%}
+    {%- capture bibtex -%}
+@misc<galego_awesome_vericoding,
+  author = <Galego, João>,
+  title = <Awesome Vericoding>,
+  year = <{{ site.time | date: "%Y" }}>,
+  url = <https://github.com/{{ site.repository }}>,
+  note = <Curated list>
+>
+    {%- endcapture -%}
+    {%- assign bibtex = bibtex | replace: "<", "{" | replace: ">", "}" %}
     <main class="markdown-body" data-list="{{ '/data/list.json' | relative_url }}">
+      <div class="site-bar">
+        <a href="https://github.com/{{ site.repository }}">GitHub</a>
+        <button type="button" hidden data-bibtex="{{ bibtex | strip | escape }}">Cite</button>
+      </div>
       {{ body }}
     </main>
   </div>

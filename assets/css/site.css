@@ -295,3 +295,28 @@
 @media (max-width: 600px) {
   .picker-row { grid-template-columns: minmax(0, 1fr); }
 }
+
+/* ------------------------------------------------------------- top bar */
+
+.markdown-body .site-bar {
+  display: flex;
+  justify-content: flex-end;
+  align-items: center;
+  gap: 8px;
+  margin-bottom: 8px;
+  font-size: 14px;
+}
+.markdown-body .site-bar a,
+.markdown-body .site-bar button {
+  border: 1px solid var(--vc-border);
+  border-radius: var(--vc-radius);
+  padding: 2px 10px;
+  background: var(--vc-bg-muted);
+  color: var(--vc-fg);
+  font: inherit;
+  text-decoration: none;
+  cursor: pointer;
+}
+.markdown-body .site-bar a:hover,
+.markdown-body .site-bar button:hover { border-color: var(--vc-accent); color: var(--vc-accent); }
+.markdown-body .site-bar button[hidden] { display: none; }

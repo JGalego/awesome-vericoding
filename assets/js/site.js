@@ -691,7 +691,23 @@ function fixHeadingIds(root) {
   if (target) target.scrollIntoView();
 }
 
+// The Cite button copies the BibTeX that the layout puts in its data attribute.
+function setUpCite(button) {
+  button.hidden = false;
+  button.addEventListener("click", async () => {
+    try {
+      await navigator.clipboard.writeText(button.dataset.bibtex);
+      button.textContent = "Copied BibTeX";
+    } catch {
+      button.textContent = "Copy failed";
+    }
+    setTimeout(() => (button.textContent = "Cite"), 1500);
+  });
+}
+
 if (main) {
+  const cite = main.querySelector(".site-bar [data-bibtex]");
+  if (cite) setUpCite(cite);
   fixHeadingIds(main);
   makeTablesSortable(main);
   const contents = main.querySelector("h2#contents");
