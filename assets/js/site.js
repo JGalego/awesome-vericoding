@@ -496,14 +496,18 @@ function buildSidebar(root, contents) {
 // ---------------------------------------------------------------- primers
 
 // Primers keep `text` fences so the Markdown reads the same everywhere. The
-// site highlights them by file extension, with Prism, where Prism knows the
-// language; the others stay plain rather than borrow a neighbour's grammar.
+// site highlights them by file extension with Prism, using the grammars in
+// prism-grammars.js for the languages Prism does not ship.
 const PRISM = "https://cdnjs.cloudflare.com/ajax/libs/prism/1.29.0/";
 const LANGUAGES = {
-  ada: "ada", agda: "agda", c: "c", go: "go", hs: "haskell", idr: "idris",
-  java: "java", lisp: "lisp", ml: "ocaml", py: "python", rs: "rust",
-  scala: "scala", sml: "sml", v: "coq",
+  ada: "ada", agda: "agda", bpl: "boogie", c: "c", dfy: "dafny", fst: "fstar",
+  go: "go", hs: "haskell", idr: "idris", java: "java", lean: "lean",
+  lisp: "lisp", ml: "ocaml", mlw: "whyml", py: "python", pvs: "pvs",
+  rs: "rust", scala: "scala", sml: "sml", thy: "isabelle", v: "coq",
+  vpr: "viper",
 };
+// Velvet files are Lean files with Velvet's own commands.
+const PRIMER_LANGUAGES = { velvet: "velvet" };
 
 // Playgrounds that open code passed in the link, checked with each primer.
 // The Verus playground builds a binary, so it needs a main.
@@ -532,6 +536,8 @@ async function highlightCode(code, language) {
   await loadScript(`${PRISM}components/prism-core.min.js`);
   await loadScript(`${PRISM}plugins/autoloader/prism-autoloader.min.js`);
   window.Prism.plugins.autoloader.languages_path = `${PRISM}components/`;
+  const { defineGrammars } = await import("./prism-grammars.js");
+  defineGrammars(window.Prism);
   code.className = `language-${language}`;
   window.Prism.highlightElement(code);
 }
@@ -560,7 +566,8 @@ function setUpPrimer(primer) {
   }
   code.parentElement.before(bar);
 
-  if (LANGUAGES[extension]) highlightCode(code, LANGUAGES[extension]).catch(() => {});
+  const language = PRIMER_LANGUAGES[primer.dataset.primer] || LANGUAGES[extension];
+  if (language) highlightCode(code, language).catch(() => {});
 }
 
 // ------------------------------------------------------------------ start
