@@ -105,10 +105,20 @@ To try AI vericoding:
 
 - [Assigning Meanings to Programs](https://doi.org/10.1007/978-94-011-1793-7_4) - Floyd attaches logical assertions to flowcharts, the origin of inductive assertions and loop invariants. *Symposia in Applied Mathematics 1967*
 - [An Axiomatic Basis for Computer Programming](https://doi.org/10.1145/363235.363259) - Hoare introduces pre/postcondition triples and axiomatic proof rules for programs. *CACM 1969*
+- [Proof of Correctness of Data Representations](https://doi.org/10.1007/BF00289507) - Hoare relates an abstract specification to its concrete data through an abstraction function, the idea behind ghost state and refinement. *Acta Informatica 1972*
+- [Proving Theorems about LISP Functions](https://doi.org/10.1145/321864.321875) - Boyer and Moore's prover that invents inductions over recursive Lisp functions, the ancestor of ACL2. *JACM 1975*
 - [Guarded Commands, Nondeterminacy and Formal Derivation of Programs](https://doi.org/10.1145/360933.360975) - Dijkstra's weakest-precondition calculus for deriving a program and its proof together. *CACM 1975*
+- [An Axiomatic Proof Technique for Parallel Programs I](https://doi.org/10.1007/BF00268134) - Owicki and Gries extend Hoare logic to parallel programs by checking that each proof survives interference from the others. *Acta Informatica 1976*
+- [Edinburgh LCF: A Mechanised Logic of Computation](https://doi.org/10.1007/3-540-09724-4) - Gordon, Milner, and Wadsworth make theorems an abstract type that only inference rules can build, the small trusted kernel of HOL4 and Isabelle. *LNCS 1979*
+- [Simplification by Cooperating Decision Procedures](https://doi.org/10.1145/357073.357079) - Nelson and Oppen combine decision procedures for separate theories into one, the architecture inside every SMT solver. *TOPLAS 1979*
+- [Tentative Steps Toward a Development Method for Interfering Programs](https://doi.org/10.1145/69575.69577) - Jones's rely-guarantee reasoning: each process states the interference it tolerates and causes, so proofs of concurrent code compose. *TOPLAS 1983*
+- [An Early Program Proof by Alan Turing](https://doi.org/10.1109/MAHC.1984.10017) - Morris and Jones reprint and annotate Turing's 1949 proof of a factorial routine, the first known program proof with assertions. *IEEE Annals of the History of Computing 1984*
+- [The Calculus of Constructions](https://doi.org/10.1016/0890-5401%2888%2990005-3) - Coquand and Huet's dependent type theory, extended with inductive types into the logic of Rocq and Lean. *Information and Computation 1988*
 - [Applying 'Design by Contract'](https://doi.org/10.1109/2.161279) - Meyer makes preconditions, postconditions, and invariants part of everyday object-oriented design. *IEEE Computer 1992*
 - [Separation Logic: A Logic for Shared Mutable Data Structures](https://doi.org/10.1109/LICS.2002.1029817) - Reynolds's logic for local reasoning about heaps and pointers, the basis of VeriFast, Viper, and Iris. *LICS 2002*
 - [The Verifying Compiler: A Grand Challenge for Computing Research](https://doi.org/10.1145/602382.602403) - Hoare's call for tools that check every program against its specification, an early statement of the vericoding goal. *JACM 2003*
+- [The Spec# Programming System: An Overview](https://doi.org/10.1007/978-3-540-30569-9_3) - Barnett, Leino, and Schulte add contracts to C# and check them with the Boogie verifier, the direct ancestor of Dafny. *CASSIS 2004*
+- [Resources, Concurrency, and Local Reasoning](https://doi.org/10.1016/j.tcs.2006.12.035) - O'Hearn's concurrent separation logic, where threads own disjoint parts of the heap, the basis of Iris. *TCS 2007*
 - [QED at Large: A Survey of Engineering of Formally Verified Software](https://doi.org/10.1561/2500000045) - How large verified systems are designed, maintained, and repaired in practice. *Foundations and Trends in PL 2019*
 
 ### 📝 Essays
@@ -117,6 +127,7 @@ To try AI vericoding:
 
 - [The Humble Programmer](https://www.cs.utexas.edu/~EWD/transcriptions/EWD03xx/EWD340.html) - Dijkstra's Turing lecture, where testing "is hopelessly inadequate for showing their absence" of bugs. *Turing Award Lecture 1972*
 - [Social Processes and Proofs of Theorems and Programs](https://doi.org/10.1145/359104.359106) - The classic critique of program verification: mathematical proofs earn trust through social processes that program proofs lack. *CACM 1979*
+- [Program Verification: The Very Idea](https://doi.org/10.1145/48529.48530) - Fetzer argues that a proof about a program cannot guarantee how a physical machine runs it, setting off a long CACM controversy. *CACM 1988*
 - [How Did Software Get So Reliable Without Proof?](https://doi.org/10.1007/3-540-60973-3_77) - Hoare asks why software works as well as it does without the verification he championed. *FME 1996*
 - [Who Builds a House Without Drawing Blueprints?](https://doi.org/10.1145/2736348) - Lamport's case for writing a specification before writing code. *CACM 2015*
 - [OpenJDK's Java.utils.Collection.sort() Is Broken: The Good, the Bad and the Worst Case](https://doi.org/10.1007/978-3-319-21690-4_16) - Verifying TimSort with KeY exposed a bug in the sort used by Java, Android, and Python, and proved a fix. *CAV 2015*
@@ -187,7 +198,7 @@ To try AI vericoding:
 
 - [Alt-Ergo](https://alt-ergo.ocamlpro.com) - SMT solver tuned for proof obligations from program verifiers such as Why3 and Frama-C.
 - [Bitwuzla](https://bitwuzla.github.io) - SMT solver for bit-vectors, floating point, arrays, and uninterpreted functions.
-- [Boogie](https://github.com/boogie-org/boogie) - Intermediate verification language and verifier that Dafny and other front ends compile to.
+- [Boogie](https://github.com/boogie-org/boogie) - Intermediate verification language and verifier that Dafny and other front ends compile to ([FMCO 2005 paper](https://doi.org/10.1007/11804192_17)).
 - [CoqHammer](https://github.com/lukaszcz/coqhammer) - Hammer for Rocq that combines premise selection, external provers, and proof reconstruction.
 - [cvc5](https://cvc5.github.io) - Open-source SMT solver with broad theory support and proof production ([TACAS 2022 paper](https://doi.org/10.1007/978-3-030-99524-9_24)).
 - [Iris](https://iris-project.org) - Higher-order concurrent separation logic framework in Rocq ([JFP 2018 paper](https://doi.org/10.1017/S0956796818000151)).
@@ -244,6 +255,7 @@ To try AI vericoding:
 - [Proof-Oriented Programming in F\*](https://fstar-lang.org/tutorial/) - The official book on writing programs and proofs together in F\*.
 - [Software Foundations](https://softwarefoundations.cis.upenn.edu) ⭐ - Free Rocq series from logic basics to verified functional algorithms, separation logic, and Verifiable C.
 - [The Calculus of Computation](https://link.springer.com/book/10.1007/978-3-540-74113-8) 💰 - Bradley and Manna on decision procedures and the logic behind program verifiers.
+- [The Science of Programming](https://doi.org/10.1007/978-1-4612-5983-1) 💰 - Gries on deriving a program and its loop invariants together from the specification.
 - [Theorem Proving in Lean 4](https://lean-lang.org/theorem_proving_in_lean4/) - Introduction to dependent type theory and interactive proof in Lean 4.
 - [Type-Driven Development with Idris](https://www.manning.com/books/type-driven-development-with-idris) 💰 - Brady on using dependent types to make programs correct by construction.
 
