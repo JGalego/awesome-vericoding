@@ -15,6 +15,12 @@ data ℕ : Set where
   zero : ℕ
   suc  : ℕ → ℕ
 
+-- An operator without a fixity declaration is non-associative at level 20.
+-- `+` and `≡` would then share a level, and `(m + n) + p ≡ m + (n + p)`
+-- below would not parse.
+infixl 6 _+_
+infix  4 _≡_
+
 _+_ : ℕ → ℕ → ℕ
 zero  + n = n
 suc m + n = suc (m + n)

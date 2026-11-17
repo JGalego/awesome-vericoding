@@ -13,16 +13,20 @@ theory Learn
   imports Main
 begin
 
+(* A theory file spells symbols in ASCII. The editor shows \<Rightarrow> as ⇒,
+   \<ge> as ≥, \<and> as ∧ and \<or> as ∨. *)
+
 (* `fun` equations are simplification rules. `by simp` is the whole proof
    when unfolding and arithmetic are enough. *)
-fun maximum :: "int ⇒ int ⇒ int" where
-  "maximum a b = (if a ≥ b then a else b)"
+fun maximum :: "int \<Rightarrow> int \<Rightarrow> int" where
+  "maximum a b = (if a \<ge> b then a else b)"
 
 lemma maximum_spec:
-  "maximum a b ≥ a ∧ maximum a b ≥ b ∧ (maximum a b = a ∨ maximum a b = b)"
+  "maximum a b \<ge> a \<and> maximum a b \<ge> b \<and>
+   (maximum a b = a \<or> maximum a b = b)"
   by simp
 
-fun sum :: "int list ⇒ int" where
+fun sum :: "int list \<Rightarrow> int" where
   "sum [] = 0"
 | "sum (x # xs) = x + sum xs"
 

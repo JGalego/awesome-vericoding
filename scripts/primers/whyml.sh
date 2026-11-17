@@ -4,12 +4,15 @@
 # Neither tool publishes Linux binaries, so both are built from source with
 # opam 2.5.2 (the static binary from the opam releases) in an OCaml 4.14.2
 # switch under $PRIMER_CACHE/whyml, from a pinned opam-repository commit.
-# A cold build takes about 10 minutes and needs gcc, make, libgmp-dev and
-# zlib1g-dev; missing Debian packages are installed with sudo apt-get. The
-# switch holds absolute paths, so $PRIMER_CACHE must not move between runs.
+# A cold build compiles OCaml, Why3 and Alt-Ergo, which takes 10 to 35
+# minutes depending on the machine (OPAMJOBS sets the parallelism, by default
+# the number of CPUs). It needs gcc, make, autoconf, libgmp-dev and zlib1g-dev;
+# missing Debian packages are installed with sudo apt-get. The switch holds
+# absolute paths, so $PRIMER_CACHE must not move between runs.
 #
-# The primer passes when `why3 prove -P alt-ergo -a split_vc` reports every
-# goal as Valid. Why3 exits 0 when a goal fails, so the script reads its output.
+# The primer passes when `why3 prove -P alt-ergo -a split_vc` exits 0 and
+# reports every goal as Valid. Why3 exits 2 when a goal fails; counting the
+# results as well makes a run that proves no goal at all fail.
 set -euo pipefail
 
 file=$1
@@ -22,25 +25,25 @@ packages=(why3.1.8.2 alt-ergo.2.4.3)
 version="opam $opam_version, opam-repository $opam_repository, $compiler ${packages[*]}"
 
 export OPAMROOT="$cache/opam" OPAMYES=1 OPAMCOLOR=never OPAMNODEPEXTS=1
-export OPAMJOBS=${OPAMJOBS:-2}
+export OPAMJOBS=${OPAMJOBS:-$(nproc)}
 opam="$cache/bin/opam"
 
 if [[ $(cat "$cache/installed" 2>/dev/null) != "$version" ]]; then
   rm -rf "$cache"
   mkdir -p "$cache/bin"
   missing=()
-  for package in gcc make patch unzip bzip2 m4 pkg-config libgmp-dev zlib1g-dev; do
+  for package in gcc make patch unzip bzip2 m4 autoconf pkg-config libgmp-dev zlib1g-dev; do
     dpkg -s "$package" >/dev/null 2>&1 || missing+=("$package")
   done
   if ((${#missing[@]})); then
     sudo apt-get update -q
     sudo apt-get install -y -q "${missing[@]}"
   fi
-  curl -fsSL -o "$opam" "https://github.com/ocaml/opam/releases/download/$opam_version/opam-$opam_version-x86_64-linux"
+  curl -fsSL --retry 3 --retry-all-errors -o "$opam" "https://github.com/ocaml/opam/releases/download/$opam_version/opam-$opam_version-x86_64-linux"
   echo "$opam_sha256  $opam" | sha256sum -c -
   chmod +x "$opam"
   mkdir "$cache/repository"
-  curl -fsSL "https://github.com/ocaml/opam-repository/archive/$opam_repository.tar.gz" |
+  curl -fsSL --retry 3 --retry-all-errors "https://github.com/ocaml/opam-repository/archive/$opam_repository.tar.gz" |
     tar -xz -C "$cache/repository" --strip-components=1
   "$opam" init --bare --no-setup --disable-sandboxing default "$cache/repository"
   rm -rf "$cache/repository"
@@ -53,6 +56,7 @@ fi
 # Only the switch's own binaries, so a Why3 or Alt-Ergo elsewhere on PATH is not used.
 export PATH="$OPAMROOT/default/bin:/usr/bin:/bin"
 export WHY3CONFIG="$PWD/why3.conf"
+: > "$WHY3CONFIG"
 why3 config detect >/dev/null
 why3 --version
 alt-ergo --version

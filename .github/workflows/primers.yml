@@ -1,0 +1,81 @@
+name: Primers
+
+# Runs each primer through its verifier. A primer is checked by
+# scripts/primers/<name>.sh, which installs a pinned version of the tool and
+# fails when the code does not verify; scripts/primers.py extracts the code
+# and runs the script. Pull requests check only the primers they touch, or all
+# of them when a shared file changes. Pushes to main, the monthly run, and
+# manual runs check every primer that has a script.
+#
+# Tools are installed under ~/.cache/awesome-vericoding/<name>, which is cached
+# per primer and keyed on its check script, so bumping a pinned version starts
+# from a clean install.
+
+on:
+  pull_request:
+    paths: ["primers/**", "scripts/primers/**", "scripts/primers.py", ".github/workflows/primers.yml"]
+  push:
+    branches: [main]
+    paths: ["primers/**", "scripts/primers/**", "scripts/primers.py", ".github/workflows/primers.yml"]
+  schedule:
+    - cron: "0 5 3 * *" # monthly, on the 3rd
+  workflow_dispatch:
+    inputs:
+      primers:
+        description: Primers to check, separated by spaces (default is every primer with a check script)
+        default: ""
+
+permissions:
+  contents: read
+
+jobs:
+  plan:
+    runs-on: ubuntu-latest
+    outputs:
+      primers: ${{ steps.plan.outputs.primers }}
+    steps:
+      - uses: actions/checkout@v7
+        with:
+          fetch-depth: 0 # to diff a pull request against its base
+      - id: plan
+        env:
+          EVENT: ${{ github.event_name }}
+          BASE: ${{ github.event.pull_request.base.sha }}
+          REQUESTED: ${{ inputs.primers }}
+        run: |
+          if [ "$EVENT" = pull_request ]; then
+            primers=$(python3 scripts/primers.py list --changed $(git diff --name-only "$BASE"...HEAD))
+          elif [ -n "$REQUESTED" ]; then
+            primers=$(python3 -c 'import json, sys; print(json.dumps(sys.argv[1:]))' $REQUESTED)
+          else
+            primers=$(python3 scripts/primers.py list)
+          fi
+          echo "primers=$primers" >> "$GITHUB_OUTPUT"
+          unchecked=$(cd scripts && python3 -c 'import primers; print(", ".join(sorted(set(primers.names()) - set(primers.checked()))))')
+          {
+            echo "Checking: \`$primers\`"
+            if [ -n "$unchecked" ]; then echo; echo "No check script yet: $unchecked"; fi
+          } >> "$GITHUB_STEP_SUMMARY"
+
+  verify:
+    needs: plan
+    if: needs.plan.outputs.primers != '[]'
+    name: ${{ matrix.primer }}
+    # Pinned rather than ubuntu-latest: the check scripts download Ubuntu 24.04
+    # builds and several tools need its glibc (2.38 or newer).
+    runs-on: ubuntu-24.04
+    # A cold install takes up to about 50 minutes (Creusot builds OCaml, Why3
+    # and its own rustc driver); a cached one takes a few minutes at most.
+    timeout-minutes: 90
+    strategy:
+      fail-fast: false
+      matrix:
+        primer: ${{ fromJSON(needs.plan.outputs.primers) }}
+    steps:
+      - uses: actions/checkout@v7
+      - uses: actions/cache@v6
+        with:
+          path: ~/.cache/awesome-vericoding/${{ matrix.primer }}
+          key: primer-${{ matrix.primer }}-${{ hashFiles(format('scripts/primers/{0}.sh', matrix.primer)) }}
+      - name: Verify primers/${{ matrix.primer }}.md
+        run: python3 scripts/primers.py check "${{ matrix.primer }}"

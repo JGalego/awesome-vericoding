@@ -12,11 +12,12 @@ title: Learn SPARK in Y Minutes
 -- learn.ads
 package Learn with SPARK_Mode is
 
-   function Maximum (A, B : Integer) return Integer
+   -- An expression function puts its aspects after the expression.
+   function Maximum (A, B : Integer) return Integer is
+     (if A >= B then A else B)
      with Post => Maximum'Result >= A
                   and then Maximum'Result >= B
-                  and then (Maximum'Result = A or else Maximum'Result = B)
-   is (if A >= B then A else B);
+                  and then (Maximum'Result = A or else Maximum'Result = B);
 
    -- `Natural` is `Integer` from 0 up. The postcondition is functional.
    -- The body still has to show that `Acc + 1` cannot exceed `Natural'Last`.

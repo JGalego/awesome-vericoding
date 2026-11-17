@@ -13,9 +13,15 @@ set -euo pipefail
 file=$1
 image=framac/frama-c:32.1
 
-docker run --rm --user "$(id -u):$(id -g)" -e HOME=/tmp \
-  -v "$PWD":/work -w /work "$image" \
-  frama-c -wp -wp-rte -wp-timeout 30 "$(basename "$file")" | tee frama-c.log
+# The image's entry point is `opam exec`, which only works as the image's own
+# user. The container runs as the caller instead, so that it can read the
+# directory it is given, and calls Frama-C from the opam switch directly. HOME
+# stays /home/opam, where the image keeps its Why3 prover configuration.
+switch=/home/opam/.opam/4.14
+cd "$(dirname "$file")"
+docker run --rm --user "$(id -u):$(id -g)" -e HOME=/home/opam -e PATH="$switch/bin:/usr/bin:/bin" \
+  -v "$PWD":/work -w /work --entrypoint "$switch/bin/frama-c" "$image" \
+  -wp -wp-rte -wp-timeout 30 "$(basename "$file")" | tee frama-c.log
 
 summary=$(grep -E '^\[wp\] Proved goals: +[0-9]+ / [0-9]+' frama-c.log || true)
 [[ -n $summary ]] || { echo "no WP summary in the output"; exit 1; }

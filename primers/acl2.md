@@ -22,7 +22,8 @@ title: Learn ACL2 in Y Minutes
   (if (>= a b) a b))
 
 ;; Both theorems are stated with no `:hints`. `maximum-ge` is simplification.
-;; `sum-append` is an induction the waterfall chooses from the definition of `sum`.
+;; `sum-append` needs an induction. The waterfall picks the one suggested by
+;; `(append xs ys)`, which also fits the recursion of `sum` on `xs`.
 (defthm maximum-ge
   (and (>= (maximum a b) a)
        (>= (maximum a b) b)

@@ -11,7 +11,9 @@ title: Learn Gobra in Y Minutes
 ```text
 package learn
 
-// Negating the minimum int32 does not fit in int32.
+// Negating the minimum int32 does not fit in int32. By default Gobra does
+// not check arithmetic for overflow, so this file verifies without the
+// precondition too. Run Gobra with --overflow and the precondition is needed.
 // @ requires x != -2147483648
 // @ ensures res >= 0 && (res == x || res == -x)
 func Abs(x int32) (res int32) {

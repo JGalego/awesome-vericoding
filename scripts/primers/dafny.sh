@@ -17,12 +17,12 @@ HOME_DIR="$CACHE/dafny-$VERSION"
 if [ ! -x "$HOME_DIR/dafny" ]; then
   mkdir -p "$CACHE"
   tmp=$(mktemp -d "$CACHE/tmp.XXXXXX")
+  trap 'rm -rf "$tmp"' EXIT
   curl -fsSL --retry 3 -o "$tmp/dafny.zip" \
     "https://github.com/dafny-lang/dafny/releases/download/v$VERSION/dafny-$VERSION-x64-ubuntu-22.04.zip"
   unzip -q "$tmp/dafny.zip" -d "$tmp"
   rm -rf "$HOME_DIR"
   mv "$tmp/dafny" "$HOME_DIR"
-  rm -rf "$tmp"
 fi
 
 "$HOME_DIR/dafny" --version

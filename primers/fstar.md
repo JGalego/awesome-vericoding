@@ -9,7 +9,8 @@ title: Learn F* in Y Minutes
 [F*](https://fstar-lang.org) is a proof-oriented dialect of ML. A refinement on an argument is a precondition, discharged at the call site. A `Lemma` is a ghost function: when its body is `()`, the SMT solver is being asked to finish the proof, and when the body recurses, that call is the induction hypothesis.
 
 ```text
-module Learn
+(* The module name has to match the file name, learnfstar.fst, up to case. *)
+module LearnFStar
 
 (* A `Lemma` whose body is `()` is a proof obligation for the SMT solver.
    No tactic script. If Z3 cannot see the reason, the body is where an

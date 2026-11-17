@@ -23,16 +23,16 @@ method max(a: Int, b: Int) returns (r: Int)
 }
 
 // `acc(x.val)` is permission to read and write that field.
-// Two full permissions to the same location cannot both be held, so `src != dst`
-// is part of the precondition, not a style constraint.
+// Two full permissions to the same location cannot both be held, so the
+// precondition already implies `src != dst`. The assertion checks that.
 // `old` is the value at the start of the method.
 method transfer(src: Ref, dst: Ref)
   requires acc(src.val) && acc(dst.val)
-  requires src != dst
   ensures acc(src.val) && acc(dst.val)
   ensures dst.val == old(dst.val) + old(src.val)
   ensures src.val == 0
 {
+  assert src != dst
   dst.val := dst.val + src.val
   src.val := 0
 }

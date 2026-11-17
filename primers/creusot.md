@@ -6,10 +6,10 @@ contributors:
 title: Learn Creusot in Y Minutes
 ---
 
-[Creusot](https://creusot.rs) verifies Rust by translating Pearlite contracts into WhyML. A function marked `#[logic]` is not Rust that runs. It is a definition in the specification logic, and `@` is the view of a Rust value in that logic.
+[Creusot](https://creusot.rs) verifies Rust by translating it, with its Pearlite contracts, into Coma, an intermediate language of the Why3 platform. A function marked `#[logic]` is not Rust that runs. It is a definition in the specification logic, and `@` is the view of a Rust value in that logic.
 
 ```text
-use creusot_contracts::prelude::*;
+use creusot_std::prelude::*;
 
 #[logic]
 fn maximum_logic(a: Int, b: Int) -> Int {

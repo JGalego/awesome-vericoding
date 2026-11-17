@@ -23,8 +23,8 @@ fn get(xs: &[i32], i: usize) -> i32 {
     xs[i]
 }
 
-// First statement in the body. It holds each time the guard is tested,
-// so when the guard fails, `i <= n` and `!(i < n)`.
+// First statement in the body. It is checked each time the body is entered,
+// which is after the guard has held, not when the guard fails.
 #[requires(n >= 0)]
 #[ensures(result == n)]
 fn count(n: i32) -> i32 {

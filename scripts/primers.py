@@ -8,6 +8,7 @@ tool when it is missing and exits non-zero when the code does not verify.
 
     python3 scripts/primers.py names              # every primer, one per line
     python3 scripts/primers.py list               # primers with a check script, as JSON
+    python3 scripts/primers.py list --changed primers/dafny.md  # only those a change affects
     python3 scripts/primers.py extract dafny DIR  # write DIR/learndafny.dfy
     python3 scripts/primers.py check dafny lean   # extract and verify each one
 
@@ -44,6 +45,18 @@ def names() -> list[str]:
 
 def checked() -> list[str]:
     return sorted(p.stem for p in CHECKS.glob("*.sh") if (PRIMERS / f"{p.stem}.md").exists())
+
+
+# A change to one of these can affect every primer's check.
+SHARED = {"scripts/primers.py", ".github/workflows/primers.yml"}
+
+
+def affected(changed: list[str]) -> list[str]:
+    """Primers with a check script that a change to these paths could break."""
+    if SHARED.intersection(changed):
+        return checked()
+    touched = {Path(path).stem for path in changed if path.startswith(("primers/", "scripts/primers/"))}
+    return [name for name in checked() if name in touched]
 
 
 def parse(text: str) -> tuple[str, str]:
@@ -100,7 +113,8 @@ def main(argv: list[str] | None = None) -> int:
     parser = argparse.ArgumentParser(description=__doc__.split("\n\n")[0])
     commands = parser.add_subparsers(dest="command", required=True)
     commands.add_parser("names", help="print every primer, one per line")
-    commands.add_parser("list", help="print primers that have a check script, as JSON")
+    listing = commands.add_parser("list", help="print primers that have a check script, as JSON")
+    listing.add_argument("--changed", nargs="*", metavar="PATH", help="only primers these changed paths affect")
     one = commands.add_parser("extract", help="write a primer's code to a directory")
     one.add_argument("name")
     one.add_argument("directory", nargs="?", default=".")
@@ -114,7 +128,7 @@ def main(argv: list[str] | None = None) -> int:
             print("\n".join(names()))
             return 0
         if args.command == "list":
-            print(json.dumps(checked()))
+            print(json.dumps(checked() if args.changed is None else affected(args.changed)))
             return 0
         if args.command == "extract":
             print(extract(args.name, Path(args.directory).resolve()))

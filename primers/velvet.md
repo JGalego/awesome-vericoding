@@ -34,4 +34,4 @@ prove_correct count by
   velvet_vcgen [count] with finish
 ```
 
-`with finish` asks Velvet to discharge every condition with its default automation. Replacing `finish` with a `case` is how a condition that automation misses is proved by hand, in Lean, against the same verification condition.
+`with finish` asks Velvet to discharge every condition with its default automation, and the error points at the clause it could not discharge. `with try finish` leaves those conditions open instead, as goals named after their clauses (`bound`, `remaining`, and `ensures1` for an unnamed `ensures`). A `case bound => ...` after it proves that condition by hand, in Lean, against the same verification condition.
