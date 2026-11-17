@@ -337,3 +337,12 @@
 @media (pointer: coarse) {
   .markdown-body .bibtex button { min-height: 36px; padding: 0 14px; }
 }
+
+/* Diagram nodes that link to their list entries. */
+.mermaid-link { cursor: pointer; }
+.mermaid-link:hover .label { text-decoration: underline; }
+li[id^="entry-"]:target { background: var(--vc-mark); border-radius: var(--vc-radius); }
+
+/* What's New */
+.new-list li + li { margin-top: 0.4em; }
+.new-where { color: var(--vc-muted); font-size: 0.85em; }

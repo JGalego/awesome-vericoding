@@ -19,16 +19,21 @@ jobs:
     runs-on: ubuntu-latest
     steps:
       - uses: actions/checkout@v7
+        with:
+          # The What's New page dates entries from the README's history.
+          fetch-depth: 0
       - uses: actions/setup-node@v7
         with:
           node-version: 22
-      # The site's search filters read data/list.json,
-      # and the README's sorry badge reads badges/sorry.json. Both are built
-      # from the README and the primers here rather than committed.
-      - name: Build the list data and the sorry badge
+      # The site's search filters read data/list.json, the README's sorry
+      # badge reads badges/sorry.json, and new.html and feed.xml list recent
+      # entries. All are built from the README, its history and the primers
+      # here rather than committed.
+      - name: Build the list data, the sorry badge and What's New
         run: |
           python3 scripts/build_data.py --out data/list.json
           node scripts/hatches.mjs primers --data data/list.json --badge badges/sorry.json --no-fail
+          python3 scripts/whats_new.py --page new.html --feed feed.xml
       - uses: actions/configure-pages@v5
       - uses: actions/jekyll-build-pages@v1
       - uses: actions/upload-pages-artifact@v3

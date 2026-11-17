@@ -29,6 +29,7 @@
   <meta property="og:image:height" content="640">
   <meta property="og:image:alt" content="Awesome Vericoding: proof or it didn't ship.">
   <meta name="twitter:card" content="summary_large_image">
+  <link rel="alternate" type="application/atom+xml" title="Awesome Vericoding: new entries" href="{{ '/feed.xml' | relative_url }}">
   <link rel="icon" href="{{ '/media/logo.svg' | relative_url }}">
   <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/github-markdown-css@5.6.1/github-markdown.css">
   <link rel="stylesheet" href="{{ '/assets/css/site.css' | relative_url }}">
@@ -102,6 +103,23 @@
     });
     mermaid.initialize({ startOnLoad: false, theme: dark ? "dark" : "default" });
     await mermaid.run();
+    // A diagram node named like a list entry links to that entry.
+    const entries = new Map();
+    document.querySelectorAll("main li > a:first-child").forEach((a) => {
+      const name = a.textContent.trim();
+      if (!entries.has(name)) entries.set(name, a.parentElement);
+    });
+    const SVG = "http://www.w3.org/2000/svg";
+    document.querySelectorAll("main .mermaid svg g.node").forEach((node) => {
+      const item = entries.get(node.textContent.trim());
+      if (!item) return;
+      item.id ||= "entry-" + node.textContent.trim().toLowerCase().replace(/[^a-z0-9]+/g, "-").replace(/-$/, "");
+      const link = document.createElementNS(SVG, "a");
+      link.setAttribute("href", "#" + item.id);
+      link.setAttribute("class", "mermaid-link");
+      node.replaceWith(link);
+      link.append(node);
+    });
   </script>
 </body>
 </html>

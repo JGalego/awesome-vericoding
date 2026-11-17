@@ -1,6 +1,6 @@
 # Awesome Vericoding [![Awesome](https://awesome.re/badge.svg)](https://awesome.re)
 
-[![GitHub](https://img.shields.io/badge/GitHub-JGalego%2Fawesome--vericoding-181717?logo=github)](https://github.com/JGalego/awesome-vericoding) [![License: CC0-1.0](https://img.shields.io/badge/license-CC0--1.0-lightgrey)](LICENSE) [![PRs welcome](https://img.shields.io/badge/PRs-welcome-brightgreen)](#contributing) ![Last commit](https://img.shields.io/github/last-commit/JGalego/awesome-vericoding) ![sorry count](https://img.shields.io/endpoint?url=https%3A%2F%2Fjgalego.github.io%2Fawesome-vericoding%2Fbadges%2Fsorry.json) ![vibes: informally verified](https://img.shields.io/badge/vibes-informally%20verified-blueviolet) ![Q.E.D.](https://img.shields.io/badge/Q.E.D.-%E2%88%8E-black)
+[![GitHub](https://img.shields.io/badge/GitHub-JGalego%2Fawesome--vericoding-181717?logo=github)](https://github.com/JGalego/awesome-vericoding) [![License: CC0-1.0](https://img.shields.io/badge/license-CC0--1.0-lightgrey)](LICENSE) [![PRs welcome](https://img.shields.io/badge/PRs-welcome-brightgreen)](#contributing) ![Last commit](https://img.shields.io/github/last-commit/JGalego/awesome-vericoding) [![What's new](https://img.shields.io/badge/what's%20new-Atom%20feed-orange?logo=rss)](https://jgalego.github.io/awesome-vericoding/new.html) ![sorry count](https://img.shields.io/endpoint?url=https%3A%2F%2Fjgalego.github.io%2Fawesome-vericoding%2Fbadges%2Fsorry.json) ![vibes: informally verified](https://img.shields.io/badge/vibes-informally%20verified-blueviolet) ![Q.E.D.](https://img.shields.io/badge/Q.E.D.-%E2%88%8E-black)
 
 <a href="https://arxiv.org/abs/2509.22908"><img src="media/logo.svg" align="right" width="130" alt="Vericoding logo: code braces around a check mark"></a>
 
@@ -217,6 +217,45 @@ To try AI vericoding:
 - [nanoda](https://github.com/ammkrn/nanoda_lib) - Independent Lean 4 type checker in Rust, a second opinion on any Lean proof.
 - [Viper](https://www.pm.inf.ethz.ch/research/viper.html) - Permission-based verification infrastructure behind Prusti, Nagini, and Gobra ([VMCAI 2016 paper](https://doi.org/10.1007/978-3-662-49122-5_2)).
 - [Z3](https://github.com/Z3Prover/z3) ⭐ 🏭 - SMT solver from Microsoft Research that underpins Dafny, Verus, F*, and much of industrial verification ([TACAS 2008 paper](https://doi.org/10.1007/978-3-540-78800-3_24)).
+
+**What builds on what:** an arrow points from a tool to the one it builds on or translates to. Double-edged boxes are intermediate verifiers, cylinders are solvers and model checkers, and rounded boxes are proof assistants.
+
+```mermaid
+%%{init: {"flowchart": {"nodeSpacing": 12, "rankSpacing": 60}}}%%
+flowchart LR
+    Prusti --> Viper[[Viper]]
+    Nagini --> Viper
+    Gobra --> Viper
+    Dafny --> Boogie[[Boogie]]
+    Creusot --> Why3[[Why3]]
+    Cameleer --> Why3
+    SPARK --> Why3
+    FramaC[Frama-C] --> Why3
+    Verus --> Z3[(Z3)]
+    LiquidHaskell[Liquid Haskell] --> Z3
+    Viper --> Z3
+    Boogie --> Z3
+    Why3 --> Z3
+    Why3 --> cvc5[(cvc5)]
+    Why3 --> AltErgo[(Alt-Ergo)]
+    Kani --> CBMC[(CBMC)]
+    HACL[HACL*] --> FStar([F*])
+    hax --> FStar
+    Aeneas --> FStar
+    FStar --> Z3
+    Aeneas --> HOL4([HOL4])
+    Aeneas --> Lean([Lean 4])
+    Velvet --> Lean
+    hax --> Rocq([Rocq])
+    Aeneas --> Rocq
+    RefinedRust --> Iris
+    RefinedC --> Iris
+    Iris --> Rocq
+    VST --> CompCert
+    VST --> Rocq
+    CompCert --> Rocq
+    AutoCorres2 --> Isabelle([Isabelle])
+```
 
 ### 🏰 Verified Systems
 
