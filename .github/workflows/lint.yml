@@ -31,8 +31,15 @@ jobs:
     runs-on: ubuntu-latest
     steps:
       - uses: actions/checkout@v7
+      - uses: actions/setup-node@v7
+        with:
+          node-version: 22
       - name: Test the maintenance scripts
         run: python3 -m unittest discover -s scripts -v
+      - name: Test the escape-hatch check
+        run: node --test scripts/test_hatches.mjs
+      - name: Check the primers for escape hatches
+        run: node scripts/hatches.mjs primers
       - name: Check that tables are aligned
         run: |
           python3 scripts/align_tables.py README.md contributing.md || {

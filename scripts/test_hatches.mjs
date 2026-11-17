@@ -1,4 +1,4 @@
-// Tests for assets/js/hatches.js and scripts/hatches.mjs. Run with:
+// Tests for scripts/hatches.mjs. Run with:
 //   node --test scripts/test_hatches.mjs
 
 import assert from "node:assert/strict";
@@ -6,8 +6,7 @@ import { execFileSync } from "node:child_process";
 import { dirname, join, resolve } from "node:path";
 import { test } from "node:test";
 import { fileURLToPath } from "node:url";
-import { badge, commentRanges, detect, scan, SYNTAX } from "../assets/js/hatches.js";
-import { primerCode } from "./hatches.mjs";
+import { badge, commentRanges, detect, primerCode, scan, SYNTAX } from "./hatches.mjs";
 
 const ROOT = resolve(dirname(fileURLToPath(import.meta.url)), "..");
 const TRUST = JSON.parse(execFileSync("python3", [join(ROOT, "scripts/build_data.py")], { encoding: "utf8" })).trust;

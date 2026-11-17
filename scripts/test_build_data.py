@@ -167,6 +167,25 @@ class RealReadmeTests(unittest.TestCase):
             self.assertTrue(entry["url"].startswith("http"), entry)
             self.assertTrue(entry["section"], entry)
 
+    def test_no_asterisks_that_pair_into_italics(self):
+        # GitHub leaves the asterisks in "F* ... Low*" alone, but the website's
+        # Markdown renderer (kramdown) pairs them into italics and breaks the
+        # entry's link. Escape them as F\\* when an item has two.
+        readme = (Path(__file__).resolve().parent.parent / "README.md").read_text(encoding="utf-8")
+        for number, line in enumerate(readme.splitlines(), 1):
+            if not re.match(r"^\s*(?:-|\d+\.) ", line):
+                continue
+            body = re.sub(r"\s\*[^*]+\*(?:\s·\s.*)?$", "", line)
+            body = re.sub(r"`[^`]*`", "", body)
+            loose = re.findall(r"(?<=\w)(?<!\\)\*(?!\*)", body)
+            self.assertLess(len(loose), 2, f"README.md:{number}: escape the asterisks as \\*")
+
+    def test_escaped_names_are_unescaped(self):
+        entry = parse_entry(r"[F\*](https://fstar-lang.org) - Uses Low\* and F\*. *POPL 2016*")
+        self.assertEqual(entry["name"], "F*")
+        self.assertEqual(entry["description"], "Uses Low* and F*.")
+        self.assertEqual(entry["venue"], "POPL 2016")
+
     def test_entry_regex_requires_a_web_link(self):
         self.assertIsNone(ENTRY.match("[🚀 Start Here](#-start-here)"))
         self.assertIsNone(parse_entry("Rust"))

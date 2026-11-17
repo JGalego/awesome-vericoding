@@ -8,7 +8,7 @@ and writes one JSON file with two parts:
   markers, venue, year, extra links, and the verifiers it mentions. The site's
   search and filters read these, and anyone can fetch the file as an API.
 - `trust`: the Trust Checklist, with a regular expression for each escape
-  hatch, used by the escape-hatch scanner and by the `sorry` badge.
+  hatch, used by scripts/hatches.mjs for the primer check and the `sorry` badge.
 
     python3 scripts/build_data.py --out data/list.json
 
@@ -77,12 +77,20 @@ def heading_text(raw: str) -> str:
     return re.sub(r"^[^\w(]+", "", raw).strip()
 
 
+ESCAPE = re.compile(r"\\([\\`*_{}\[\]()#+\-.!|])")
+
+
+def unescape(markdown: str) -> str:
+    """Drop Markdown backslash escapes, such as the one in `F\\*`."""
+    return ESCAPE.sub(r"\1", markdown)
+
+
 def plain(markdown: str) -> str:
     """Markdown inline text to plain text."""
     text = LINK.sub(r"\1", markdown)
     text = CODE_SPAN.sub(r"\1", text)
-    text = re.sub(r"(?<!\w)\*([^*]+)\*(?!\w)", r"\1", text)
-    return re.sub(r"\s+", " ", text).strip()
+    text = re.sub(r"(?<![\w\\])\*([^*]+)(?<!\\)\*(?!\w)", r"\1", text)
+    return re.sub(r"\s+", " ", unescape(text)).strip()
 
 
 def verifiers_in(*texts: str) -> list[str]:
@@ -111,7 +119,7 @@ def parse_entry(text: str) -> dict | None:
         year = int(years[-1]) if years else None
     links = [{"label": label, "url": url} for label, url in LINK.findall(rest)] + links
     return {
-        "name": match.group("name"),
+        "name": unescape(match.group("name")),
         "url": match.group("url"),
         "markers": [MARKERS[m] for m in re.findall("⭐|🏭|💰", match.group("markers"))],
         "description": plain(rest),

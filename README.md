@@ -1,6 +1,6 @@
 # Awesome Vericoding [![Awesome](https://awesome.re/badge.svg)](https://awesome.re)
 
-[![License: CC0-1.0](https://img.shields.io/badge/license-CC0--1.0-lightgrey)](LICENSE) [![PRs welcome](https://img.shields.io/badge/PRs-welcome-brightgreen)](#contributing) ![Last commit](https://img.shields.io/github/last-commit/JGalego/awesome-vericoding) ![sorry: 0](https://img.shields.io/badge/sorry-0-brightgreen) ![vibes: informally verified](https://img.shields.io/badge/vibes-informally%20verified-blueviolet) ![Q.E.D.](https://img.shields.io/badge/Q.E.D.-%E2%88%8E-black)
+[![License: CC0-1.0](https://img.shields.io/badge/license-CC0--1.0-lightgrey)](LICENSE) [![PRs welcome](https://img.shields.io/badge/PRs-welcome-brightgreen)](#contributing) ![Last commit](https://img.shields.io/github/last-commit/JGalego/awesome-vericoding) ![sorry count](https://img.shields.io/endpoint?url=https%3A%2F%2Fjgalego.github.io%2Fawesome-vericoding%2Fbadges%2Fsorry.json) ![vibes: informally verified](https://img.shields.io/badge/vibes-informally%20verified-blueviolet) ![Q.E.D.](https://img.shields.io/badge/Q.E.D.-%E2%88%8E-black)
 
 <a href="https://arxiv.org/abs/2509.22908"><img src="media/logo.svg" align="right" width="130" alt="Vericoding logo: code braces around a check mark"></a>
 
@@ -128,7 +128,7 @@ To try AI vericoding:
 > *The verifier complains the moment your code and spec disagree*
 
 - [Dafny](https://dafny.org) ⭐ 🏭 - Imperative and functional language with built-in contracts, verified through Boogie and Z3 and compiled to several mainstream languages ([LPAR 2010 paper](https://doi.org/10.1007/978-3-642-17511-4_20)).
-- [F*](https://fstar-lang.org) 🏭 - Proof-oriented functional language with dependent types and SMT automation; its Low* subset compiles to C through KaRaMeL ([POPL 2016 paper](https://doi.org/10.1145/2837614.2837655)).
+- [F\*](https://fstar-lang.org) 🏭 - Proof-oriented functional language with dependent types and SMT automation; its Low\* subset compiles to C through KaRaMeL ([POPL 2016 paper](https://doi.org/10.1145/2837614.2837655)).
 - [SPARK](https://github.com/AdaCore/spark2014) 🏭 - Formally analyzable subset of Ada whose GNATprove tool proves absence of runtime errors and functional contracts.
 - [Velvet](https://velvetprover.dev) - Dafny-style auto-active verifier embedded in Lean that mixes SMT automation with interactive and AI-assisted proofs ([introduction](https://proofsandintuitions.net/2026/01/21/multi-modal-verification-velvet/)).
 - [Why3](https://why3.org) - Platform for deductive verification of WhyML programs that sends proof obligations to many SMT solvers and proof assistants ([ESOP 2013 paper](https://doi.org/10.1007/978-3-642-37036-6_8)).
@@ -208,7 +208,7 @@ To try AI vericoding:
 - [Using Crash Hoare Logic for Certifying the FSCQ File System](https://doi.org/10.1145/2815400.2815402) - FSCQ, a file system proved in Rocq to recover correctly from crashes. *SOSP 2015*
 - [Verdi](https://github.com/uwplse/verdi) - Rocq framework for implementing and verifying distributed systems, including the Raft consensus protocol.
 - [CertiKOS](https://flint.cs.yale.edu/certikos/) - Architecture for building certified concurrent operating system kernels in Rocq.
-- [HACL*](https://hacl-star.github.io) 🏭 - Verified cryptographic library written in F* and compiled to C, deployed in Mozilla Firefox and the Linux kernel ([CCS 2017 paper](https://doi.org/10.1145/3133956.3134043)).
+- [HACL\*](https://hacl-star.github.io) 🏭 - Verified cryptographic library written in F\* and compiled to C, deployed in Mozilla Firefox and the Linux kernel ([CCS 2017 paper](https://doi.org/10.1145/3133956.3134043)).
 - [Project Everest](https://project-everest.github.io) - Verified components for the HTTPS ecosystem, including HACL*, EverCrypt, and the EverParse parser generator.
 - [Fiat Cryptography](https://github.com/mit-plv/fiat-crypto) 🏭 - Generates verified elliptic-curve field arithmetic from Rocq specifications; its code ships in BoringSSL ([S&P 2019 paper](https://doi.org/10.1109/SP.2019.00005)).
 - [s2n-bignum](https://github.com/awslabs/s2n-bignum) - Bignum and cryptographic assembly for x86-64 and Arm from AWS, proved correct in HOL Light.
@@ -241,7 +241,7 @@ To try AI vericoding:
 - [Functional Programming in Lean](https://lean-lang.org/functional_programming_in_lean/) - Christiansen's introduction to Lean 4 as a programming language.
 - [Program Proofs](https://program-proofs.com) ⭐ 💰 - Leino's hands-on textbook on writing verified programs in Dafny.
 - [Programming Language Foundations in Agda](https://plfa.github.io) - Programming language theory developed with machine-checked proofs in Agda.
-- [Proof-Oriented Programming in F*](https://fstar-lang.org/tutorial/) - The official book on writing programs and proofs together in F*.
+- [Proof-Oriented Programming in F\*](https://fstar-lang.org/tutorial/) - The official book on writing programs and proofs together in F\*.
 - [Software Foundations](https://softwarefoundations.cis.upenn.edu) ⭐ - Free Rocq series from logic basics to verified functional algorithms, separation logic, and Verifiable C.
 - [The Calculus of Computation](https://link.springer.com/book/10.1007/978-3-540-74113-8) 💰 - Bradley and Manna on decision procedures and the logic behind program verifiers.
 - [Theorem Proving in Lean 4](https://lean-lang.org/theorem_proving_in_lean4/) - Introduction to dependent type theory and interactive proof in Lean 4.
@@ -283,7 +283,7 @@ To try AI vericoding:
 - [Learn F* in Y Minutes](https://github.com/JGalego/awesome-vericoding/blob/main/primers/fstar.md) - Refinements as preconditions and an SMT lemma whose body is the induction.
 - [Learn Flux in Y Minutes](https://github.com/JGalego/awesome-vericoding/blob/main/primers/flux.md) - Predicates attached to Rust types, including the overflow check beside them.
 - [Learn Gobra in Y Minutes](https://github.com/JGalego/awesome-vericoding/blob/main/primers/gobra.md) - Go comments for contracts, termination, and permission to each slice cell.
-- [Learn Gospel in Y Minutes](https://github.com/JGalego/awesome-vericoding/blob/main/primers/gospel.md) - OCaml contracts in comments, including a checks clause a test can monitor.
+- [Learn Gospel in Y Minutes](https://github.com/JGalego/awesome-vericoding/blob/main/primers/gospel.md) - OCaml contracts in comments, a module proved against its signature, and a checks clause that raises.
 - [Learn HOL4 in Y Minutes](https://github.com/JGalego/awesome-vericoding/blob/main/primers/hol4.md) - A Holmake script: a definition used by name, then an induction.
 - [Learn Idris 2 in Y Minutes](https://github.com/JGalego/awesome-vericoding/blob/main/primers/idris.md) - Totality checking, and a vector whose length is part of its type.
 - [Learn Isabelle in Y Minutes](https://github.com/JGalego/awesome-vericoding/blob/main/primers/isabelle.md) - Simplification when it is enough, and an induction when auto will not invent one.
@@ -512,16 +512,16 @@ To try AI vericoding:
 
 > *Search for these escape hatches before you trust a ✅*
 
-| Verifier | Escape hatches to search for                                               | How to audit                                                                 |
-| -------- | -------------------------------------------------------------------------- | ---------------------------------------------------------------------------- |
-| Dafny    | `assume`, `{:axiom}`, `{:verify false}`, bodiless `{:extern}` declarations | `dafny verify --warn-contradictory-assumptions --warn-redundant-assumptions` |
-| Verus    | `assume(...)`, `#[verifier::external_body]`                                | Search for both and review every trusted function specification              |
-| Lean 4   | `sorry`, `axiom`, `native_decide`, `@[implemented_by]`, `@[extern]`        | `#print axioms theorem_name` lists every axiom a theorem depends on          |
-| Rocq     | `Admitted`, `admit`, `Axiom`, `Parameter`                                  | `Print Assumptions theorem_name`                                             |
-| Isabelle | `sorry`, `axiomatization`                                                  | `thm_oracles theorem_name` shows skipped proofs                              |
-| F*       | `admit ()`, `assume`, `--admit_smt_queries true`, `--lax`                  | Search sources and build flags                                               |
-| SPARK    | `pragma Assume`, `SPARK_Mode (Off)`, `pragma Annotate` justifications      | Review the GNATprove summary for assumed and justified checks                |
-| Kani     | `kani::assume`, function stubs, low unwinding bounds                       | Remember that the proof only covers the bounds you set                       |
+| Verifier | Escape hatches to search for                                                                 | How to audit                                                                 |
+| -------- | -------------------------------------------------------------------------------------------- | ---------------------------------------------------------------------------- |
+| Dafny    | `assume`, `{:axiom}`, `{:verify false}`, bodiless `{:extern}` declarations                   | `dafny verify --warn-contradictory-assumptions --warn-redundant-assumptions` |
+| Verus    | `assume(...)`, `#[verifier::external_body]`                                                  | Search for both and review every trusted function specification              |
+| Lean 4   | `sorry`, `axiom`, `native_decide`, `@[implemented_by]`, `@[extern]`                          | `#print axioms theorem_name` lists every axiom a theorem depends on          |
+| Rocq     | `Admitted`, `admit`, `Axiom`, `Parameter`                                                    | `Print Assumptions theorem_name`                                             |
+| Isabelle | `sorry`, `axiomatization`                                                                    | `thm_oracles theorem_name` shows skipped proofs                              |
+| F*       | `admit ()`, `assume`, `--admit_smt_queries true`, `--lax`                                    | Search sources and build flags                                               |
+| SPARK    | `pragma Assume`, `SPARK_Mode (Off)` or `SPARK_Mode => Off`, `pragma Annotate` justifications | Review the GNATprove summary for assumed and justified checks                |
+| Kani     | `kani::assume`, function stubs, low unwinding bounds                                         | Remember that the proof only covers the bounds you set                       |
 
 ## 📅 Milestones
 
