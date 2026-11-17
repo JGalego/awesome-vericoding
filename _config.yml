@@ -1,5 +1,7 @@
 title: Awesome Vericoding
 description: Curated resources on vericoding, i.e. code generated together with a proof.
+repository: JGalego/awesome-vericoding
+url: https://jgalego.github.io
 markdown: kramdown
 kramdown:
   input: GFM
@@ -18,6 +20,10 @@ defaults:
       path: ""
     values:
       layout: default
+  - scope:
+      path: "primers"
+    values:
+      layout: primer
 include:
   - contributing.md
   - code-of-conduct.md

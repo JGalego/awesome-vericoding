@@ -493,6 +493,76 @@ function buildSidebar(root, contents) {
   };
 }
 
+// ---------------------------------------------------------------- primers
+
+// Primers keep `text` fences so the Markdown reads the same everywhere. The
+// site highlights them by file extension, with Prism, where Prism knows the
+// language; the others stay plain rather than borrow a neighbour's grammar.
+const PRISM = "https://cdnjs.cloudflare.com/ajax/libs/prism/1.29.0/";
+const LANGUAGES = {
+  ada: "ada", agda: "agda", c: "c", go: "go", hs: "haskell", idr: "idris",
+  java: "java", lisp: "lisp", ml: "ocaml", py: "python", rs: "rust",
+  scala: "scala", sml: "sml", v: "coq",
+};
+
+// Playgrounds that open code passed in the link, checked with each primer.
+// The Verus playground builds a binary, so it needs a main.
+const PLAYGROUNDS = {
+  lean: {
+    label: "Open in the Lean web editor",
+    url: (code) => `https://live.lean-lang.org/#code=${encodeURIComponent(code)}`,
+  },
+  verus: {
+    label: "Open in the Verus playground",
+    url: (code) =>
+      "https://play.verus-lang.org/?version=stable&mode=basic&edition=2021&code=" +
+      encodeURIComponent(`${code.trimEnd()}\n\nfn main() {}\n`),
+  },
+};
+
+function loadScript(src) {
+  return new Promise((resolve, reject) => {
+    document.head.append(element("script", { src, onload: resolve, onerror: reject }));
+  });
+}
+
+async function highlightCode(code, language) {
+  window.Prism = window.Prism || {};
+  window.Prism.manual = true;
+  await loadScript(`${PRISM}components/prism-core.min.js`);
+  await loadScript(`${PRISM}plugins/autoloader/prism-autoloader.min.js`);
+  window.Prism.plugins.autoloader.languages_path = `${PRISM}components/`;
+  code.className = `language-${language}`;
+  window.Prism.highlightElement(code);
+}
+
+function setUpPrimer(primer) {
+  const code = primer.querySelector("pre > code");
+  if (!code) return;
+  const source = code.textContent;
+  const extension = (primer.dataset.filename || "").split(".").pop();
+
+  const copy = element("button", { type: "button", class: "primer-button" }, "Copy");
+  copy.addEventListener("click", async () => {
+    try {
+      await navigator.clipboard.writeText(source);
+      copy.textContent = "Copied";
+    } catch {
+      copy.textContent = "Copy failed";
+    }
+    setTimeout(() => (copy.textContent = "Copy"), 1500);
+  });
+
+  const bar = element("div", { class: "primer-bar" }, element("code", {}, primer.dataset.filename || ""), copy);
+  const playground = PLAYGROUNDS[primer.dataset.primer];
+  if (playground) {
+    bar.append(element("a", { class: "primer-button", href: playground.url(source), target: "_blank", rel: "noopener" }, `${playground.label} ↗`));
+  }
+  code.parentElement.before(bar);
+
+  if (LANGUAGES[extension]) highlightCode(code, LANGUAGES[extension]).catch(() => {});
+}
+
 // ------------------------------------------------------------------ start
 
 // kramdown keeps the invisible variation selector of an emoji such as ✏️ in
@@ -514,4 +584,6 @@ if (main) {
   makeTablesSortable(main);
   const contents = main.querySelector("h2#contents");
   if (contents) setUpHome(main, contents);
+  const primer = main.querySelector(".primer");
+  if (primer) setUpPrimer(primer);
 }

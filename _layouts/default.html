@@ -3,8 +3,32 @@
 <head>
   <meta charset="utf-8">
   <meta name="viewport" content="width=device-width, initial-scale=1">
-  <title>{{ page.title | default: site.title }}</title>
-  <meta name="description" content="{{ page.description | default: site.description }}">
+  {%- if page.title and page.title != site.title -%}
+    {%- assign title = page.title | append: " · " | append: site.title -%}
+  {%- else -%}
+    {%- assign title = site.title -%}
+  {%- endif -%}
+  {%- comment -%} A primer's description is its first paragraph. {%- endcomment -%}
+  {%- if page.description -%}
+    {%- assign description = page.description -%}
+  {%- elsif page.path contains "primers/" -%}
+    {%- assign description = page.content | markdownify | split: "</p>" | first | strip_html | normalize_whitespace | truncate: 200 -%}
+  {%- else -%}
+    {%- assign description = site.description -%}
+  {%- endif %}
+  <title>{{ title }}</title>
+  <meta name="description" content="{{ description | escape }}">
+  <link rel="canonical" href="{{ page.url | absolute_url }}">
+  <meta property="og:type" content="website">
+  <meta property="og:site_name" content="{{ site.title }}">
+  <meta property="og:title" content="{{ page.title | default: site.title }}">
+  <meta property="og:description" content="{{ description | escape }}">
+  <meta property="og:url" content="{{ page.url | absolute_url }}">
+  <meta property="og:image" content="{{ '/media/social.png' | absolute_url }}">
+  <meta property="og:image:width" content="1280">
+  <meta property="og:image:height" content="640">
+  <meta property="og:image:alt" content="Awesome Vericoding: proof or it didn't ship.">
+  <meta name="twitter:card" content="summary_large_image">
   <link rel="icon" href="{{ '/media/logo.svg' | relative_url }}">
   <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/github-markdown-css@5.6.1/github-markdown.css">
   <link rel="stylesheet" href="{{ '/assets/css/site.css' | relative_url }}">
@@ -16,8 +40,23 @@
 </head>
 <body>
   <div class="page">
+    {%- comment -%}
+      The README links primers on github.com so that they work there and in
+      awesome-lint. On the site, point those links at the site's own pages.
+    {%- endcomment -%}
+    {%- assign body = content -%}
+    {%- capture blob %}href="https://github.com/{{ site.repository }}/blob/main/{% endcapture -%}
+    {%- if body contains blob -%}
+      {%- for other in site.pages -%}
+        {%- if other.path contains "primers/" -%}
+          {%- capture from %}{{ blob }}{{ other.path }}"{% endcapture -%}
+          {%- capture to %}href="{{ other.url | relative_url }}"{% endcapture -%}
+          {%- assign body = body | replace: from, to -%}
+        {%- endif -%}
+      {%- endfor -%}
+    {%- endif %}
     <main class="markdown-body" data-list="{{ '/data/list.json' | relative_url }}">
-      {{ content }}
+      {{ body }}
     </main>
   </div>
   <script type="module" src="{{ '/assets/js/site.js' | relative_url }}"></script>

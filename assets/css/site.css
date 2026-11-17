@@ -1,4 +1,4 @@
-/* Styles for the search, sidebar, and sortable tables. The page
+/* Styles for the search, sidebar, sortable tables, and primer pages. The page
    itself is styled by github-markdown-css; these tokens copy its light and
    dark palettes so that elements outside .markdown-body match. */
 
@@ -11,6 +11,12 @@
   --vc-bg-muted: #f6f8fa;
   --vc-border: #d0d7de;
   --vc-mark: #fff8c5;
+  --vc-syntax-comment: #59636e;
+  --vc-syntax-keyword: #cf222e;
+  --vc-syntax-string: #0a3069;
+  --vc-syntax-constant: #0550ae;
+  --vc-syntax-entity: #6639ba;
+  --vc-syntax-variable: #953800;
   --vc-radius: 6px;
   --vc-mono: ui-monospace, SFMono-Regular, "SF Mono", Menlo, Consolas, "Liberation Mono", monospace;
 }
@@ -25,6 +31,12 @@
     --vc-bg-muted: #161b22;
     --vc-border: #30363d;
     --vc-mark: #bb800966;
+    --vc-syntax-comment: #9198a1;
+    --vc-syntax-keyword: #ff7b72;
+    --vc-syntax-string: #a5d6ff;
+    --vc-syntax-constant: #79c0ff;
+    --vc-syntax-entity: #d2a8ff;
+    --vc-syntax-variable: #ffa657;
   }
 }
 
@@ -210,3 +222,55 @@
 .markdown-body th[aria-sort="ascending"] .sort::after { content: "▲"; color: var(--vc-accent); opacity: 1; }
 .markdown-body th[aria-sort="descending"] .sort::after { content: "▼"; color: var(--vc-accent); opacity: 1; }
 .markdown-body th .sort:focus-visible { outline: 2px solid var(--vc-accent); outline-offset: 2px; border-radius: 3px; }
+
+/* ---------------------------------------------------------------- primers */
+
+.primer-back { margin-bottom: 8px; font-size: 14px; }
+.primer-meta { color: var(--vc-muted); font-size: 14px; }
+.primer-bar {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  gap: 8px;
+  margin-bottom: 8px;
+  font-size: 13px;
+}
+.primer-bar > code { margin-right: auto; }
+.markdown-body .primer-button {
+  padding: 3px 10px;
+  border: 1px solid var(--vc-border);
+  border-radius: var(--vc-radius);
+  background: var(--vc-bg-muted);
+  color: var(--vc-fg);
+  font: inherit;
+  text-decoration: none;
+  cursor: pointer;
+}
+.markdown-body .primer-button:hover { border-color: var(--vc-muted); }
+.markdown-body .primer-button:focus-visible { outline: 2px solid var(--vc-accent); outline-offset: 2px; }
+
+/* Prism tokens in GitHub's colours. */
+.markdown-body .token.comment,
+.markdown-body .token.prolog,
+.markdown-body .token.doctype,
+.markdown-body .token.cdata { color: var(--vc-syntax-comment); }
+.markdown-body .token.keyword,
+.markdown-body .token.important,
+.markdown-body .token.rule,
+.markdown-body .token.atrule { color: var(--vc-syntax-keyword); }
+.markdown-body .token.string,
+.markdown-body .token.char,
+.markdown-body .token.regex,
+.markdown-body .token.attr-value { color: var(--vc-syntax-string); }
+.markdown-body .token.number,
+.markdown-body .token.boolean,
+.markdown-body .token.constant,
+.markdown-body .token.symbol { color: var(--vc-syntax-constant); }
+.markdown-body .token.function,
+.markdown-body .token.class-name,
+.markdown-body .token.builtin { color: var(--vc-syntax-entity); }
+.markdown-body .token.attribute,
+.markdown-body .token.annotation,
+.markdown-body .token.macro,
+.markdown-body .token.property,
+.markdown-body .token.directive { color: var(--vc-syntax-variable); }

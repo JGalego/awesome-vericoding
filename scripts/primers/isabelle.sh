@@ -16,11 +16,12 @@ version=Isabelle2026
 sha256=858c995b32216b3876bf395c3be843147d1f1eee404bc6c958d7534ee335e48d
 cache="${PRIMER_CACHE:-$HOME/.cache/awesome-vericoding}/isabelle"
 isabelle_home="$cache/$version"
-# The mirror at Clarkson is listed on the Isabelle site. The TUM address
-# redirects to plain HTTP, which some networks block.
+# Mirrors listed on the Isabelle site, all over HTTPS. TUM's plain /dist
+# redirects to HTTP, which some networks block, so use its versioned path.
 mirrors=(
+  "https://www.cl.cam.ac.uk/research/hvg/Isabelle/dist"
   "https://mirror.clarkson.edu/isabelle/dist"
-  "https://isabelle.in.tum.de/dist"
+  "https://isabelle.in.tum.de/website-$version/dist"
 )
 
 if [ ! -x "$isabelle_home/bin/isabelle" ]; then
@@ -28,8 +29,9 @@ if [ ! -x "$isabelle_home/bin/isabelle" ]; then
   mkdir -p "$cache"
   tmp=$(mktemp -d "$cache/tmp.XXXXXX")
   tarball="$tmp/${version}_linux.tar.gz"
+  # A stalled download gives up after a minute and tries the next mirror.
   for mirror in "${mirrors[@]}"; do
-    if curl -fsSL --retry 3 --connect-timeout 30 -o "$tarball" "$mirror/${version}_linux.tar.gz" \
+    if curl -fsSL --retry 3 --connect-timeout 30 --speed-limit 50000 --speed-time 60 -o "$tarball" "$mirror/${version}_linux.tar.gz" \
       && echo "$sha256  $tarball" | sha256sum -c -; then
       break
     fi

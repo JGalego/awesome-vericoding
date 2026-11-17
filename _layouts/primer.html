@@ -1,0 +1,13 @@
+---
+layout: default
+---
+{%- assign name = page.path | split: "/" | last | remove: ".md" -%}
+<div class="primer" data-primer="{{ name }}" data-filename="{{ page.filename }}">
+  <nav class="primer-back"><a href="{{ '/' | relative_url }}#-unofficial-cheat-sheets">← All primers</a></nav>
+  <h1>{{ page.title }}</h1>
+  <p class="primer-meta">
+    <a href="https://github.com/{{ site.repository }}/blob/main/scripts/primers/{{ name }}.sh">How CI checks it</a>
+    · <a href="https://github.com/{{ site.repository }}/edit/main/{{ page.path }}">Edit on GitHub</a>
+  </p>
+  {{ content }}
+</div>
