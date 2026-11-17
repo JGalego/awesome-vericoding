@@ -64,7 +64,9 @@ function webLink(element) {
     if (node.nodeType === Node.TEXT_NODE && !node.textContent.trim()) continue;
     if (node.nodeType !== Node.ELEMENT_NODE) return null;
     if (node.tagName === "P") return webLink(node);
-    return node.tagName === "A" && /^https?:/.test(node.getAttribute("href") || "") ? node : null;
+    // An entry links to the web, or to one of the site's primer pages.
+    const href = node.getAttribute("href") || "";
+    return node.tagName === "A" && (/^https?:/.test(href) || /\/primers\/[a-z0-9-]+\.html$/.test(href)) ? node : null;
   }
   return null;
 }
@@ -123,13 +125,19 @@ function index(root) {
   return { sections, blocks, entries, groups, strays: strays.filter((li) => li.closest("ul, ol") && entries.some((e) => e.element.parentElement === li.parentElement)) };
 }
 
-function attachData(entries, data) {
+// The site links primers to its own pages rather than to github.com, so a
+// primer is matched by its page.
+function attachData(entries, data, base) {
   const queues = new Map();
   for (const item of data.entries) {
-    if (!queues.has(item.url)) queues.set(item.url, []);
-    queues.get(item.url).push(item);
+    const key = item.primer ? new URL(item.primer.page, base).href : item.url;
+    if (!queues.has(key)) queues.set(key, []);
+    queues.get(key).push(item);
   }
-  for (const entry of entries) entry.data = queues.get(entry.link.getAttribute("href"))?.shift() ?? null;
+  for (const entry of entries) {
+    const queue = queues.get(entry.link.getAttribute("href")) || queues.get(entry.link.href);
+    entry.data = queue?.shift() ?? null;
+  }
 }
 
 const ONLY = [
@@ -147,6 +155,7 @@ function readState() {
     verifiers: new Set(list("v")),
     since: Number(params.get("since")) || null,
     only: new Set(list("only").filter((key) => ONLY.some((o) => o.key === key))),
+    lang: params.get("lang") || "",
   };
 }
 
@@ -156,6 +165,7 @@ function writeState(state) {
   if (state.verifiers.size) params.set("v", [...state.verifiers].join(","));
   if (state.since) params.set("since", state.since);
   if (state.only.size) params.set("only", [...state.only].join(","));
+  if (state.lang) params.set("lang", state.lang);
   const query = params.toString().replace(/%2C/g, ",");
   history.replaceState(null, "", (query ? `?${query}` : location.pathname) + location.hash);
 }
@@ -271,8 +281,10 @@ function setUpHome(root, contents) {
   fetch(root.dataset.list)
     .then((response) => (response.ok ? response.json() : Promise.reject(response.status)))
     .then((data) => {
-      attachData(model.entries, data);
+      const base = new URL("../", new URL(root.dataset.list, location.href));
+      attachData(model.entries, data, base);
       finder.facets(data.entries, state);
+      buildPicker(root, data, base, state);
       apply();
     })
     .catch(() => {
@@ -282,6 +294,99 @@ function setUpHome(root, contents) {
       apply();
     });
   if (!waitsForData) apply();
+}
+
+// ----------------------------------------------------------------- picker
+
+// "I ship Rust": the verifiers for that language from Verifiers for
+// Mainstream Languages, the primers written in it, and the Trust Checklist
+// rows for those verifiers. Everything comes from the README.
+const MAINSTREAM = "Verifiers for Mainstream Languages";
+const OWN_LANGUAGE = "Verification-Aware Languages";
+
+function primerTool(item) {
+  return item.name.replace(/^Learn (.+) in Y Minutes$/, "$1");
+}
+
+function pickerData(entries, trust) {
+  const languages = new Map();
+  const forLanguage = (name) => {
+    if (!languages.has(name)) languages.set(name, { tools: [], primers: [] });
+    return languages.get(name);
+  };
+  for (const item of entries) {
+    if (item.subsection === MAINSTREAM && item.group) forLanguage(item.group).tools.push(item);
+    if (item.primer?.language) forLanguage(item.primer.language).primers.push(item);
+  }
+  // A language with its own verifier, such as SPARK for Ada, has no group in
+  // Mainstream Languages; its primer names the tool.
+  for (const language of languages.values()) {
+    for (const primer of language.primers) {
+      const name = primerTool(primer);
+      if (language.tools.some((tool) => tool.name === name)) continue;
+      const tool = entries.find((item) => item.subsection === OWN_LANGUAGE && item.name === name);
+      if (tool) language.tools.push(tool);
+    }
+    const names = new Set(language.tools.map((tool) => tool.name));
+    language.trust = trust.filter((row) => names.has(row.verifier));
+  }
+  return new Map([...languages].sort(([a], [b]) => collator.compare(a, b)));
+}
+
+const MARKS = { start: "⭐", production: "🏭", paid: "💰" };
+
+function buildPicker(root, data, base, state) {
+  const start = [...root.querySelectorAll("h2")].find((h) => h.id.endsWith("start-here"));
+  if (!start) return;
+  let anchor = null;
+  for (let node = start.nextElementSibling; node && node.tagName !== "H2"; node = node.nextElementSibling) {
+    if (node.tagName === "OL" || node.tagName === "UL") anchor = node;
+  }
+  if (!anchor) return;
+
+  const languages = pickerData(data.entries, data.trust);
+  if (!languages.has(state.lang)) state.lang = "";
+  const card = element("div", { class: "picker-card", "aria-live": "polite" });
+  const chips = element("div", { class: "chips", role: "group", "aria-label": "Language you ship" });
+  for (const name of languages.keys()) {
+    chips.append(element("button", { type: "button", class: "chip", "data-language": name, "aria-pressed": "false" }, name));
+  }
+  const checklist = [...root.querySelectorAll("h2")].find((h) => h.id.endsWith("trust-checklist"));
+
+  const row = (label, ...items) => element("div", { class: "picker-row" }, element("dt", {}, label), element("dd", {}, ...items));
+  const joined = (nodes) => nodes.flatMap((node, i) => (i ? [" · ", node] : [node]));
+
+  function render() {
+    for (const chip of chips.children) chip.setAttribute("aria-pressed", String(chip.dataset.language === state.lang));
+    card.replaceChildren();
+    card.hidden = !state.lang;
+    if (!state.lang) return;
+    const { tools, primers, trust } = languages.get(state.lang);
+    const rows = [];
+    rows.push(row("Verifiers", ...joined(tools.map((tool) => {
+      const marks = tool.markers.map((m) => MARKS[m]).filter(Boolean).join(" ");
+      return element("span", {}, element("a", { href: tool.url, title: tool.description }, tool.name), marks ? ` ${marks}` : "");
+    }))));
+    if (primers.length) {
+      rows.push(row("Primers", ...joined(primers.map((p) => element("a", { href: new URL(p.primer.page, base).href }, primerTool(p))))));
+    }
+    if (trust.length) {
+      const label = checklist ? element("a", { href: `#${checklist.id}` }, "Escape hatches") : "Escape hatches";
+      rows.push(row(label, ...trust.map((t) => element("div", {}, `${t.verifier}: `, ...joined(t.hatches.map((h) => element("code", {}, h.text)))))));
+    }
+    card.append(element("dl", {}, ...rows));
+  }
+
+  chips.addEventListener("click", (event) => {
+    const chip = event.target.closest(".chip");
+    if (!chip) return;
+    state.lang = state.lang === chip.dataset.language ? "" : chip.dataset.language;
+    render();
+    writeState(state);
+  });
+
+  anchor.after(element("div", { class: "picker" }, element("p", { class: "picker-prompt" }, "I ship:"), chips, card));
+  render();
 }
 
 function highlight(entries, terms) {

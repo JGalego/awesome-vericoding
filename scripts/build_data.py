@@ -7,6 +7,8 @@ and writes one JSON file with two parts:
 - `entries`: every linked list item and benchmark row, with its section, group,
   markers, venue, year, extra links, and the verifiers it mentions. The site's
   search and filters read these, and anyone can fetch the file as an API.
+  A primer's entry also has `primer`: its page on the site and, when it is
+  written in a mainstream language, that language, from its `filename:`.
 - `trust`: the Trust Checklist, with a regular expression for each escape
   hatch, used by scripts/hatches.mjs for the primer check and the `sorry` badge.
 
@@ -38,6 +40,14 @@ EXTRA_LINK = re.compile(r"\s+·\s+\[(?P<label>[^\]]+)\]\((?P<url>[^)\s]+)\)\s*$"
 VENUE = re.compile(r"\s+\*(?P<venue>[^*]+)\*\s*$")
 YEAR = re.compile(r"\b(19[5-9]\d|20\d\d)\b")
 CELL_SPLIT = re.compile(r"(?<!\\)\|")
+PRIMER_URL = re.compile(r"^https://github\.com/JGalego/awesome-vericoding/blob/main/primers/(?P<name>[a-z0-9-]+)\.md$")
+FILENAME = re.compile(r"^filename:\s*(\S+)\s*$", re.MULTILINE)
+# Primers written in a language people already ship. The others are written
+# in the verifier's own language, such as Dafny or Lean.
+PRIMER_LANGUAGES = {
+    "ada": "Ada", "c": "C", "go": "Go", "hs": "Haskell", "java": "Java",
+    "ml": "OCaml", "py": "Python", "rs": "Rust", "scala": "Scala",
+}
 CODE_SPAN = re.compile(r"`([^`]+)`")
 
 MARKERS = {"⭐": "start", "🏭": "production", "💰": "paid"}
@@ -204,7 +214,18 @@ def parse_trust_row(cells: list[str]) -> dict:
     }
 
 
-def build(readme: str) -> dict:
+def primer_info(url: str, primers: Path) -> dict | None:
+    match = PRIMER_URL.match(url)
+    if not match:
+        return None
+    name = match.group("name")
+    path = primers / f"{name}.md"
+    filename = FILENAME.search(path.read_text(encoding="utf-8")) if path.exists() else None
+    extension = filename.group(1).rsplit(".", 1)[-1] if filename else ""
+    return {"page": f"primers/{name}.html", "language": PRIMER_LANGUAGES.get(extension)}
+
+
+def build(readme: str, primers: Path = ROOT / "primers") -> dict:
     entries: list[dict] = []
     trust: list[dict] = []
     section = subsection = group = None
@@ -275,6 +296,9 @@ def build(readme: str) -> dict:
             entry["group"] or "",
             entry.get("fields", {}).get("Verifiers", ""),
         )
+        primer = primer_info(entry["url"], primers)
+        if primer:
+            entry["primer"] = primer
     return {"entries": entries, "trust": trust}
 
 

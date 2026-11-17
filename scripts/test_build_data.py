@@ -190,6 +190,16 @@ class RealReadmeTests(unittest.TestCase):
         self.assertIsNone(ENTRY.match("[🚀 Start Here](#-start-here)"))
         self.assertIsNone(parse_entry("Rust"))
 
+    def test_every_primer_has_a_page_and_language_from_its_filename(self):
+        root = Path(__file__).resolve().parent.parent
+        data = build((root / "README.md").read_text(encoding="utf-8"))
+        primers = {e["primer"]["page"]: e["primer"]["language"] for e in data["entries"] if "primer" in e}
+        on_disk = {f"primers/{p.stem}.html" for p in (root / "primers").glob("*.md")}
+        self.assertEqual(set(primers), on_disk)
+        self.assertEqual(primers["primers/verus.html"], "Rust")
+        self.assertEqual(primers["primers/spark.html"], "Ada")
+        self.assertIsNone(primers["primers/dafny.html"])
+
 
 if __name__ == "__main__":
     unittest.main()

@@ -274,3 +274,24 @@
 .markdown-body .token.macro,
 .markdown-body .token.property,
 .markdown-body .token.directive { color: var(--vc-syntax-variable); }
+
+/* ----------------------------------------------------------------- picker */
+
+.picker { display: flex; flex-wrap: wrap; align-items: center; gap: 8px; margin: 16px 0; }
+.markdown-body .picker-prompt { margin: 0; font-weight: 600; }
+.picker-card {
+  flex-basis: 100%;
+  padding: 12px 16px;
+  border: 1px solid var(--vc-border);
+  border-radius: var(--vc-radius);
+  background: var(--vc-bg-muted);
+}
+.picker-card[hidden] { display: none; }
+.markdown-body .picker-card dl { margin: 0; padding: 0; }
+.picker-row { display: grid; grid-template-columns: 120px minmax(0, 1fr); gap: 4px 12px; padding: 4px 0; }
+.markdown-body .picker-row dt { margin: 0; padding: 0; font-size: 14px; font-style: normal; font-weight: 600; color: var(--vc-muted); }
+.markdown-body .picker-row dt a { color: inherit; }
+.markdown-body .picker-row dd { margin: 0; padding: 0; }
+@media (max-width: 600px) {
+  .picker-row { grid-template-columns: minmax(0, 1fr); }
+}
